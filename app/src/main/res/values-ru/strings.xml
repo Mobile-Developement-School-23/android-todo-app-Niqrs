@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ToDo App</string>
+    <string name="app_name">Сделать</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
@@ -90,6 +90,6 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
-    <string name="my_tasks">My tasks</string>
-    <string name="visibility_button">visibility</string>
+    <string name="my_tasks">Мои дела</string>
+    <string name="visibility_button">видимость</string>
 </resources>
