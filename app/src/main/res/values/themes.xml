@@ -3,7 +3,36 @@
     <style name="Base.Theme.ToDoApp" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:background">@color/back_primary</item>
+        <item name="android:windowBackground">@color/back_primary</item>
+        <item name="android:colorBackground">@color/back_primary</item>
+
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="support_separator">@color/support_light_separator</item>
+        <item name="support_overlay">@color/support_light_overlay</item>
+        <item name="label_primary">@color/label_light_primary</item>
+        <item name="label_secondary">@color/label_light_secondary</item>
+        <item name="label_tertiary">@color/label_light_tertiary</item>
+        <item name="label_disable">@color/label_light_disable</item>
+        <item name="color_red">@color/color_light_red</item>
+        <item name="color_green">@color/color_light_green</item>
+        <item name="color_blue">@color/color_light_blue</item>
+        <item name="color_gray">@color/color_light_gray</item>
+        <item name="color_gray_light">@color/color_light_gray_light</item>
+        <item name="color_white">@color/color_light_white</item>
+        <item name="back_primary">@color/back_light_primary</item>
+        <item name="back_secondary">@color/back_light_secondary</item>
+        <item name="back_elevated">@color/back_light_elevated</item>
     </style>
 
     <style name="Theme.ToDoApp" parent="Base.Theme.ToDoApp" />
+<!--
+    <style name="Theme.ToDoApp.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.ToDoApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.ToDoApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />-->
 </resources>
