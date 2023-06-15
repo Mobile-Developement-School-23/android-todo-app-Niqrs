@@ -6,12 +6,9 @@ import com.niqr.todoapp.data.model.TodoItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.time.LocalDate
-import java.time.LocalDateTime
 
 class LocalTasksRepository: TodoItemsRepository {
     private val tasks = sampleTasks.toMutableList()
@@ -61,7 +58,7 @@ private val sampleTasks = listOf(
     ),
     TodoItem(
         id = "5",
-        description = "Normal task of Yandex Senior Android developer",
+        description = "Normal looooooooooooooooooooooooooooooooooooooooooooooooooong task of Yandex Senior Android developer",
         priority = Priority.No
     ),
     TodoItem(
@@ -76,7 +73,7 @@ private val sampleTasks = listOf(
     ),
     TodoItem(
         id = "8",
-        description = "Simple task of Yandex Senior Android developer",
+        description = "Simple looooooooooooooooooooooooooooooooooooooooooooooooooong task of Yandex Senior Android developer",
         priority = Priority.Low
     ),
     TodoItem(
@@ -95,7 +92,7 @@ private val sampleTasks = listOf(
     ),
     TodoItem(
         id = "12",
-        description = "Hard task of Yandex Senior Android developer",
+        description = "Hard looooooooooooooooooooooooooooooooooooooooooooooooooong task of Yandex Senior Android developer",
         priority = Priority.High
     ),
     TodoItem(
@@ -130,12 +127,12 @@ private val sampleTasks = listOf(
     ),
     TodoItem(
         id = "19",
-        description = "Hard task of Yandex Senior Android developer",
+        description = "Hard looooooooooooooooooooooooooooooooooooooooooooooooooong task of Yandex Senior Android developer",
         priority = Priority.High
     ),
     TodoItem(
         id = "20",
-        description = "Normal task of Yandex Senior Android developer",
+        description = "Normal looooooooooooooooooooooooooooooooooooooooooooooooooong task of Yandex Senior Android developer",
         priority = Priority.No
     ),
     TodoItem(
