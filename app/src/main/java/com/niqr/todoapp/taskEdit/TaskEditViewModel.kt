@@ -17,17 +17,19 @@ import javax.inject.Inject
 class TaskEditViewModel @Inject constructor(): ViewModel() {
 
     private val _priority = MutableStateFlow(UiText.StringResource(R.string.priority_no))
-    val priority: StateFlow<UiText.StringResource>
-        get() = _priority.asStateFlow()
+    val priority = _priority.asStateFlow()
 
-    private val _date = MutableStateFlow<LocalDate?>(null)
+    private val _date = MutableStateFlow<LocalDate>(LocalDate.now().plusDays(1))
     val date = _date.asStateFlow()
+
+    private val _dateVisibility = MutableStateFlow(false)
+    val dateVisibility = _dateVisibility.asStateFlow()
 
     fun updatePriority(priority: Priority) {
         val priorityResource = when(priority) {
-            Priority.No -> R.id.priority_menu_no
-            Priority.Low -> R.id.priority_menu_low
-            Priority.High -> R.id.priority_menu_high
+            Priority.No -> R.string.priority_no
+            Priority.Low -> R.string.priority_low
+            Priority.High -> R.string.priority_high
         }
         _priority.update {
             UiText.StringResource(priorityResource)
@@ -38,6 +40,12 @@ class TaskEditViewModel @Inject constructor(): ViewModel() {
         val newDate = dateFromLong(time)
         _date.update {
             newDate
+        }
+    }
+
+    fun updateDateVisibility(visible: Boolean) {
+        _dateVisibility.update {
+            visible
         }
     }
 }

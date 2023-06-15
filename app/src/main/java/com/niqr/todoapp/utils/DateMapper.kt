@@ -7,6 +7,12 @@ import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
 
+fun LocalDate.toLong(): Long {
+    val zoneId = ZoneId.systemDefault()
+    val epoch: Long = this.atStartOfDay(zoneId).toEpochSecond()
+    return epoch
+}
+
 fun dateFromLong(time: Long): LocalDate {
     return Instant.ofEpochMilli(time).atZone(ZoneId.systemDefault()).toLocalDate()
 }

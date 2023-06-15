@@ -14,8 +14,8 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.niqr.todoapp.R
 import com.niqr.todoapp.taskEdit.model.Priority
+import com.niqr.todoapp.utils.DAY
 import com.niqr.todoapp.utils.toStringDate
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 
@@ -30,64 +30,72 @@ class TaskEditFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_task_edit, container, false)
-
-
-        return view
+        return inflater.inflate(R.layout.fragment_task_edit, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setupFlows()
-        setupDatePicker(view)
-        setupPriorityMenu(view)
-        setupButtons(view)
+        setupDatePicker()
+        setupDateSwitch()
+        setupPriorityMenu()
+        setupButtons()
 
     }
 
     private fun setupFlows() {
-        val dateText = requireView().findViewById<TextView>(R.id.dateText)
-        val priorityText = requireView().findViewById<TextView>(R.id.priorityText)
+        val view = requireView()
+        val dateText = view.findViewById<TextView>(R.id.dateText)
+        val priorityText = view.findViewById<TextView>(R.id.priorityText)
+        val dateField = view.findViewById<LinearLayout>(R.id.editDate)
+
         lifecycleScope.launch {
-            viewModel.date.collectLatest {
-                dateText.text = it?.toStringDate()
+            viewModel.date.collect {
+                dateText.text = it.toStringDate()
             }
         }
         lifecycleScope.launch {
-            viewModel.priority.collectLatest {
+            viewModel.priority.collect {
                 priorityText.text = getText(it.resId)
             }
         }
-    }
-
-    private fun setupDatePicker(view: View) {
-        val switch = view.findViewById<SwitchCompat>(R.id.date_picker_switch)
-
-        val picker =
-            MaterialDatePicker.Builder.datePicker()
-                .setTitleText(getString(R.string.select_date))
-                .build()
-
-        switch.setOnCheckedChangeListener { _, isChecked ->
-            when(isChecked) {
-                true -> picker.show(childFragmentManager, null)
-                false -> {
-                    val dateText = view.findViewById<TextView>(R.id.dateText)
-                    dateText.text = ""
-                }
+        lifecycleScope.launch {
+            viewModel.dateVisibility.collect {
+                dateField.isClickable = it
+                dateText.text = if (it) viewModel.date.value.toStringDate() else ""
             }
         }
+    }
 
-        picker.addOnNegativeButtonClickListener { switch.isChecked = false }
-        picker.addOnCancelListener { switch.isChecked = false }
+    private fun setupDatePicker() {
+        val editDate = requireView().findViewById<LinearLayout>(R.id.editDate)
+        val picker = MaterialDatePicker.Builder.datePicker()
+                .setTitleText(getString(R.string.select_date))
+                .setSelection(MaterialDatePicker.todayInUtcMilliseconds() + DAY)
+                .build()
+
+        editDate.setOnClickListener {
+            if (!picker.isVisible)
+                picker.show(childFragmentManager, null)
+        }
+        editDate.isClickable = false
+
         picker.addOnPositiveButtonClickListener(viewModel::updateDate)
     }
 
-    private fun setupPriorityMenu(view: View) {
-        val priorityField = view.findViewById<LinearLayout>(R.id.priorityField)
+    private fun setupDateSwitch() {
+        val switch = requireView().findViewById<SwitchCompat>(R.id.date_switch)
 
-        val priorityMenu = androidx.appcompat.widget.PopupMenu(view.context, priorityField)
+        switch.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.updateDateVisibility(isChecked)
+        }
+    }
+
+    private fun setupPriorityMenu() {
+        val priorityField = requireView().findViewById<LinearLayout>(R.id.priorityField)
+
+        val priorityMenu = androidx.appcompat.widget.PopupMenu(requireContext(), priorityField)
         priorityMenu.inflate(R.menu.priority_menu)
         priorityField.setOnClickListener {
             priorityMenu.show()
@@ -103,7 +111,8 @@ class TaskEditFragment : Fragment() {
         }
     }
 
-    private fun setupButtons(view: View) {
+    private fun setupButtons() {
+        val view = requireView()
         val closeButton = view.findViewById<ImageView>(R.id.closeButton)
         val saveButton = view.findViewById<TextView>(R.id.saveButton)
         val deleteButton = view.findViewById<LinearLayout>(R.id.deleteButton)

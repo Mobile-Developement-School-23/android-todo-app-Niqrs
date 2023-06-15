@@ -103,6 +103,7 @@
                 android:layout_marginHorizontal="16dp">
 
                 <LinearLayout
+                    android:id="@+id/editDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|start"
@@ -125,7 +126,7 @@
                 </LinearLayout>
 
                 <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/date_picker_switch"
+                    android:id="@+id/date_switch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|end"
