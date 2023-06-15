@@ -6,15 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".TasksFragment">
+    tools:context=".tasks.TasksFragment">
 
-    <com.niqr.todoapp.collapsingToolbar.CollapsibleAppbar
+    <com.niqr.todoapp.tasks.collapsingToolbar.CollapsibleAppbar
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?back_primary">
 
-        <com.umbrella.myapplication.collapsingToolbar.CollapsibleToolbar
+        <com.niqr.todoapp.tasks.collapsingToolbar.CollapsibleToolbar
             android:id="@+id/motionLayout"
             android:layout_width="match_parent"
             android:layout_height="140dp"
@@ -59,8 +59,8 @@
                 android:contentDescription="@string/visibility_button"
                 app:tint="?color_blue" />
 
-        </com.umbrella.myapplication.collapsingToolbar.CollapsibleToolbar>
-    </com.niqr.todoapp.collapsingToolbar.CollapsibleAppbar>
+        </com.niqr.todoapp.tasks.collapsingToolbar.CollapsibleToolbar>
+    </com.niqr.todoapp.tasks.collapsingToolbar.CollapsibleAppbar>
 
     <include layout="@layout/content_scrolling"/>
 

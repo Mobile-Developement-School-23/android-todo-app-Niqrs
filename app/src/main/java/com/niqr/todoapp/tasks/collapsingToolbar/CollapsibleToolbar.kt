@@ -1,4 +1,4 @@
-package com.umbrella.myapplication.collapsingToolbar
+package com.niqr.todoapp.tasks.collapsingToolbar
 
 import android.content.Context
 import android.util.AttributeSet
