@@ -9,6 +9,7 @@
     <attr name="color_red" format="color|reference"/>
     <attr name="color_green" format="color|reference"/>
     <attr name="color_blue" format="color|reference"/>
+    <attr name="color_blue_translucent" format="color|reference"/>
     <attr name="color_gray" format="color|reference"/>
     <attr name="color_gray_light" format="color|reference"/>
     <attr name="color_white" format="color|reference"/>
