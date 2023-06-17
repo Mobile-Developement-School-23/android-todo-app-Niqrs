@@ -141,36 +141,21 @@
                 android:layout_marginTop="32dp"
                 app:dividerColor="?support_separator" />
 
-            <LinearLayout
+            <TextView
                 android:id="@+id/deleteButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                android:layout_marginHorizontal="12dp"
-                android:padding="4dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginHorizontal="8dp"
+                android:padding="8dp"
+                android:drawablePadding="12dp"
                 android:clickable="true"
-                android:orientation="horizontal"
-                android:foregroundTint="?color_red"
-                android:foregroundTintMode="add">
+                android:text="@string/delete"
+                android:textAppearance="?attr/textAppearanceBodyLarge"
+                android:textColor="?color_red"
+                app:drawableStartCompat="@drawable/ic_baseline_delete_24dp"
+                app:drawableTint="?color_red" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:contentDescription="@string/delete"
-                    android:src="@drawable/ic_baseline_delete_24dp"
-                    app:tint="?color_red" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginStart="12dp"
-                    android:text="@string/delete"
-                    android:textAppearance="?attr/textAppearanceBodyLarge"
-                    android:textColor="?color_red" />
-
-            </LinearLayout>
         </LinearLayout>
 
     </ScrollView>

@@ -4,10 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.Switch
 import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.widget.addTextChangedListener
@@ -18,11 +16,12 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputEditText
 import com.niqr.todoapp.R
 import com.niqr.todoapp.data.model.Priority
-import com.niqr.todoapp.ui.utils.toResource
+import com.niqr.todoapp.ui.taskEdit.model.TaskEditUiEvent
 import com.niqr.todoapp.ui.utils.toStringResource
 import com.niqr.todoapp.utils.DAY
 import com.niqr.todoapp.utils.toStringDate
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 private const val ARG_TASK_ID = "id"
@@ -50,12 +49,23 @@ class TaskEditFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupUiEventsListener()
         setupFlows()
         setupTextField()
         setupDatePicker()
         setupDateSwitch()
         setupPriorityMenu()
         setupButtons()
+    }
+
+    private fun setupUiEventsListener() {
+        lifecycleScope.launch {
+            viewModel.uiEvent.collectLatest {
+                when(it) {
+                    TaskEditUiEvent.NavigateBack -> parentFragmentManager.popBackStack()
+                }
+            }
+        }
     }
 
     private fun setupFlows() {
@@ -145,14 +155,11 @@ class TaskEditFragment : Fragment() {
         val view = requireView()
         val closeButton = view.findViewById<ImageView>(R.id.closeButton)
         val saveButton = view.findViewById<TextView>(R.id.saveButton)
-        val deleteButton = view.findViewById<LinearLayout>(R.id.deleteButton)
+        val deleteButton = view.findViewById<TextView>(R.id.deleteButton)
 
         closeButton.setOnClickListener { parentFragmentManager.popBackStack() }
-        saveButton.setOnClickListener {
-            viewModel.saveTask()
-            parentFragmentManager.popBackStack()
-        }
-        deleteButton.setOnClickListener { parentFragmentManager.popBackStack() }
+        saveButton.setOnClickListener { viewModel.saveTask() }
+        deleteButton.setOnClickListener { viewModel.deleteTask() }
     }
 
     companion object {
