@@ -1,17 +1,12 @@
 package com.niqr.todoapp.data.local
 
-import android.util.Log
 import com.niqr.todoapp.data.TodoItemsRepository
 import com.niqr.todoapp.data.model.Priority
 import com.niqr.todoapp.data.model.TodoItem
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalDateTime
 import javax.inject.Inject
@@ -29,7 +24,8 @@ class LocalTasksRepository @Inject constructor(): TodoItemsRepository {
     }
 
     override suspend fun addTodoItem(task: TodoItem) {
-        tasks.add(task)
+        val taskId = ((tasks.lastOrNull()?.id ?: "0").toInt() + 1).toString()
+        tasks.add(task.copy(id = taskId))
         updateFlow()
     }
 
@@ -78,7 +74,8 @@ private val sampleTasks = listOf(
         id = "3",
         description = "Simple task of Yandex Senior Android developer",
         priority = Priority.COMMON
-    ),TodoItem(
+    ),
+    TodoItem(
         id = "4",
         description = "Hard task of Yandex Senior Android developer",
         priority = Priority.HIGH,

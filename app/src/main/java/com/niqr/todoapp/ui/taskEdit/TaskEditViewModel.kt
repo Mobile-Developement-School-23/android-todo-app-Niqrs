@@ -2,11 +2,9 @@ package com.niqr.todoapp.ui.taskEdit
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.niqr.todoapp.R
 import com.niqr.todoapp.data.TodoItemsRepository
 import com.niqr.todoapp.data.model.Priority
 import com.niqr.todoapp.data.model.TodoItem
-import com.niqr.todoapp.utils.UiText
 import com.niqr.todoapp.utils.dateFromLong
 import com.niqr.todoapp.utils.toLong
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +15,6 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalDateTime
 import javax.inject.Inject
-import kotlin.random.Random
 
 @HiltViewModel
 class TaskEditViewModel @Inject constructor(
@@ -68,7 +65,7 @@ class TaskEditViewModel @Inject constructor(
             val newTask = previousTask!!.copy(
                 description = _description.value,
                 priority = _priority.value,
-                deadline = _date.value,
+                deadline = if (_dateVisibility.value) _date.value else null,
                 editedAt = LocalDateTime.now()
             )
             viewModelScope.launch {
@@ -76,10 +73,10 @@ class TaskEditViewModel @Inject constructor(
             }
         } else {
             val newTask = TodoItem(
-                id = Random(100000).nextInt().toString(),
+                id = "1",
                 description = _description.value,
                 priority = _priority.value,
-                deadline = _date.value,
+                deadline = if (_dateVisibility.value) _date.value else null,
             )
             viewModelScope.launch {
                 repo.addTodoItem(newTask)
