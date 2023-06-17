@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="?back_primary"
+    tools:context=".ui.taskEdit.TaskEditFragment">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?back_primary"
+        android:elevation="3dp">
+
+        <ImageView
+            android:id="@+id/closeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|start"
+            android:clickable="true"
+            android:contentDescription="@string/close_edit_button"
+            android:padding="16dp"
+            android:src="@drawable/ic_baseline_close_24dp"
+            app:tint="?label_primary" />
+
+        <TextView
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|end"
+            android:clickable="true"
+            android:contentDescription="@string/save_button"
+            android:padding="16dp"
+            android:text="@string/save_button"
+            android:textAppearance="?attr/textAppearanceBodyLarge"
+            android:textColor="?color_blue"
+            android:textStyle="bold" />
+
+    </FrameLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="156dp"
+            android:scrollbars="horizontal">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/edit_task"
+                android:elevation="2dp"
+                android:gravity="top"
+                android:hint="@string/task_input_hint"
+                android:imeOptions="actionDone"
+                android:minLines="3"
+                android:textColor="?label_primary"
+                android:textColorHint="?label_tertiary" />
+
+            <LinearLayout
+                android:id="@+id/priorityField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:layout_marginHorizontal="16dp"
+                android:clickable="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?attr/textAppearanceBodyLarge"
+                    android:textColor="?label_primary"
+                    android:text="@string/priority"/>
+
+                <TextView
+                    android:id="@+id/priorityText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textColor="?label_tertiary"
+                    android:text="@string/priority_no"/>
+            </LinearLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="16dp"
+                app:dividerColor="?support_separator" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp">
+
+                <LinearLayout
+                    android:id="@+id/editDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|start"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/do_it_till"
+                        android:textAppearance="?attr/textAppearanceBodyLarge"
+                        android:textColor="?label_primary" />
+
+                    <TextView
+                        android:id="@+id/dateText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?color_blue" />
+                </LinearLayout>
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/date_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|end"
+                    app:thumbTint="@drawable/switch_thumb"
+                    app:trackTint="@drawable/switch_track"/>
+
+            </FrameLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="32dp"
+                app:dividerColor="?support_separator" />
+
+            <LinearLayout
+                android:id="@+id/deleteButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:layout_marginHorizontal="12dp"
+                android:padding="4dp"
+                android:clickable="true"
+                android:orientation="horizontal"
+                android:foregroundTint="?color_red"
+                android:foregroundTintMode="add">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:contentDescription="@string/delete"
+                    android:src="@drawable/ic_baseline_delete_24dp"
+                    app:tint="?color_red" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="12dp"
+                    android:text="@string/delete"
+                    android:textAppearance="?attr/textAppearanceBodyLarge"
+                    android:textColor="?color_red" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
