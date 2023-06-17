@@ -2,22 +2,22 @@ package com.niqr.todoapp.ui.taskEdit
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.niqr.todoapp.R
 import com.niqr.todoapp.data.TodoItemsRepository
 import com.niqr.todoapp.data.model.Priority
 import com.niqr.todoapp.data.model.TodoItem
-import com.niqr.todoapp.utils.UiText
+import com.niqr.todoapp.ui.taskEdit.model.TaskEditUiEvent
 import com.niqr.todoapp.utils.dateFromLong
 import com.niqr.todoapp.utils.toLong
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalDateTime
 import javax.inject.Inject
-import kotlin.random.Random
 
 @HiltViewModel
 class TaskEditViewModel @Inject constructor(
@@ -25,6 +25,11 @@ class TaskEditViewModel @Inject constructor(
 ): ViewModel() {
     private var isEditing = false
     private var previousTask: TodoItem? = null
+
+
+    private val _uiEvent = Channel<TaskEditUiEvent>()
+    val uiEvent = _uiEvent.receiveAsFlow()
+
 
     private val _description = MutableStateFlow("")
     val description = _description.asStateFlow()
@@ -64,26 +69,36 @@ class TaskEditViewModel @Inject constructor(
     }
 
     fun saveTask() {
-        if (isEditing) {
-            val newTask = previousTask!!.copy(
+        if (_description.value.isBlank())
+            return
+
+        val newTask = if (isEditing)
+            previousTask!!.copy(
                 description = _description.value,
                 priority = _priority.value,
-                deadline = _date.value,
+                deadline = if (_dateVisibility.value) _date.value else null,
                 editedAt = LocalDateTime.now()
             )
-            viewModelScope.launch {
-                repo.updateTodoItem(newTask)
-            }
-        } else {
-            val newTask = TodoItem(
-                id = Random(100000).nextInt().toString(),
+        else
+            TodoItem(
+                id = "1",
                 description = _description.value,
                 priority = _priority.value,
-                deadline = _date.value,
+                deadline = if (_dateVisibility.value) _date.value else null,
             )
-            viewModelScope.launch {
-                repo.addTodoItem(newTask)
-            }
+
+        viewModelScope.launch {
+            if (isEditing) repo.updateTodoItem(newTask)
+            else repo.addTodoItem(newTask)
+            _uiEvent.send(TaskEditUiEvent.NavigateBack)
+        }
+    }
+
+    fun deleteTask() {
+        viewModelScope.launch {
+            if (isEditing)
+                previousTask?.let { repo.deleteTodoItem(it.id) }
+            _uiEvent.send(TaskEditUiEvent.NavigateBack)
         }
     }
 
