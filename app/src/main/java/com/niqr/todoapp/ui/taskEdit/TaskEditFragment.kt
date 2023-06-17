@@ -1,29 +1,43 @@
-package com.niqr.todoapp.taskEdit
+package com.niqr.todoapp.ui.taskEdit
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Switch
 import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.textfield.TextInputEditText
 import com.niqr.todoapp.R
-import com.niqr.todoapp.taskEdit.model.Priority
+import com.niqr.todoapp.data.model.Priority
+import com.niqr.todoapp.ui.utils.toResource
+import com.niqr.todoapp.ui.utils.toStringResource
 import com.niqr.todoapp.utils.DAY
 import com.niqr.todoapp.utils.toStringDate
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+private const val ARG_TASK_ID = "id"
 
+@AndroidEntryPoint
 class TaskEditFragment : Fragment() {
     private val viewModel by viewModels<TaskEditViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        arguments?.let {
+            it.getString(ARG_TASK_ID)?.let { taskId ->
+                viewModel.setupTask(taskId)
+            }
+        }
     }
 
     override fun onCreateView(
@@ -37,19 +51,26 @@ class TaskEditFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupFlows()
+        setupTextField()
         setupDatePicker()
         setupDateSwitch()
         setupPriorityMenu()
         setupButtons()
-
     }
 
     private fun setupFlows() {
         val view = requireView()
+        val editText = view.findViewById<TextInputEditText>(R.id.editText)
         val dateText = view.findViewById<TextView>(R.id.dateText)
         val priorityText = view.findViewById<TextView>(R.id.priorityText)
         val dateField = view.findViewById<LinearLayout>(R.id.editDate)
+        val switch = view.findViewById<SwitchCompat>(R.id.date_switch)
 
+        lifecycleScope.launch {
+            viewModel.description.collect {
+                editText.setTextKeepState(it)
+            }
+        }
         lifecycleScope.launch {
             viewModel.date.collect {
                 dateText.text = it.toStringDate()
@@ -57,19 +78,28 @@ class TaskEditFragment : Fragment() {
         }
         lifecycleScope.launch {
             viewModel.priority.collect {
-                priorityText.text = getText(it.resId)
+                priorityText.text = getText(it.toStringResource())
             }
         }
         lifecycleScope.launch {
             viewModel.dateVisibility.collect {
                 dateField.isClickable = it
                 dateText.text = if (it) viewModel.date.value.toStringDate() else ""
+                switch.isChecked = it
             }
+        }
+    }
+
+    private fun setupTextField() {
+        val editText = requireView().findViewById<TextInputEditText>(R.id.editText)
+        editText.addTextChangedListener {
+            viewModel.updateDescription(it.toString())
         }
     }
 
     private fun setupDatePicker() {
         val editDate = requireView().findViewById<LinearLayout>(R.id.editDate)
+        val switch = requireView().findViewById<SwitchCompat>(R.id.date_switch)
         val picker = MaterialDatePicker.Builder.datePicker()
                 .setTitleText(getString(R.string.select_date))
                 .setSelection(MaterialDatePicker.todayInUtcMilliseconds() + DAY)
@@ -79,7 +109,7 @@ class TaskEditFragment : Fragment() {
             if (!picker.isVisible)
                 picker.show(childFragmentManager, null)
         }
-        editDate.isClickable = false
+        editDate.isClickable = switch.isChecked
 
         picker.addOnPositiveButtonClickListener(viewModel::updateDate)
     }
@@ -102,9 +132,9 @@ class TaskEditFragment : Fragment() {
         }
         priorityMenu.setOnMenuItemClickListener {
             val priority = when(it.itemId) {
-                R.id.priority_menu_low -> Priority.Low
-                R.id.priority_menu_high -> Priority.High
-                else -> Priority.No
+                R.id.priority_menu_low -> Priority.LOW
+                R.id.priority_menu_high -> Priority.HIGH
+                else -> Priority.COMMON
             }
             viewModel.updatePriority(priority)
             true
@@ -118,7 +148,20 @@ class TaskEditFragment : Fragment() {
         val deleteButton = view.findViewById<LinearLayout>(R.id.deleteButton)
 
         closeButton.setOnClickListener { parentFragmentManager.popBackStack() }
-        saveButton.setOnClickListener { parentFragmentManager.popBackStack() }
+        saveButton.setOnClickListener {
+            viewModel.saveTask()
+            parentFragmentManager.popBackStack()
+        }
         deleteButton.setOnClickListener { parentFragmentManager.popBackStack() }
+    }
+
+    companion object {
+        @JvmStatic
+        fun newInstance(task: String) =
+            TaskEditFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_TASK_ID, task)
+                }
+            }
     }
 }

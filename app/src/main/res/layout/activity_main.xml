@@ -6,7 +6,7 @@
     tools:context=".MainActivity">
 
     <androidx.fragment.app.FragmentContainerView
-        android:name="com.niqr.todoapp.tasks.TasksFragment"
+        android:name="com.niqr.todoapp.ui.tasks.TasksFragment"
         android:id="@+id/fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

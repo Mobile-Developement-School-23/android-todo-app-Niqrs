@@ -8,7 +8,7 @@ import java.time.format.FormatStyle
 
 fun LocalDate.toLong(): Long {
     val zoneId = ZoneId.systemDefault()
-    return atStartOfDay(zoneId).toEpochSecond()
+    return atStartOfDay(zoneId).toEpochSecond() * 1000
 }
 
 fun dateFromLong(time: Long): LocalDate =

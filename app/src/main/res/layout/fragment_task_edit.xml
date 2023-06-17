@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="?back_primary"
-    tools:context=".taskEdit.TaskEditFragment">
+    tools:context=".ui.taskEdit.TaskEditFragment">
 
     <FrameLayout
         android:layout_width="match_parent"

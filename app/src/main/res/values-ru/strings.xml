@@ -103,4 +103,7 @@
     <string name="priority_low">Низкий</string>
     <string name="priority_high"><font fgcolor='#FF3B30'>!! Высокий</font></string>
     <string name="select_date">Выберете дату</string>
+    <string name="task_info">Информация о задаче</string>
+    <string name="done_count">Выполнено — %1$d</string>
+    <string name="edit">Изменить</string>
 </resources>

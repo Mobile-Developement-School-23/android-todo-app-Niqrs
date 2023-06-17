@@ -15,6 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
+            android:layout_marginBottom="16dp"
             android:fontFamily="sans-serif-medium"
             android:gravity="center"
             android:textAppearance="?attr/textAppearanceSubtitle1"
@@ -25,8 +26,16 @@
             android:id="@+id/appBarTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/expandedSubtitle"
-            app:layout_constraintStart_toStartOf="@+id/expandedSubtitle"/>
+            app:layout_constraintBottom_toTopOf="@+id/doneCounter"
+            app:layout_constraintStart_toStartOf="@+id/doneCounter"/>
+        <Constraint
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="48dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/doneCounter"
+            android:layout_marginBottom="16dp" />
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">
@@ -42,6 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
+            android:layout_marginBottom="0dp"
             android:fontFamily="sans-serif-medium"
             android:gravity="center"
             android:textAppearance="?attr/textAppearanceSubtitle1"
@@ -67,19 +77,19 @@
 
         <KeyFrameSet>
             <KeyAttribute
-                app:motionTarget="@+id/expandedSubtitle"
+                app:motionTarget="@+id/doneCounter"
                 app:framePosition="70"
                 android:translationX="30dp" />
             <KeyAttribute
-                app:motionTarget="@+id/expandedSubtitle"
+                app:motionTarget="@+id/doneCounter"
                 app:framePosition="70"
                 android:alpha="0" />
             <KeyAttribute
-                app:motionTarget="@+id/expandedSubtitle"
+                app:motionTarget="@+id/doneCounter"
                 app:framePosition="100"
                 android:translationX="30dp" />
             <KeyAttribute
-                app:motionTarget="@+id/expandedSubtitle"
+                app:motionTarget="@+id/doneCounter"
                 app:framePosition="100"
                 android:alpha="0" />
         </KeyFrameSet>

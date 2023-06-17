@@ -6,9 +6,9 @@ import java.time.LocalDateTime
 data class TodoItem(
     val id: String,
     val description: String,
-    val priority: Priority = Priority.No,
-    val date: LocalDate = LocalDate.now(),
+    val priority: Priority = Priority.COMMON,
+    val deadline: LocalDate? = null,
     val isDone: Boolean = false,
-    val createdDate: LocalDateTime = LocalDateTime.now(),
-    val editedDate: LocalDateTime = LocalDateTime.now()
+    val createdAt: LocalDateTime = LocalDateTime.now(),
+    val editedAt: LocalDateTime? = null
 )
