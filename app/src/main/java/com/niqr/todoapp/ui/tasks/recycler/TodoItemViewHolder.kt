@@ -2,6 +2,7 @@ package com.niqr.todoapp.ui.tasks.recycler
 
 import android.content.res.Resources.Theme
 import android.graphics.Paint
+import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.widget.CheckBox
@@ -16,7 +17,7 @@ import com.niqr.todoapp.R
 import com.niqr.todoapp.data.model.Priority
 import com.niqr.todoapp.data.model.TodoItem
 import com.niqr.todoapp.ui.tasks.model.TasksUiAction
-import com.niqr.todoapp.ui.utils.toResource
+import com.niqr.todoapp.utils.toResource
 import com.niqr.todoapp.utils.toStringDate
 
 

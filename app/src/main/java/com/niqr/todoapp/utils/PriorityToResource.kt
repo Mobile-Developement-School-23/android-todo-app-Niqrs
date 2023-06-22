@@ -1,4 +1,4 @@
-package com.niqr.todoapp.ui.utils
+package com.niqr.todoapp.utils
 
 import androidx.core.content.res.ResourcesCompat
 import com.niqr.todoapp.R

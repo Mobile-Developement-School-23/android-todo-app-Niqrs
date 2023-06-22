@@ -64,55 +64,14 @@
         </com.niqr.todoapp.ui.tasks.collapsingToolbar.CollapsibleToolbar>
     </com.niqr.todoapp.ui.tasks.collapsingToolbar.CollapsibleAppbar>
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nestedScroll"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/todoItems"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/recycler_background"
-            android:layout_marginTop="6dp"
-            android:layout_marginHorizontal="8dp"
-            android:elevation="2dp"
-            android:orientation="vertical">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/todoItems"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
-            <LinearLayout
-                android:id="@+id/newItemField"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginEnd="4dp"
-                    android:contentDescription="@string/new_task"
-                    android:padding="10dp"
-                    android:src="@drawable/ic_baseline_add_24dp"
-                    app:tint="?label_tertiary" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:text="@string/new_task"
-                    android:textAppearance="?attr/textAppearanceBodyLarge"
-                    android:textColor="?label_tertiary" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </androidx.core.widget.NestedScrollView>
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingBottom="96dp"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/newItemFab"

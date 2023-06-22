@@ -17,7 +17,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.niqr.todoapp.R
 import com.niqr.todoapp.data.model.Priority
 import com.niqr.todoapp.ui.taskEdit.model.TaskEditUiEvent
-import com.niqr.todoapp.ui.utils.toStringResource
+import com.niqr.todoapp.utils.toStringResource
 import com.niqr.todoapp.utils.DAY
 import com.niqr.todoapp.utils.toStringDate
 import dagger.hilt.android.AndroidEntryPoint

@@ -1,13 +1,11 @@
 package com.niqr.todoapp.ui.tasks
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.fragment.app.viewModels
@@ -21,6 +19,7 @@ import com.niqr.todoapp.ui.taskEdit.TaskEditFragment
 import com.niqr.todoapp.ui.tasks.model.TasksUiAction
 import com.niqr.todoapp.ui.tasks.model.TasksUiEvent
 import com.niqr.todoapp.ui.tasks.recycler.SwipeTodoItemCallback
+import com.niqr.todoapp.ui.tasks.recycler.TodoItemDecoration
 import com.niqr.todoapp.ui.tasks.recycler.TodoItemsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -70,6 +69,9 @@ class TasksFragment : Fragment() {
 
         todoItemsRecyclerView.adapter = todoItemsAdapter
         todoItemsRecyclerView.layoutManager = layoutManager
+        todoItemsRecyclerView.addItemDecoration(
+            TodoItemDecoration(view.context, R.drawable.recycler_divider)
+        )
         setupRecyclerViewSwipes(todoItemsAdapter, todoItemsRecyclerView)
 
         lifecycleScope.launch {
@@ -100,10 +102,8 @@ class TasksFragment : Fragment() {
 
     private fun setupNavigationToNewItem() {
         val view = requireView()
-        val field = view.findViewById<LinearLayout>(R.id.newItemField)
         val fab = view.findViewById<FloatingActionButton>(R.id.newItemFab)
 
-        field.setOnClickListener { navigateToNewTask() }
         fab.setOnClickListener { navigateToNewTask() }
     }
 
