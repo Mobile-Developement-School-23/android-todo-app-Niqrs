@@ -15,8 +15,9 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputEditText
 import com.niqr.todoapp.R
+import com.niqr.todoapp.compose.ui.taskEdit.TaskEditViewModel
 import com.niqr.todoapp.data.model.Priority
-import com.niqr.todoapp.ui.taskEdit.model.TaskEditUiEvent
+import com.niqr.todoapp.compose.ui.taskEdit.model.TaskEditEvent
 import com.niqr.todoapp.utils.toStringResource
 import com.niqr.todoapp.utils.DAY
 import com.niqr.todoapp.utils.toStringDate
@@ -62,7 +63,7 @@ class TaskEditFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.uiEvent.collectLatest {
                 when(it) {
-                    TaskEditUiEvent.NavigateBack -> parentFragmentManager.popBackStack()
+                    TaskEditEvent.NavigateBack -> parentFragmentManager.popBackStack()
                 }
             }
         }

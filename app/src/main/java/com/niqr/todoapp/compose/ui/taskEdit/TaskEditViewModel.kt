@@ -1,11 +1,13 @@
-package com.niqr.todoapp.ui.taskEdit
+package com.niqr.todoapp.compose.ui.taskEdit
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.niqr.todoapp.compose.ui.taskEdit.model.TaskEditAction
+import com.niqr.todoapp.compose.ui.taskEdit.model.TaskEditEvent
+import com.niqr.todoapp.compose.ui.taskEdit.model.TaskEditUiState
 import com.niqr.todoapp.data.TodoItemsRepository
 import com.niqr.todoapp.data.model.Priority
 import com.niqr.todoapp.data.model.TodoItem
-import com.niqr.todoapp.ui.taskEdit.model.TaskEditUiEvent
 import com.niqr.todoapp.utils.dateFromLong
 import com.niqr.todoapp.utils.toLong
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,10 +28,18 @@ class TaskEditViewModel @Inject constructor(
     private var isEditing = false
     private var previousTask: TodoItem? = null
 
+    private val _uiState = MutableStateFlow(TaskEditUiState())
+    val uiState = _uiState.asStateFlow()
 
-    private val _uiEvent = Channel<TaskEditUiEvent>()
+    private val _uiEvent = Channel<TaskEditEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
+    fun onAction(action: TaskEditAction) {
+        when(action) {
+
+            else -> {}
+        }
+    }
 
     private val _description = MutableStateFlow("")
     val description = _description.asStateFlow()
@@ -90,7 +100,7 @@ class TaskEditViewModel @Inject constructor(
         viewModelScope.launch {
             if (isEditing) repo.updateTodoItem(newTask)
             else repo.addTodoItem(newTask)
-            _uiEvent.send(TaskEditUiEvent.NavigateBack)
+            _uiEvent.send(TaskEditEvent.NavigateBack)
         }
     }
 
@@ -98,7 +108,7 @@ class TaskEditViewModel @Inject constructor(
         viewModelScope.launch {
             if (isEditing)
                 previousTask?.let { repo.deleteTodoItem(it.id) }
-            _uiEvent.send(TaskEditUiEvent.NavigateBack)
+            _uiEvent.send(TaskEditEvent.NavigateBack)
         }
     }
 

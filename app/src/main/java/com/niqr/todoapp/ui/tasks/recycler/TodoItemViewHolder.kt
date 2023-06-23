@@ -2,7 +2,6 @@ package com.niqr.todoapp.ui.tasks.recycler
 
 import android.content.res.Resources.Theme
 import android.graphics.Paint
-import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.widget.CheckBox
@@ -16,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.niqr.todoapp.R
 import com.niqr.todoapp.data.model.Priority
 import com.niqr.todoapp.data.model.TodoItem
-import com.niqr.todoapp.ui.tasks.model.TasksUiAction
+import com.niqr.todoapp.compose.ui.tasks.model.TasksAction
 import com.niqr.todoapp.utils.toResource
 import com.niqr.todoapp.utils.toStringDate
 
@@ -33,7 +32,7 @@ class TodoItemViewHolder(
     private val dateText: TextView = itemView.findViewById(R.id.dateText)
     private val infoIcon: ImageView = itemView.findViewById(R.id.infoIcon)
 
-    fun onBind(todoItem: TodoItem, onUiAction: (TasksUiAction) -> Unit) {
+    fun onBind(todoItem: TodoItem, onUiAction: (TasksAction) -> Unit) {
         this.todoItem = todoItem
         setupValues()
         setupCallback(onUiAction)
@@ -85,12 +84,12 @@ class TodoItemViewHolder(
         }
     }
 
-    private fun setupCallback(onUiAction: (TasksUiAction) -> Unit) {
+    private fun setupCallback(onUiAction: (TasksAction) -> Unit) {
         val context = itemView.context
         taskCheck.setOnCheckedChangeListener { _, isChecked ->
             if (todoItem.isDone != isChecked) {
                 val newItem = todoItem.copy(isDone = isChecked)
-                onUiAction(TasksUiAction.UpdateTask(newItem))
+                onUiAction(TasksAction.UpdateTask(newItem))
             }
         }
 
@@ -103,11 +102,11 @@ class TodoItemViewHolder(
         }
     }
 
-    private fun setupMenuItemsCallbacks(itemMenu: PopupMenu, onUiAction: (TasksUiAction) -> Unit) {
+    private fun setupMenuItemsCallbacks(itemMenu: PopupMenu, onUiAction: (TasksAction) -> Unit) {
         itemMenu.setOnMenuItemClickListener {
             when(it.itemId) {
                 R.id.task_menu_edit -> {
-                    onUiAction(TasksUiAction.EditTask(todoItem))
+                    onUiAction(TasksAction.EditTask(todoItem))
                 }
             }
             true

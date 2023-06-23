@@ -1,13 +1,16 @@
-package com.niqr.todoapp.ui.tasks
+package com.niqr.todoapp.compose.ui.tasks
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.niqr.todoapp.data.TodoItemsRepository
 import com.niqr.todoapp.data.model.TodoItem
-import com.niqr.todoapp.ui.tasks.model.TasksUiAction
-import com.niqr.todoapp.ui.tasks.model.TasksUiEvent
+import com.niqr.todoapp.compose.ui.tasks.model.TasksAction
+import com.niqr.todoapp.compose.ui.tasks.model.TasksEvent
+import com.niqr.todoapp.compose.ui.tasks.model.TasksUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,15 +20,18 @@ class TasksViewModel @Inject constructor(
     private val repository: TodoItemsRepository
 ): ViewModel() {
 
-    private val _uiEvent = Channel<TasksUiEvent>()
+    private val _uiState = MutableStateFlow(TasksUiState())
+    val uiState = _uiState.asStateFlow()
+
+    private val _uiEvent = Channel<TasksEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
-    fun onUiAction(action: TasksUiAction) {
+    fun onAction(action: TasksAction) {
         when(action) {
-            is TasksUiAction.UpdateTask -> updateItem(action.todoItem)
-            is TasksUiAction.DeleteTask -> deleteItem(action.id)
-            is TasksUiAction.EditTask -> editTask(action.todoItem)
-            is TasksUiAction.UpdateDoneVisibility -> updateDoneVisibility(action.visible)
+            is TasksAction.UpdateTask -> updateItem(action.todoItem)
+            is TasksAction.DeleteTask -> deleteItem(action.id)
+            is TasksAction.EditTask -> editTask(action.todoItem)
+            is TasksAction.UpdateDoneVisibility -> updateDoneVisibility(action.visible)
         }
     }
 
@@ -37,7 +43,7 @@ class TasksViewModel @Inject constructor(
 
     private fun editTask(item: TodoItem) {
         viewModelScope.launch {
-            _uiEvent.send(TasksUiEvent.NavigateToEditTask(item.id))
+            _uiEvent.send(TasksEvent.NavigateToEditTask(item.id))
         }
     }
 

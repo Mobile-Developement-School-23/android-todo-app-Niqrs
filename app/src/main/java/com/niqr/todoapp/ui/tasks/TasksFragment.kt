@@ -18,9 +18,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.niqr.todoapp.R
+import com.niqr.todoapp.compose.ui.tasks.TasksViewModel
 import com.niqr.todoapp.ui.taskEdit.TaskEditFragment
-import com.niqr.todoapp.ui.tasks.model.TasksUiAction
-import com.niqr.todoapp.ui.tasks.model.TasksUiEvent
+import com.niqr.todoapp.compose.ui.tasks.model.TasksAction
+import com.niqr.todoapp.compose.ui.tasks.model.TasksEvent
 import com.niqr.todoapp.ui.tasks.recycler.SwipeTodoItemCallback
 import com.niqr.todoapp.ui.tasks.recycler.TodoItemDecoration
 import com.niqr.todoapp.ui.tasks.recycler.TodoItemsAdapter
@@ -52,10 +53,10 @@ class TasksFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.uiEvent.collectLatest {
                 when(it) {
-                    is TasksUiEvent.NavigateToEditTask -> {
+                    is TasksEvent.NavigateToEditTask -> {
                         navigateToEditTask(it.id)
                     }
-                    TasksUiEvent.NavigateToNewTask -> {
+                    TasksEvent.NavigateToNewTask -> {
                         navigateToNewTask()
                     }
                 }
@@ -68,7 +69,7 @@ class TasksFragment : Fragment() {
         val visibilityButton = view.findViewById<CheckBox>(R.id.visibilityButton)
 
         visibilityButton.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.onUiAction( TasksUiAction.UpdateDoneVisibility(isChecked) )
+            viewModel.onAction( TasksAction.UpdateDoneVisibility(isChecked) )
         }
     }
 
@@ -77,7 +78,7 @@ class TasksFragment : Fragment() {
         val counter = view.findViewById<TextView>(R.id.doneCounter)
 
         val todoItemsRecyclerView = view.findViewById<RecyclerView>(R.id.todoItems)
-        val todoItemsAdapter = TodoItemsAdapter(viewModel::onUiAction)
+        val todoItemsAdapter = TodoItemsAdapter(viewModel::onAction)
         val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
         todoItemsRecyclerView.adapter = todoItemsAdapter
@@ -107,12 +108,12 @@ class TasksFragment : Fragment() {
         val swipeCallback = SwipeTodoItemCallback(
             onSwipeLeft = { position ->
                 val item = adapter.getItem(position)
-                viewModel.onUiAction(TasksUiAction.DeleteTask(item.id))
+                viewModel.onAction(TasksAction.DeleteTask(item.id))
             },
             onSwipeRight = { position ->
                 val item = adapter.getItem(position)
                 val newItem = item.copy(isDone = !item.isDone)
-                viewModel.onUiAction(TasksUiAction.UpdateTask(newItem))
+                viewModel.onAction(TasksAction.UpdateTask(newItem))
             },
             applicationContext = requireActivity().baseContext
         )
