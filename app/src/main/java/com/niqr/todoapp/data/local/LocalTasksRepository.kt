@@ -13,11 +13,15 @@ import javax.inject.Inject
 
 class LocalTasksRepository @Inject constructor(): TodoItemsRepository {
     private val tasks: MutableList<TodoItem> = sampleTasks.toMutableList()
+    private var isDoneVisible = true
 
     private val tasksFlow = MutableStateFlow(tasks.toList())
+    private val countFlow = MutableStateFlow(tasks.count(TodoItem::isDone))
 
     override fun todoItems(): Flow<List<TodoItem>> =
         tasksFlow.asStateFlow()
+    override fun doneCount(): Flow<Int> =
+        countFlow.asStateFlow()
 
     override suspend fun findItemById(id: String): TodoItem? {
         return tasks.firstOrNull { it.id == id }
@@ -48,9 +52,20 @@ class LocalTasksRepository @Inject constructor(): TodoItemsRepository {
         updateFlow()
     }
 
+    override suspend fun updateDoneTodoItemsVisibility(visible: Boolean) {
+        isDoneVisible = visible
+        updateFlow()
+    }
+
     private fun updateFlow() {
         tasksFlow.update {
-            tasks.map { it.copy() }.toList()
+            if (isDoneVisible)
+                tasks.toList()
+            else
+                tasks.filter { !it.isDone }
+        }
+        countFlow.update {
+            tasks.count(TodoItem::isDone)
         }
     }
 }

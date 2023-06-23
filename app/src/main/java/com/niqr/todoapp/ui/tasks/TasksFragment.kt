@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -40,6 +43,7 @@ class TasksFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupUiEventsListener()
+        setupDoneVisibilityButton()
         setupRecyclerAndCounter()
         setupNavigationToNewItem()
     }
@@ -59,6 +63,15 @@ class TasksFragment : Fragment() {
         }
     }
 
+    private fun setupDoneVisibilityButton() {
+        val view = requireView()
+        val visibilityButton = view.findViewById<CheckBox>(R.id.visibilityButton)
+
+        visibilityButton.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.onUiAction( TasksUiAction.UpdateDoneVisibility(isChecked) )
+        }
+    }
+
     private fun setupRecyclerAndCounter() {
         val view = requireView()
         val counter = view.findViewById<TextView>(R.id.doneCounter)
@@ -75,10 +88,17 @@ class TasksFragment : Fragment() {
         setupRecyclerViewSwipes(todoItemsAdapter, todoItemsRecyclerView)
 
         lifecycleScope.launch {
-            viewModel.todoItems().collectLatest {
-                todoItemsAdapter.submitList(it)
-                val doneTasks = it.count { task -> task.isDone }
-                counter.text = getString(R.string.done_count, doneTasks)
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewModel.todoItems().collect {
+                        todoItemsAdapter.submitList(it)
+                    }
+                }
+                launch {
+                    viewModel.doneCount().collect {
+                        counter.text = getString(R.string.done_count, it)
+                    }
+                }
             }
         }
     }
@@ -86,7 +106,8 @@ class TasksFragment : Fragment() {
     private fun setupRecyclerViewSwipes(adapter: TodoItemsAdapter, recyclerView: RecyclerView) {
         val swipeCallback = SwipeTodoItemCallback(
             onSwipeLeft = { position ->
-                viewModel.onUiAction(TasksUiAction.DeleteTask(position))
+                val item = adapter.getItem(position)
+                viewModel.onUiAction(TasksUiAction.DeleteTask(item.id))
             },
             onSwipeRight = { position ->
                 val item = adapter.getItem(position)

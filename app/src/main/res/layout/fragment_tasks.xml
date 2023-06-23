@@ -51,15 +51,17 @@
                 android:textColor="?label_primary"
                 android:textStyle="bold" />
 
-            <ImageView
+            <CheckBox
                 android:id="@+id/visibilityButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="true"
+                android:checked="true"
                 android:contentDescription="@string/visibility_button"
-                android:src="@drawable/ic_baseline_visibility_24dp"
+                android:background="@android:color/transparent"
+                android:button="@drawable/checkbox_visibility_drawable"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:tint="?color_blue" />
+                app:buttonTint="?color_blue" />
 
         </com.niqr.todoapp.ui.tasks.collapsingToolbar.CollapsibleToolbar>
     </com.niqr.todoapp.ui.tasks.collapsingToolbar.CollapsibleAppbar>

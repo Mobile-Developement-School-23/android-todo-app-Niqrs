@@ -23,13 +23,17 @@ class TasksViewModel @Inject constructor(
     fun onUiAction(action: TasksUiAction) {
         when(action) {
             is TasksUiAction.UpdateTask -> updateItem(action.todoItem)
-            is TasksUiAction.DeleteTask -> deleteItemAtPosition(action.position)
+            is TasksUiAction.DeleteTask -> deleteItem(action.id)
             is TasksUiAction.EditTask -> editTask(action.todoItem)
+            is TasksUiAction.UpdateDoneVisibility -> updateDoneVisibility(action.visible)
         }
     }
 
     fun todoItems() =
         repository.todoItems()
+
+    fun doneCount() =
+        repository.doneCount()
 
     private fun editTask(item: TodoItem) {
         viewModelScope.launch {
@@ -43,15 +47,15 @@ class TasksViewModel @Inject constructor(
         }
     }
 
-    private fun deleteItemAtPosition(position: Int) {
-        viewModelScope.launch {
-            repository.deleteTodoItemAt(position)
-        }
-    }
-
     private fun deleteItem(id: String) {
         viewModelScope.launch {
             repository.deleteTodoItem(id)
+        }
+    }
+
+    private fun updateDoneVisibility(visible: Boolean) {
+        viewModelScope.launch {
+            repository.updateDoneTodoItemsVisibility(visible)
         }
     }
 }
