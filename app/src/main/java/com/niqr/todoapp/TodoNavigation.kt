@@ -1,7 +1,6 @@
 package com.niqr.todoapp
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -11,6 +10,7 @@ import com.niqr.todoapp.compose.ui.taskEdit.navigateToTaskEdit
 import com.niqr.todoapp.compose.ui.taskEdit.taskEditScreen
 import com.niqr.todoapp.compose.ui.tasks.TasksScreenRoutePattern
 import com.niqr.todoapp.compose.ui.tasks.tasksScreen
+import com.niqr.todoapp.compose.ui.theme.ExtendedTheme
 
 @Composable
 fun TodoNavigation() {
@@ -18,7 +18,7 @@ fun TodoNavigation() {
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
+        color = ExtendedTheme.colors.backPrimary
     ) {
         NavHost(
             navController = navController,
