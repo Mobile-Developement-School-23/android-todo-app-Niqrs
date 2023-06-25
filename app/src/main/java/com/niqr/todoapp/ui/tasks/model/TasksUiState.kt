@@ -1,4 +1,4 @@
-package com.niqr.todoapp.compose.ui.tasks.model
+package com.niqr.todoapp.ui.tasks.model
 
 import com.niqr.todoapp.data.model.TodoItem
 

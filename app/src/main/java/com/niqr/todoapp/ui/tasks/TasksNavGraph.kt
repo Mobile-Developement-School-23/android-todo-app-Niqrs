@@ -1,4 +1,4 @@
-package com.niqr.todoapp.compose.ui.tasks
+package com.niqr.todoapp.ui.tasks
 
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -16,7 +16,7 @@ internal fun NavController.navigateToTasks() {
 
 internal fun NavGraphBuilder.tasksScreen(
     onNavigateToCreateTask: () -> Unit,
-    onNavigateToEditTask: () -> Unit
+    onNavigateToEditTask: (String) -> Unit
 ) {
     composable(TasksScreenRoutePattern) {
         val viewModel: TasksViewModel = hiltViewModel()

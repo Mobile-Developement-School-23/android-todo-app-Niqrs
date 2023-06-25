@@ -6,11 +6,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.niqr.todoapp.compose.ui.taskEdit.navigateToTaskEdit
-import com.niqr.todoapp.compose.ui.taskEdit.taskEditScreen
-import com.niqr.todoapp.compose.ui.tasks.TasksScreenRoutePattern
-import com.niqr.todoapp.compose.ui.tasks.tasksScreen
-import com.niqr.todoapp.compose.ui.theme.ExtendedTheme
+import com.niqr.todoapp.ui.taskEdit.navigateToTaskEdit
+import com.niqr.todoapp.ui.taskEdit.taskEditScreen
+import com.niqr.todoapp.ui.tasks.TasksScreenRoutePattern
+import com.niqr.todoapp.ui.tasks.tasksScreen
+import com.niqr.todoapp.ui.theme.ExtendedTheme
 
 @Composable
 fun TodoNavigation() {
@@ -26,7 +26,7 @@ fun TodoNavigation() {
         ) {
             tasksScreen(
                 onNavigateToCreateTask = navController::navigateToTaskEdit,
-                onNavigateToEditTask = { TODO() }
+                onNavigateToEditTask = navController::navigateToTaskEdit
             )
             taskEditScreen(
                 onNavigateUp = navController::navigateUp,

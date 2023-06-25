@@ -13,5 +13,5 @@ fun Priority.toResource() = when(this) {
 fun Priority.toStringResource() = when(this) {
     Priority.COMMON -> R.string.priority_no
     Priority.LOW -> R.string.priority_low
-    Priority.HIGH -> R.string.priority_high
+    Priority.HIGH -> R.string.priority_high_extra
 }

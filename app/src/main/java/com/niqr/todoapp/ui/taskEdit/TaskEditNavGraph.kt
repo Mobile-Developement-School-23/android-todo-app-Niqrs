@@ -1,14 +1,20 @@
-package com.niqr.todoapp.compose.ui.taskEdit
+package com.niqr.todoapp.ui.taskEdit
 
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 
-internal const val TaskEditScreenRoutePattern = "taskEdit"
+internal const val TaskId = "taskId"
+private const val TaskEdit = "taskEdit"
+internal const val TaskEditScreenRoutePattern = "$TaskEdit?$TaskId={$TaskId}"
 
-internal fun NavController.navigateToTaskEdit() {
-    this.navigate(TaskEditScreenRoutePattern) {
+internal fun NavController.navigateToTaskEdit(id: String = "") {
+    this.navigate(
+        route = if (id.isNotBlank()) "$TaskEdit?$TaskId=$id"
+            else TaskEdit
+    ) {
         launchSingleTop = true
     }
 }
@@ -17,7 +23,13 @@ internal fun NavGraphBuilder.taskEditScreen(
     onNavigateUp: () -> Unit,
     onSuccessSave: () -> Unit
 ) {
-    composable(TaskEditScreenRoutePattern) {
+    composable(
+        route = TaskEditScreenRoutePattern,
+        arguments = listOf(navArgument(TaskEdit) {
+            nullable = true
+        }
+        )
+    ) {
         val viewModel: TaskEditViewModel = hiltViewModel()
         TaskEditScreen(
             uiState = viewModel.uiState,

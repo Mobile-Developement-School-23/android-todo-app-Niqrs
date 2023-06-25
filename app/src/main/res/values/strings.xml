@@ -101,9 +101,12 @@
     <string name="delete">Delete</string>
     <string name="priority_no">No</string>
     <string name="priority_low">Low</string>
-    <string name="priority_high"><font fgcolor='#FF3B30'>!! High</font></string>
+    <string name="priority_high">High</string>
+    <string name="priority_high_extra">!! High</string>
     <string name="select_date">Select date</string>
     <string name="task_info">task information</string>
     <string name="done_count">Done — %1$d</string>
     <string name="edit">Edit</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 </resources>

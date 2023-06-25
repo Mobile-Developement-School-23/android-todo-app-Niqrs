@@ -1,4 +1,4 @@
-package com.niqr.todoapp.compose.ui.theme
+package com.niqr.todoapp.ui.theme
 
 import android.app.Activity
 import android.os.Build

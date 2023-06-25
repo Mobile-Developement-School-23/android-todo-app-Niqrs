@@ -1,4 +1,4 @@
-package com.niqr.todoapp.compose.ui.theme
+package com.niqr.todoapp.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

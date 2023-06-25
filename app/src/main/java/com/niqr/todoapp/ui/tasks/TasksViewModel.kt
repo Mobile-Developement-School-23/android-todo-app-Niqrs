@@ -1,33 +1,40 @@
-package com.niqr.todoapp.compose.ui.tasks
+package com.niqr.todoapp.ui.tasks
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.niqr.todoapp.data.TodoItemsRepository
 import com.niqr.todoapp.data.model.TodoItem
-import com.niqr.todoapp.compose.ui.tasks.model.TasksAction
-import com.niqr.todoapp.compose.ui.tasks.model.TasksEvent
-import com.niqr.todoapp.compose.ui.tasks.model.TasksUiState
+import com.niqr.todoapp.ui.tasks.model.TasksAction
+import com.niqr.todoapp.ui.tasks.model.TasksEvent
+import com.niqr.todoapp.ui.tasks.model.TasksUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 
 @HiltViewModel
 class TasksViewModel @Inject constructor(
     private val repository: TodoItemsRepository
 ): ViewModel() {
+    var uiState by mutableStateOf(TasksUiState())
+        private set
 
-    private val _uiState = MutableStateFlow(TasksUiState())
-    val uiState = _uiState.asStateFlow()
+    init {
+        setupTodoItems()
+    }
 
     private val _uiEvent = Channel<TasksEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
     fun onAction(action: TasksAction) {
         when(action) {
+            TasksAction.CreateTask -> viewModelScope.launch { _uiEvent.send(TasksEvent.NavigateToNewTask) }
             is TasksAction.UpdateTask -> updateItem(action.todoItem)
             is TasksAction.DeleteTask -> deleteItem(action.id)
             is TasksAction.EditTask -> editTask(action.todoItem)
@@ -35,32 +42,39 @@ class TasksViewModel @Inject constructor(
         }
     }
 
-    fun todoItems() =
-        repository.todoItems()
+    private fun setupTodoItems() {
+        viewModelScope.launch {
+            repository.todoItems().collect {
+                uiState = uiState.copy(tasks = it)
+            }
+        }
+    }
 
-    fun doneCount() =
-        repository.doneCount()
+    private fun doneCount() {
+//        repository.doneCount()
+    }
 
     private fun editTask(item: TodoItem) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             _uiEvent.send(TasksEvent.NavigateToEditTask(item.id))
         }
     }
 
     private fun updateItem(item: TodoItem) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             repository.updateTodoItem(item)
         }
     }
 
     private fun deleteItem(id: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             repository.deleteTodoItem(id)
         }
     }
 
     private fun updateDoneVisibility(visible: Boolean) {
-        viewModelScope.launch {
+        uiState =  uiState.copy(doneVisible = visible)
+        viewModelScope.launch(Dispatchers.IO) {
             repository.updateDoneTodoItemsVisibility(visible)
         }
     }
