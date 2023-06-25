@@ -23,6 +23,5 @@
 
     <style name="Theme.ToDoApp" parent="Base.Theme.ToDoApp">
         <item name="android:statusBarColor">?back_primary</item>
-        <item name="popupMenuBackground">@drawable/priority_menu_background</item>
     </style>
 </resources>
