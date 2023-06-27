@@ -68,7 +68,6 @@ class TaskEditViewModel @Inject constructor(
             )
         else
             TodoItem(
-                id = "1",
                 description = uiState.description,
                 priority = uiState.priority,
                 deadline = if (uiState.isDeadlineVisible) uiState.deadline else null,
@@ -84,7 +83,7 @@ class TaskEditViewModel @Inject constructor(
     private fun deleteTask() {
         viewModelScope.launch(Dispatchers.IO) {
             if (isEditing)
-                previousTask?.let { repo.deleteTodoItem(it.id) }
+                previousTask?.let { repo.deleteTodoItem(it) }
             _uiEvent.send(TaskEditEvent.NavigateBack)
         }
     }

@@ -81,7 +81,7 @@ fun LazyItemScope.TasksItem(
                     false
                 }
                 DismissValue.DismissedToStart -> {
-                    onAction(TasksAction.DeleteTask(currentTask.id))
+                    onAction(TasksAction.DeleteTask(currentTask))
                     true
                 }
                 else -> false
@@ -264,7 +264,7 @@ private fun TasksItemMenu(
         DropdownMenuItem(
             text = { Text(stringResource(R.string.delete)) },
             onClick = {
-                onAction(TasksAction.DeleteTask(task.id))
+                onAction(TasksAction.DeleteTask(task))
                 hideMenu()
             },
             leadingIcon = {

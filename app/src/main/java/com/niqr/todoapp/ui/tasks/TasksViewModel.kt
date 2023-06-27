@@ -13,6 +13,8 @@ import com.niqr.todoapp.ui.tasks.model.TasksUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -36,7 +38,7 @@ class TasksViewModel @Inject constructor(
         when(action) {
             TasksAction.CreateTask -> viewModelScope.launch { _uiEvent.send(TasksEvent.NavigateToNewTask) }
             is TasksAction.UpdateTask -> updateItem(action.todoItem)
-            is TasksAction.DeleteTask -> deleteItem(action.id)
+            is TasksAction.DeleteTask -> deleteItem(action.todoItem)
             is TasksAction.EditTask -> editTask(action.todoItem)
             is TasksAction.UpdateDoneVisibility -> updateDoneVisibility(action.visible)
         }
@@ -44,14 +46,16 @@ class TasksViewModel @Inject constructor(
 
     private fun setupTodoItems() {
         viewModelScope.launch {
-            repository.todoItems().collect {
-                uiState = uiState.copy(tasks = it)
+            repository.todoItems().combine(repository.doneVisible()) { tasks, doneVisible ->
+                val newTasks = when(doneVisible) {
+                    true -> tasks
+                    else -> tasks.filter { !it.isDone }
+                }
+                Pair(doneVisible, newTasks)
+            }.collectLatest {
+                uiState = uiState.copy(doneVisible = it.first, tasks = it.second)
             }
         }
-    }
-
-    private fun doneCount() {
-//        repository.doneCount()
     }
 
     private fun editTask(item: TodoItem) {
@@ -66,9 +70,9 @@ class TasksViewModel @Inject constructor(
         }
     }
 
-    private fun deleteItem(id: String) {
+    private fun deleteItem(item: TodoItem) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteTodoItem(id)
+            repository.deleteTodoItem(item)
         }
     }
 

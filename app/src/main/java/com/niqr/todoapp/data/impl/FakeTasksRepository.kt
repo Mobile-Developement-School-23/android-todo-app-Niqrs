@@ -1,4 +1,4 @@
-package com.niqr.todoapp.data.local
+package com.niqr.todoapp.data.impl
 
 import com.niqr.todoapp.data.TodoItemsRepository
 import com.niqr.todoapp.data.model.Priority
@@ -11,7 +11,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import javax.inject.Inject
 
-class LocalTasksRepository @Inject constructor(): TodoItemsRepository {
+class FakeTasksRepository @Inject constructor(): TodoItemsRepository {
     private val tasks: MutableList<TodoItem> = sampleTasks.toMutableList()
     private var isDoneVisible = true
 
@@ -20,6 +20,11 @@ class LocalTasksRepository @Inject constructor(): TodoItemsRepository {
 
     override fun todoItems(): Flow<List<TodoItem>> =
         tasksFlow.asStateFlow()
+
+    override fun doneVisible(): Flow<Boolean> {
+        TODO("Not yet implemented")
+    }
+
     override fun doneCount(): Flow<Int> =
         countFlow.asStateFlow()
 
@@ -29,7 +34,7 @@ class LocalTasksRepository @Inject constructor(): TodoItemsRepository {
 
     override suspend fun addTodoItem(task: TodoItem) {
         val taskId = ((tasks.lastOrNull()?.id ?: "0").toInt() + 1).toString()
-        tasks.add(task.copy(id = taskId))
+        tasks.add(task.copy(id = taskId, editedAt = LocalDateTime.now()))
         updateFlow()
     }
 
@@ -37,18 +42,13 @@ class LocalTasksRepository @Inject constructor(): TodoItemsRepository {
         val index = tasks.indexOfFirst { it.id == task.id }
         if (index == -1)
             return
-        tasks[index] = task
+        tasks[index] = task.copy(editedAt = LocalDateTime.now())
         updateFlow()
     }
 
-    override suspend fun deleteTodoItemAt(position: Int) {
-        tasks.removeAt(position)
-        updateFlow()
-    }
-
-    override suspend fun deleteTodoItem(id: String) {
-        val task = tasks.find { it.id == id } ?: return
-        tasks.remove(task)
+    override suspend fun deleteTodoItem(task: TodoItem) {
+        val localTask = tasks.find { it.id == task.id } ?: return
+        tasks.remove(localTask)
         updateFlow()
     }
 
@@ -69,6 +69,8 @@ class LocalTasksRepository @Inject constructor(): TodoItemsRepository {
         }
     }
 }
+
+
 
 private val sampleTasks = listOf(
     TodoItem(
