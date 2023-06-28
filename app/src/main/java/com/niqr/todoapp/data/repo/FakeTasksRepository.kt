@@ -1,6 +1,6 @@
-package com.niqr.todoapp.data.impl
+package com.niqr.todoapp.data.repo
 
-import com.niqr.todoapp.data.TodoItemsRepository
+import com.niqr.todoapp.data.abstraction.TodoItemsRepository
 import com.niqr.todoapp.data.model.Priority
 import com.niqr.todoapp.data.model.TodoItem
 import kotlinx.coroutines.flow.Flow
