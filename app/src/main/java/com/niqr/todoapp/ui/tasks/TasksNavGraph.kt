@@ -16,7 +16,8 @@ internal fun NavController.navigateToTasks() {
 
 internal fun NavGraphBuilder.tasksScreen(
     onNavigateToCreateTask: () -> Unit,
-    onNavigateToEditTask: (String) -> Unit
+    onNavigateToEditTask: (String) -> Unit,
+    onSignOut: () -> Unit
 ) {
     composable(TasksScreenRoutePattern) {
         val viewModel: TasksViewModel = hiltViewModel()
@@ -25,7 +26,8 @@ internal fun NavGraphBuilder.tasksScreen(
             uiEvent = viewModel.uiEvent,
             onAction = viewModel::onAction,
             onCreateTask = onNavigateToCreateTask,
-            onEditTask = onNavigateToEditTask
+            onEditTask = onNavigateToEditTask,
+            onSignOut = onSignOut
         )
     }
 }

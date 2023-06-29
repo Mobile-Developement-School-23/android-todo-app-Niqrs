@@ -2,11 +2,16 @@ package com.niqr.todoapp.di
 
 import android.content.Context
 import androidx.room.Room
-import com.niqr.todoapp.data.TodoItemsRepository
-import com.niqr.todoapp.data.impl.TasksRepositoryImpl
-import com.niqr.todoapp.data.local.TaskDao
-import com.niqr.todoapp.data.local.TasksDatabase
+import com.niqr.todoapp.data.abstraction.AuthInfoMutableProvider
+import com.niqr.todoapp.data.abstraction.AuthInfoProvider
+import com.niqr.todoapp.data.abstraction.AuthRepository
+import com.niqr.todoapp.data.abstraction.TodoItemsRepository
+import com.niqr.todoapp.data.local.db.TaskDao
+import com.niqr.todoapp.data.local.db.TasksDatabase
+import com.niqr.todoapp.data.local.store.AuthInfoDataStoreManager
 import com.niqr.todoapp.data.remote.TasksService
+import com.niqr.todoapp.data.repo.AuthRepositoryImpl
+import com.niqr.todoapp.data.repo.TasksRepositoryImpl
 import com.niqr.todoapp.utils.BASE_URL
 import com.niqr.todoapp.utils.DATABASE_NAME
 import com.niqr.todoapp.utils.LIST
@@ -63,12 +68,37 @@ object AppModule {
         }
     }
 
+    @Provides
+    @Singleton
+    fun provideAuthInfoMutableProvider(
+        manager: AuthInfoDataStoreManager
+    ): AuthInfoMutableProvider {
+        return manager
+    }
 
     @Provides
+    @Singleton
+    fun provideAuthInfoProvider(
+        manager: AuthInfoDataStoreManager
+    ): AuthInfoProvider {
+        return manager
+    }
+
+    @Provides
+    @Singleton
+    fun provideAuthRepository(
+        authProvider: AuthInfoMutableProvider
+    ): AuthRepository {
+        return AuthRepositoryImpl(authProvider)
+    }
+
+    @Provides
+    @Singleton
     fun provideTodoItemsRepository(
         service: TasksService,
-        dao: TaskDao
+        dao: TaskDao,
+        authEditor: AuthInfoMutableProvider
     ): TodoItemsRepository {
-        return TasksRepositoryImpl(service, dao)
+        return TasksRepositoryImpl(authEditor, service, dao)
     }
 }

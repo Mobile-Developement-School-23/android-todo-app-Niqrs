@@ -1,7 +1,8 @@
-package com.niqr.todoapp.data.impl
+package com.niqr.todoapp.data.repo
 
-import com.niqr.todoapp.data.TodoItemsRepository
-import com.niqr.todoapp.data.local.TaskDao
+import com.niqr.todoapp.data.abstraction.AuthInfoMutableProvider
+import com.niqr.todoapp.data.abstraction.TodoItemsRepository
+import com.niqr.todoapp.data.local.db.TaskDao
 import com.niqr.todoapp.data.model.TodoItem
 import com.niqr.todoapp.data.remote.TasksService
 import kotlinx.coroutines.CoroutineScope
@@ -15,6 +16,7 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 class TasksRepositoryImpl @Inject constructor(
+    private val authProvider: AuthInfoMutableProvider,
     private val service: TasksService,
     private val dao: TaskDao
 ): TodoItemsRepository {

@@ -6,14 +6,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.niqr.todoapp.data.abstraction.AuthInfoProvider
+import com.niqr.todoapp.ui.auth.AuthScreenRoutePattern
+import com.niqr.todoapp.ui.auth.authScreen
+import com.niqr.todoapp.ui.auth.navigateToAuth
 import com.niqr.todoapp.ui.taskEdit.navigateToTaskEdit
 import com.niqr.todoapp.ui.taskEdit.taskEditScreen
 import com.niqr.todoapp.ui.tasks.TasksScreenRoutePattern
+import com.niqr.todoapp.ui.tasks.navigateToTasks
 import com.niqr.todoapp.ui.tasks.tasksScreen
 import com.niqr.todoapp.ui.theme.ExtendedTheme
 
 @Composable
-fun TodoNavigation() {
+fun TodoNavigation(authProvider: AuthInfoProvider) {
     val navController = rememberNavController()
 
     Surface(
@@ -22,11 +27,15 @@ fun TodoNavigation() {
     ) {
         NavHost(
             navController = navController,
-            startDestination = TasksScreenRoutePattern
+            startDestination = if (authProvider.authInfo().token.isBlank()) AuthScreenRoutePattern else TasksScreenRoutePattern
         ) {
+            authScreen(
+                onSuccessAuth = navController::navigateToTasks
+            )
             tasksScreen(
                 onNavigateToCreateTask = navController::navigateToTaskEdit,
-                onNavigateToEditTask = navController::navigateToTaskEdit
+                onNavigateToEditTask = navController::navigateToTaskEdit,
+                onSignOut = navController::navigateToAuth
             )
             taskEditScreen(
                 onNavigateUp = navController::navigateUp,

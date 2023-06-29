@@ -9,13 +9,15 @@ import kotlinx.coroutines.flow.Flow
 fun TasksUiEventHandler(
     uiEvent: Flow<TasksEvent>,
     onCreateTask: () -> Unit,
-    onEditTask: (String) -> Unit
+    onEditTask: (String) -> Unit,
+    onSignOut: () -> Unit
 ) {
     LaunchedEffect(Unit) {
         uiEvent.collect {
             when(it) {
                 is TasksEvent.NavigateToEditTask -> onEditTask(it.id)
                 TasksEvent.NavigateToNewTask -> onCreateTask()
+                TasksEvent.SignOut -> onSignOut()
             }
         }
     }

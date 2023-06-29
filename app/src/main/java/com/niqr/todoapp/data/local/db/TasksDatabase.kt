@@ -1,4 +1,4 @@
-package com.niqr.todoapp.data.local
+package com.niqr.todoapp.data.local.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

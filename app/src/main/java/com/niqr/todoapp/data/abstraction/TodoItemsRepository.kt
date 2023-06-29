@@ -1,4 +1,4 @@
-package com.niqr.todoapp.data
+package com.niqr.todoapp.data.abstraction
 
 import com.niqr.todoapp.data.model.TodoItem
 import kotlinx.coroutines.flow.Flow

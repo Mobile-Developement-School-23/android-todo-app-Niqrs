@@ -20,4 +20,6 @@
     <string name="edit">Edit</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="login_with_yandex_id">Login with Yandex ID</string>
+    <string name="sign_out">Sign-Out</string>
 </resources>

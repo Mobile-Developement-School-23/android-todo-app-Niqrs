@@ -20,4 +20,6 @@
     <string name="edit">Изменить</string>
     <string name="ok">OK</string>
     <string name="cancel">Отмена</string>
+    <string name="login_with_yandex_id">Войти с Яндекс ID</string>
+    <string name="sign_out">Выйти</string>
 </resources>

@@ -26,9 +26,10 @@ fun TasksScreen(
     uiEvent: Flow<TasksEvent>,
     onAction: (TasksAction) -> Unit,
     onCreateTask: () -> Unit,
-    onEditTask: (String) -> Unit
+    onEditTask: (String) -> Unit,
+    onSignOut: () -> Unit
 ) {
-    TasksUiEventHandler(uiEvent, onCreateTask, onEditTask)
+    TasksUiEventHandler(uiEvent, onCreateTask, onEditTask, onSignOut)
 
     Scaffold(
         topBar = {

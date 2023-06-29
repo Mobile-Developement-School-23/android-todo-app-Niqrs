@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.niqr.todoapp.data.TodoItemsRepository
+import com.niqr.todoapp.data.abstraction.TodoItemsRepository
 import com.niqr.todoapp.data.model.TodoItem
 import com.niqr.todoapp.ui.taskEdit.model.TaskEditAction
 import com.niqr.todoapp.ui.taskEdit.model.TaskEditEvent

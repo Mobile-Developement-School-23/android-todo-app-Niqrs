@@ -1,4 +1,4 @@
-package com.niqr.todoapp.data.local
+package com.niqr.todoapp.data.local.db
 
 import androidx.room.Dao
 import androidx.room.Delete

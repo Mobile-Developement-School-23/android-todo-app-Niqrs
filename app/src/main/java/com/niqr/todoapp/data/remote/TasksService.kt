@@ -1,5 +1,7 @@
 package com.niqr.todoapp.data.remote
 
+import com.niqr.todoapp.data.abstraction.AuthInfoProvider
+import com.niqr.todoapp.data.model.AuthInfo
 import com.niqr.todoapp.data.model.TodoItem
 import com.niqr.todoapp.data.remote.model.RequestResult
 import com.niqr.todoapp.data.remote.model.TodoItemRequest
@@ -7,6 +9,9 @@ import com.niqr.todoapp.data.remote.model.TodoItemResponse
 import com.niqr.todoapp.data.remote.model.TodoItemsRequest
 import com.niqr.todoapp.data.remote.model.TodoItemsResponse
 import com.niqr.todoapp.data.remote.model.result
+import com.niqr.todoapp.utils.AUTHORIZATION
+import com.niqr.todoapp.utils.LAST_KNOWN_REVISION
+import com.niqr.todoapp.utils.OAuth
 import io.ktor.client.HttpClient
 import io.ktor.client.request.delete
 import io.ktor.client.request.get
@@ -16,36 +21,45 @@ import io.ktor.client.request.post
 import io.ktor.client.request.put
 import io.ktor.client.request.setBody
 import io.ktor.http.HttpMessageBuilder
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 class TasksService @Inject constructor(
-    private val client: HttpClient
+    private val client: HttpClient,
+    authProvider: AuthInfoProvider
 ) {
-    private val rev = "26"
+    private val auth = authProvider.authInfoFlow().stateIn(
+        CoroutineScope(Dispatchers.IO),
+        started = SharingStarted.Eagerly,
+        AuthInfo()
+    )
 
     suspend fun getTasks(): RequestResult<TodoItemsResponse> =
-        client.get { requestHeaders(rev) }.result()
+        client.get { requestHeaders() }.result()
 
     suspend fun mergeTasks(tasks: List<TodoItem>): RequestResult<TodoItemsResponse> =
-        client.patch { requestHeaders(rev); setBody(TodoItemsRequest(tasks)) }.result()
+        client.patch { requestHeaders(); setBody(TodoItemsRequest(tasks)) }.result()
 
     suspend fun addTask(task: TodoItem): RequestResult<TodoItemResponse> =
-        client.post { requestHeaders(rev); setBody(TodoItemRequest(task)) }.result()
+        client.post { requestHeaders(); setBody(TodoItemRequest(task)) }.result()
 
     suspend fun getTask(id: String): RequestResult<TodoItemResponse> =
-        client.get(id) { requestHeaders(rev) }.result()
+        client.get(id) { requestHeaders() }.result()
 
     suspend fun updateTask(task: TodoItem): RequestResult<TodoItemResponse> =
-        client.put(task.id) { requestHeaders(rev); setBody(TodoItemRequest(task)) }.result()
+        client.put(task.id) { requestHeaders(); setBody(TodoItemRequest(task)) }.result()
 
     suspend fun deleteTask(id: String): RequestResult<TodoItemResponse> =
-        client.delete(id) { requestHeaders(rev) }.result()
+        client.delete(id) { requestHeaders() }.result()
 
 
-    private fun HttpMessageBuilder.requestHeaders(revision: String) {
+    private fun HttpMessageBuilder.requestHeaders() {
         headers {
-//            append(AUTHORIZATION, "$OAuth $OAuthToken")
-//            append(LAST_KNOWN_REVISION, revision)
+            append(AUTHORIZATION, "$OAuth ${auth.value.token}")
+            append(LAST_KNOWN_REVISION, auth.value.revision)
         }
     }
 }
