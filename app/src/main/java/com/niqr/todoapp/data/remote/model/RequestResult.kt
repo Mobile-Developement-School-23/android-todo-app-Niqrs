@@ -1,5 +1,6 @@
 package com.niqr.todoapp.data.remote.model
 
+import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.statement.HttpResponse
 
@@ -13,7 +14,18 @@ enum class RequestError(val code: Int) {
     AUTH(401),
     NOT_FOUND(404),
     SERVER(500),
+    NO_CONNECTION(0),
     UNKNOWN(0)
+}
+
+suspend inline fun <reified T> HttpClient.safeRequest(
+    request: HttpClient.() -> HttpResponse
+): RequestResult<T> {
+    return try {
+        request().result<T>()
+    } catch (e: Exception) {
+        RequestResult.Error<T>(RequestError.NO_CONNECTION)
+    }
 }
 
 suspend inline fun <reified T> HttpResponse.result(): RequestResult<T> {

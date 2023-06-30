@@ -8,7 +8,7 @@ import com.niqr.todoapp.data.remote.model.TodoItemRequest
 import com.niqr.todoapp.data.remote.model.TodoItemResponse
 import com.niqr.todoapp.data.remote.model.TodoItemsRequest
 import com.niqr.todoapp.data.remote.model.TodoItemsResponse
-import com.niqr.todoapp.data.remote.model.result
+import com.niqr.todoapp.data.remote.model.safeRequest
 import com.niqr.todoapp.utils.AUTHORIZATION
 import com.niqr.todoapp.utils.LAST_KNOWN_REVISION
 import com.niqr.todoapp.utils.OAuth
@@ -38,22 +38,22 @@ class TasksService @Inject constructor(
     )
 
     suspend fun getTasks(): RequestResult<TodoItemsResponse> =
-        client.get { requestHeaders() }.result()
+        client.safeRequest { get { requestHeaders() } }
 
     suspend fun mergeTasks(tasks: List<TodoItem>): RequestResult<TodoItemsResponse> =
-        client.patch { requestHeaders(); setBody(TodoItemsRequest(tasks)) }.result()
+        client.safeRequest { patch { requestHeaders(); setBody(TodoItemsRequest(tasks)) } }
 
     suspend fun addTask(task: TodoItem): RequestResult<TodoItemResponse> =
-        client.post { requestHeaders(); setBody(TodoItemRequest(task)) }.result()
+        client.safeRequest { post { requestHeaders(); setBody(TodoItemRequest(task)) } }
 
     suspend fun getTask(id: String): RequestResult<TodoItemResponse> =
-        client.get(id) { requestHeaders() }.result()
+        client.safeRequest { get(id) { requestHeaders() } }
 
     suspend fun updateTask(task: TodoItem): RequestResult<TodoItemResponse> =
-        client.put(task.id) { requestHeaders(); setBody(TodoItemRequest(task)) }.result()
+        client.safeRequest { put(task.id) { requestHeaders(); setBody(TodoItemRequest(task)) } }
 
     suspend fun deleteTask(id: String): RequestResult<TodoItemResponse> =
-        client.delete(id) { requestHeaders() }.result()
+        client.safeRequest { delete(id) { requestHeaders() } }
 
 
     private fun HttpMessageBuilder.requestHeaders() {
