@@ -13,3 +13,6 @@ const val SYNCHRONIZATION_WORK_TAG = "synchronization_tag"
 const val SYNCHRONIZATION_WORK = "synchronization_work"
 const val PERIODIC_SYNCHRONIZATION_WORK_TAG = "periodic_synchronization_tag"
 const val PERIODIC_SYNCHRONIZATION_WORK = "periodic_synchronization_work"
+
+const val SYNCHRONIZATION_CHANNEL_ID = "synchronization_channel_id"
+const val SYNCHRONIZATION_CHANNEL = "synchronization_channel"

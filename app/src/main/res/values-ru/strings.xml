@@ -23,4 +23,6 @@
     <string name="login_with_yandex_id">Войти с Яндекс ID</string>
     <string name="sign_out">Выйти</string>
     <string name="connection_error">Ошибка в соединении</string>
+    <string name="synchronizing">Синхронизация…</string>
+    <string name="synchronization_in_progress">Синхронизация данных</string>
 </resources>
