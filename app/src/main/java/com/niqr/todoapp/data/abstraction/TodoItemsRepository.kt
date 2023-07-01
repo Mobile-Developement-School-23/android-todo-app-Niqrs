@@ -12,4 +12,8 @@ interface TodoItemsRepository {
     suspend fun updateTodoItem(task: TodoItem)
     suspend fun deleteTodoItem(task: TodoItem)
     suspend fun updateDoneTodoItemsVisibility(visible: Boolean)
+    suspend fun updateTodoItems()
+    suspend fun refreshTodoItems(): Boolean
+    suspend fun pushTodoItems()
+    suspend fun clearTodoItems()
 }

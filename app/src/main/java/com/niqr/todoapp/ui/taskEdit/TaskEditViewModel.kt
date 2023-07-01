@@ -18,8 +18,6 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.time.LocalDateTime
-import java.time.ZoneOffset
 import javax.inject.Inject
 
 @HiltViewModel
@@ -63,14 +61,13 @@ class TaskEditViewModel @Inject constructor(
             previousTask!!.copy(
                 description = uiState.description,
                 priority = uiState.priority,
-                deadline = if (uiState.isDeadlineVisible) uiState.deadline else null,
-                editedAt = LocalDateTime.now(ZoneOffset.UTC)
+                deadline = if (uiState.isDeadlineVisible) uiState.deadline else null
             )
         else
             TodoItem(
                 description = uiState.description,
                 priority = uiState.priority,
-                deadline = if (uiState.isDeadlineVisible) uiState.deadline else null,
+                deadline = if (uiState.isDeadlineVisible) uiState.deadline else null
             )
 
         viewModelScope.launch(Dispatchers.IO) {

@@ -8,5 +8,7 @@ sealed class TasksAction {
     data class DeleteTask(val todoItem: TodoItem) : TasksAction()
     data class EditTask(val todoItem: TodoItem) : TasksAction()
     data class UpdateDoneVisibility(val visible: Boolean): TasksAction()
+    object UpdateRequest: TasksAction()
+    object RefreshTasks: TasksAction()
     object SignOut: TasksAction()
 }

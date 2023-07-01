@@ -14,6 +14,7 @@ import com.niqr.todoapp.ui.tasks.model.TasksUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -43,6 +44,8 @@ class TasksViewModel @Inject constructor(
             is TasksAction.DeleteTask -> deleteItem(action.todoItem)
             is TasksAction.EditTask -> editTask(action.todoItem)
             is TasksAction.UpdateDoneVisibility -> updateDoneVisibility(action.visible)
+            is TasksAction.UpdateRequest -> viewModelScope.launch(Dispatchers.IO) { todoRepo.updateTodoItems() }
+            is TasksAction.RefreshTasks -> refreshTasks()
             TasksAction.SignOut -> signOut()
         }
     }
@@ -80,15 +83,29 @@ class TasksViewModel @Inject constructor(
     }
 
     private fun updateDoneVisibility(visible: Boolean) {
-        uiState =  uiState.copy(doneVisible = visible)
+        uiState = uiState.copy(doneVisible = visible)
         viewModelScope.launch(Dispatchers.IO) {
             todoRepo.updateDoneTodoItemsVisibility(visible)
         }
     }
 
+    private fun refreshTasks() {
+        viewModelScope.launch {
+            uiState = uiState.copy(isRefreshing = true)
+            if (!todoRepo.refreshTodoItems())
+                _uiEvent.send(TasksEvent.ConnectionError)
+            uiState = uiState.copy(isRefreshing = false)
+        }
+    }
+
     private fun signOut() {
         viewModelScope.launch {
+            launch(Dispatchers.IO) {
+                todoRepo.pushTodoItems()
+            }
+            delay(100)
             authRepo.signOut()
+            todoRepo.clearTodoItems()
             _uiEvent.send(TasksEvent.SignOut)
         }
     }

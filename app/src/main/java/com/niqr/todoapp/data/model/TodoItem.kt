@@ -58,5 +58,5 @@ data class TodoItem(
 
     @ColumnInfo(name = "last_updated_by")
     @SerialName("last_updated_by")
-    val lastUpdatedBy: String = "11711" //TODO: remove default
+    val lastUpdatedBy: String = "1110111"
 )

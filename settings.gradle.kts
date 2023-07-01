@@ -12,5 +12,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+
 rootProject.name = "ToDo App"
-include ':app'
+include(":app")
+include(":libraries")

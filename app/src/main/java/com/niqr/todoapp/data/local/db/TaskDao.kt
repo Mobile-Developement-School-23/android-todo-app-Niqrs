@@ -5,36 +5,46 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import androidx.room.Update
 import com.niqr.todoapp.data.model.TodoItem
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface TaskDao {
+abstract class TaskDao {
     @Query("SELECT * FROM task")
-    fun getAllTasks(): Flow<List<TodoItem>>
+    abstract fun getAllTasks(): Flow<List<TodoItem>>
 
     @Query("SELECT * FROM task WHERE done LIKE 0")
-    fun getAllUndoneTasks(): Flow<List<TodoItem>>
+    abstract fun getAllUndoneTasks(): Flow<List<TodoItem>>
 
     @Query("SELECT COUNT(*) FROM task WHERE done LIKE 1")
-    fun getDoneCount(): Flow<Int>
+    abstract fun getDoneCount(): Flow<Int>
 
     @Query("SELECT * FROM task WHERE id LIKE :id LIMIT 1")
-    suspend fun findTaskById(id: String): TodoItem?
+    abstract suspend fun findTaskById(id: String): TodoItem?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllTasks(vararg tasks: TodoItem)
+    abstract suspend fun insertAllTasks(tasks: List<TodoItem>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTask(task: TodoItem)
+    abstract suspend fun insertTask(task: TodoItem)
 
     @Update
-    suspend fun updateTasks(vararg: TodoItem)
+    abstract suspend fun updateTasks(vararg: TodoItem)
 
     @Update
-    suspend fun updateTask(task: TodoItem)
+    abstract suspend fun updateTask(task: TodoItem)
 
     @Delete
-    suspend fun deleteTask(task: TodoItem)
+    abstract suspend fun deleteTask(task: TodoItem)
+
+    @Query("DELETE FROM task")
+    abstract suspend fun clearAll()
+
+    @Transaction
+    open suspend fun replaceAll(tasks: List<TodoItem>) {
+        clearAll()
+        insertAllTasks(tasks)
+    }
 }
