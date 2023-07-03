@@ -1,4 +1,4 @@
-package com.niqr.todoapp.ui.taskEdit
+package com.niqr.todoapp.ui.edit
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -10,16 +10,16 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.niqr.todoapp.ui.taskEdit.components.TaskEditDateField
-import com.niqr.todoapp.ui.taskEdit.components.TaskEditDeleteButton
-import com.niqr.todoapp.ui.taskEdit.components.TaskEditDivider
-import com.niqr.todoapp.ui.taskEdit.components.TaskEditPriorityField
-import com.niqr.todoapp.ui.taskEdit.components.TaskEditTextField
-import com.niqr.todoapp.ui.taskEdit.components.TaskEditTopAppBar
-import com.niqr.todoapp.ui.taskEdit.components.TaskEditUiEventHandler
-import com.niqr.todoapp.ui.taskEdit.model.TaskEditAction
-import com.niqr.todoapp.ui.taskEdit.model.TaskEditEvent
-import com.niqr.todoapp.ui.taskEdit.model.TaskEditUiState
+import com.niqr.todoapp.ui.edit.components.TaskEditDateField
+import com.niqr.todoapp.ui.edit.components.TaskEditDeleteButton
+import com.niqr.todoapp.ui.edit.components.TaskEditDivider
+import com.niqr.todoapp.ui.edit.components.TaskEditPriorityField
+import com.niqr.todoapp.ui.edit.components.TaskEditTextField
+import com.niqr.todoapp.ui.edit.components.TaskEditTopAppBar
+import com.niqr.todoapp.ui.edit.components.TaskEditUiEventHandler
+import com.niqr.todoapp.ui.edit.model.TaskEditAction
+import com.niqr.todoapp.ui.edit.model.TaskEditEvent
+import com.niqr.todoapp.ui.edit.model.TaskEditUiState
 import com.niqr.todoapp.ui.theme.ExtendedTheme
 import kotlinx.coroutines.flow.Flow
 

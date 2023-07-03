@@ -10,8 +10,8 @@ import com.niqr.todoapp.data.abstraction.AuthInfoProvider
 import com.niqr.todoapp.ui.auth.AuthScreenRoutePattern
 import com.niqr.todoapp.ui.auth.authScreen
 import com.niqr.todoapp.ui.auth.navigateToAuth
-import com.niqr.todoapp.ui.taskEdit.navigateToTaskEdit
-import com.niqr.todoapp.ui.taskEdit.taskEditScreen
+import com.niqr.todoapp.ui.edit.navigateToTaskEdit
+import com.niqr.todoapp.ui.edit.taskEditScreen
 import com.niqr.todoapp.ui.tasks.TasksScreenRoutePattern
 import com.niqr.todoapp.ui.tasks.navigateToTasks
 import com.niqr.todoapp.ui.tasks.tasksScreen

@@ -1,8 +1,8 @@
-package com.niqr.todoapp.ui.taskEdit.components
+package com.niqr.todoapp.ui.edit.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import com.niqr.todoapp.ui.taskEdit.model.TaskEditEvent
+import com.niqr.todoapp.ui.edit.model.TaskEditEvent
 import kotlinx.coroutines.flow.Flow
 
 @Composable

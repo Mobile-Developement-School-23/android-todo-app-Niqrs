@@ -1,4 +1,4 @@
-package com.niqr.todoapp.ui.taskEdit.model
+package com.niqr.todoapp.ui.edit.model
 
 import com.niqr.todoapp.data.model.Priority
 

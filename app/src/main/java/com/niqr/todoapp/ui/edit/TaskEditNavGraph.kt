@@ -1,4 +1,4 @@
-package com.niqr.todoapp.ui.taskEdit
+package com.niqr.todoapp.ui.edit
 
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController

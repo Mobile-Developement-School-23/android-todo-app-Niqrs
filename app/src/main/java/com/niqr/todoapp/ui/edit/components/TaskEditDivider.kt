@@ -1,4 +1,4 @@
-package com.niqr.todoapp.ui.taskEdit.components
+package com.niqr.todoapp.ui.edit.components
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth

@@ -1,4 +1,4 @@
-package com.niqr.todoapp.ui.taskEdit.components
+package com.niqr.todoapp.ui.edit.components
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.layout.Spacer
@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.niqr.todoapp.R
-import com.niqr.todoapp.ui.taskEdit.model.TaskEditAction
+import com.niqr.todoapp.ui.edit.model.TaskEditAction
 import com.niqr.todoapp.ui.theme.ExtendedTheme
 import com.niqr.todoapp.ui.theme.Red
 

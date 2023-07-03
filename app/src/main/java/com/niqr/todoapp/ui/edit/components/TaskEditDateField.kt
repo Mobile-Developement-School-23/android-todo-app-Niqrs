@@ -1,4 +1,4 @@
-package com.niqr.todoapp.ui.taskEdit.components
+package com.niqr.todoapp.ui.edit.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
@@ -30,7 +30,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.niqr.todoapp.R
-import com.niqr.todoapp.ui.taskEdit.model.TaskEditAction
+import com.niqr.todoapp.ui.edit.model.TaskEditAction
 import com.niqr.todoapp.ui.theme.Blue
 import com.niqr.todoapp.ui.theme.BlueTranslucent
 import com.niqr.todoapp.ui.theme.ExtendedTheme

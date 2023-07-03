@@ -15,9 +15,6 @@ abstract class TaskDao {
     @Query("SELECT * FROM task")
     abstract fun getAllTasks(): Flow<List<TodoItem>>
 
-    @Query("SELECT * FROM task WHERE done LIKE 0")
-    abstract fun getAllUndoneTasks(): Flow<List<TodoItem>>
-
     @Query("SELECT COUNT(*) FROM task WHERE done LIKE 1")
     abstract fun getDoneCount(): Flow<Int>
 

@@ -1,4 +1,4 @@
-package com.niqr.todoapp.ui.taskEdit
+package com.niqr.todoapp.ui.edit
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -8,9 +8,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.niqr.todoapp.data.abstraction.TodoItemsRepository
 import com.niqr.todoapp.data.model.TodoItem
-import com.niqr.todoapp.ui.taskEdit.model.TaskEditAction
-import com.niqr.todoapp.ui.taskEdit.model.TaskEditEvent
-import com.niqr.todoapp.ui.taskEdit.model.TaskEditUiState
+import com.niqr.todoapp.ui.edit.model.TaskEditAction
+import com.niqr.todoapp.ui.edit.model.TaskEditEvent
+import com.niqr.todoapp.ui.edit.model.TaskEditUiState
 import com.niqr.todoapp.utils.dateFromLong
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

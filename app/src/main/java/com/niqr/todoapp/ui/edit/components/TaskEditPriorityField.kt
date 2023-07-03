@@ -1,4 +1,4 @@
-package com.niqr.todoapp.ui.taskEdit.components
+package com.niqr.todoapp.ui.edit.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import com.niqr.todoapp.R
 import com.niqr.todoapp.data.model.Priority
-import com.niqr.todoapp.ui.taskEdit.model.TaskEditAction
+import com.niqr.todoapp.ui.edit.model.TaskEditAction
 import com.niqr.todoapp.ui.theme.ExtendedTheme
 import com.niqr.todoapp.ui.theme.GrayLight
 import com.niqr.todoapp.ui.theme.Red
