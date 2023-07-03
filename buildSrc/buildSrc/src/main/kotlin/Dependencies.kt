@@ -9,7 +9,7 @@ object Dependencies {
         }
 
         object Ksp {
-            const val version = "1.8.21-1.0.11"
+            private const val version = "1.8.21-1.0.11"
             const val gradlePlugin = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin:$version"
         }
     }
@@ -58,7 +58,7 @@ object Dependencies {
         private const val version = "2.3.1"
 
         const val core = "io.ktor:ktor-client-core:$version"
-        const val cio = "io.ktor:ktor-client-content-negotiation:$version"
+        const val cio = "io.ktor:ktor-client-cio:$version"
         const val contentNegotiation = "io.ktor:ktor-client-content-negotiation:$version"
         const val serializationJson = "io.ktor:ktor-serialization-kotlinx-json:$version"
         const val slf4fNop = "org.slf4j:slf4j-nop:2.0.7"

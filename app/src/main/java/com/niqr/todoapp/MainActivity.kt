@@ -11,10 +11,10 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.OutOfQuotaPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
+import com.niqr.core.ui.theme.TodoAppTheme
 import com.niqr.todoapp.data.abstraction.AuthInfoProvider
 import com.niqr.todoapp.data.worker.ScheduledSynchronizationWorker
 import com.niqr.todoapp.data.worker.SynchronizationWorker
-import com.niqr.todoapp.ui.theme.TodoAppTheme
 import com.niqr.todoapp.utils.PERIODIC_SYNCHRONIZATION_WORK
 import com.niqr.todoapp.utils.SYNCHRONIZATION_WORK
 import com.niqr.todoapp.utils.SYNCHRONIZATION_WORK_TAG

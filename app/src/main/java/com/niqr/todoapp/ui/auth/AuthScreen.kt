@@ -35,8 +35,8 @@ import com.niqr.todoapp.R
 import com.niqr.todoapp.ui.auth.model.AuthAction
 import com.niqr.todoapp.ui.auth.model.AuthEvent
 import com.niqr.todoapp.ui.auth.model.AuthUiState
-import com.niqr.todoapp.ui.theme.Blue
-import com.niqr.todoapp.ui.theme.ExtendedTheme
+import com.niqr.core.ui.theme.Blue
+import com.niqr.core.ui.theme.ExtendedTheme
 import com.yandex.authsdk.YandexAuthLoginOptions
 import com.yandex.authsdk.YandexAuthOptions
 import com.yandex.authsdk.YandexAuthSdk

@@ -20,7 +20,7 @@ import com.niqr.todoapp.ui.edit.components.TaskEditUiEventHandler
 import com.niqr.todoapp.ui.edit.model.TaskEditAction
 import com.niqr.todoapp.ui.edit.model.TaskEditEvent
 import com.niqr.todoapp.ui.edit.model.TaskEditUiState
-import com.niqr.todoapp.ui.theme.ExtendedTheme
+import com.niqr.core.ui.theme.ExtendedTheme
 import kotlinx.coroutines.flow.Flow
 
 @Composable

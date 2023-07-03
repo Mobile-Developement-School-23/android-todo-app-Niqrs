@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.niqr.core.ui.theme.ExtendedTheme
 import com.niqr.todoapp.data.abstraction.AuthInfoProvider
 import com.niqr.todoapp.ui.auth.AuthScreenRoutePattern
 import com.niqr.todoapp.ui.auth.authScreen
@@ -15,7 +16,6 @@ import com.niqr.todoapp.ui.edit.taskEditScreen
 import com.niqr.todoapp.ui.tasks.TasksScreenRoutePattern
 import com.niqr.todoapp.ui.tasks.navigateToTasks
 import com.niqr.todoapp.ui.tasks.tasksScreen
-import com.niqr.todoapp.ui.theme.ExtendedTheme
 
 @Composable
 fun TodoNavigation(authProvider: AuthInfoProvider) {

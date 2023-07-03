@@ -17,7 +17,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.niqr.todoapp.R
 import com.niqr.todoapp.ui.edit.model.TaskEditAction
-import com.niqr.todoapp.ui.theme.ExtendedTheme
+import com.niqr.core.ui.theme.ExtendedTheme
 
 @Composable
 fun TaskEditTextField(

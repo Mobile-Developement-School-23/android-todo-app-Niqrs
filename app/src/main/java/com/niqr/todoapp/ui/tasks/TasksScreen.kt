@@ -15,6 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.niqr.core.ui.theme.ExtendedTheme
 import com.niqr.todoapp.ui.components.pullRefresh.PullRefreshIndicator
 import com.niqr.todoapp.ui.components.pullRefresh.pullRefresh
 import com.niqr.todoapp.ui.components.pullRefresh.rememberPullRefreshState
@@ -25,7 +26,6 @@ import com.niqr.todoapp.ui.tasks.components.TasksUiEventHandler
 import com.niqr.todoapp.ui.tasks.model.TasksAction
 import com.niqr.todoapp.ui.tasks.model.TasksEvent
 import com.niqr.todoapp.ui.tasks.model.TasksUiState
-import com.niqr.todoapp.ui.theme.ExtendedTheme
 import kotlinx.coroutines.flow.Flow
 
 @Composable

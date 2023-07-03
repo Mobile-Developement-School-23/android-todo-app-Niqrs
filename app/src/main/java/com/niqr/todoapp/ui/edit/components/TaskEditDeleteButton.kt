@@ -18,8 +18,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.niqr.todoapp.R
 import com.niqr.todoapp.ui.edit.model.TaskEditAction
-import com.niqr.todoapp.ui.theme.ExtendedTheme
-import com.niqr.todoapp.ui.theme.Red
+import com.niqr.core.ui.theme.ExtendedTheme
+import com.niqr.core.ui.theme.Red
 
 @Composable
 fun TaskEditDeleteButton(

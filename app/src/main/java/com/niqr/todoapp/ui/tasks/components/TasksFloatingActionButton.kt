@@ -6,8 +6,8 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import com.niqr.todoapp.ui.tasks.model.TasksAction
-import com.niqr.todoapp.ui.theme.Blue
-import com.niqr.todoapp.ui.theme.White
+import com.niqr.core.ui.theme.Blue
+import com.niqr.core.ui.theme.White
 
 @Composable
 fun TasksFloatingActionButton(

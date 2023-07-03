@@ -23,8 +23,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.niqr.todoapp.R
 import com.niqr.todoapp.ui.tasks.model.TasksAction
-import com.niqr.todoapp.ui.theme.Blue
-import com.niqr.todoapp.ui.theme.ExtendedTheme
+import com.niqr.core.ui.theme.Blue
+import com.niqr.core.ui.theme.ExtendedTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

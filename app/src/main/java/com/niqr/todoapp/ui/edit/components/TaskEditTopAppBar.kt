@@ -17,8 +17,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import com.niqr.todoapp.R
 import com.niqr.todoapp.ui.edit.model.TaskEditAction
-import com.niqr.todoapp.ui.theme.Blue
-import com.niqr.todoapp.ui.theme.ExtendedTheme
+import com.niqr.core.ui.theme.Blue
+import com.niqr.core.ui.theme.ExtendedTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

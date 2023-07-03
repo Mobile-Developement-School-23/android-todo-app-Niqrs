@@ -25,9 +25,9 @@ import androidx.compose.ui.unit.dp
 import com.niqr.todoapp.R
 import com.niqr.todoapp.data.model.Priority
 import com.niqr.todoapp.ui.edit.model.TaskEditAction
-import com.niqr.todoapp.ui.theme.ExtendedTheme
-import com.niqr.todoapp.ui.theme.GrayLight
-import com.niqr.todoapp.ui.theme.Red
+import com.niqr.core.ui.theme.ExtendedTheme
+import com.niqr.core.ui.theme.GrayLight
+import com.niqr.core.ui.theme.Red
 import com.niqr.todoapp.utils.toStringResource
 
 @Composable

@@ -31,9 +31,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.niqr.todoapp.R
 import com.niqr.todoapp.ui.edit.model.TaskEditAction
-import com.niqr.todoapp.ui.theme.Blue
-import com.niqr.todoapp.ui.theme.BlueTranslucent
-import com.niqr.todoapp.ui.theme.ExtendedTheme
+import com.niqr.core.ui.theme.Blue
+import com.niqr.core.ui.theme.BlueTranslucent
+import com.niqr.core.ui.theme.ExtendedTheme
 import com.niqr.todoapp.utils.toLong
 import com.niqr.todoapp.utils.toStringDate
 import java.time.LocalDate
