@@ -6,8 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.niqr.auth.domain.AuthInfoProvider
 import com.niqr.core.ui.theme.ExtendedTheme
-import com.niqr.todoapp.data.abstraction.AuthInfoProvider
 import com.niqr.todoapp.ui.auth.AuthScreenRoutePattern
 import com.niqr.todoapp.ui.auth.authScreen
 import com.niqr.todoapp.ui.auth.navigateToAuth

@@ -22,12 +22,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
-import com.niqr.todoapp.R
-import com.niqr.todoapp.data.model.Priority
-import com.niqr.todoapp.ui.edit.model.TaskEditAction
 import com.niqr.core.ui.theme.ExtendedTheme
 import com.niqr.core.ui.theme.GrayLight
 import com.niqr.core.ui.theme.Red
+import com.niqr.tasks.domain.model.Priority
+import com.niqr.todoapp.R
+import com.niqr.todoapp.ui.edit.model.TaskEditAction
 import com.niqr.todoapp.utils.toStringResource
 
 @Composable

@@ -5,9 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.niqr.todoapp.data.abstraction.AuthRepository
-import com.niqr.todoapp.data.abstraction.TodoItemsRepository
-import com.niqr.todoapp.data.model.TodoItem
+import com.niqr.tasks.domain.model.TodoItem
+import com.niqr.tasks.domain.repo.TodoItemsRepository
+import com.niqr.auth.domain.AuthRepository
 import com.niqr.todoapp.ui.tasks.model.TasksAction
 import com.niqr.todoapp.ui.tasks.model.TasksEvent
 import com.niqr.todoapp.ui.tasks.model.TasksUiState

@@ -49,16 +49,16 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
-import com.niqr.todoapp.R
-import com.niqr.todoapp.data.model.Priority
-import com.niqr.todoapp.data.model.TodoItem
-import com.niqr.todoapp.ui.tasks.model.TasksAction
 import com.niqr.core.ui.theme.ExtendedTheme
 import com.niqr.core.ui.theme.Gray
 import com.niqr.core.ui.theme.GrayLight
 import com.niqr.core.ui.theme.Green
 import com.niqr.core.ui.theme.Red
 import com.niqr.core.ui.theme.White
+import com.niqr.tasks.domain.model.Priority
+import com.niqr.tasks.domain.model.TodoItem
+import com.niqr.todoapp.R
+import com.niqr.todoapp.ui.tasks.model.TasksAction
 import com.niqr.todoapp.utils.toStringDate
 
 

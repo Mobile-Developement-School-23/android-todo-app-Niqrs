@@ -1,6 +1,6 @@
 package com.niqr.todoapp.ui.tasks.model
 
-import com.niqr.todoapp.data.model.TodoItem
+import com.niqr.tasks.domain.model.TodoItem
 
 sealed class TasksAction {
     object CreateTask: TasksAction()

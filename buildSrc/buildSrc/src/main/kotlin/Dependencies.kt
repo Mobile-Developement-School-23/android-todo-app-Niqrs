@@ -31,7 +31,8 @@ object Dependencies {
         const val gradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:$version"
 
         const val android = "com.google.dagger:hilt-android:$version"
-        const val androidCompiler = "com.google.dagger:hilt-android-compiler:$version" //kapt
+        const val daggerAndroidCompiler = "com.google.dagger:hilt-android-compiler:$version" //kapt
+        const val androidCompiler = "androidx.hilt:hilt-compiler:1.0.0"
         const val navigation = "androidx.hilt:hilt-navigation-compose:1.0.0"
         const val workManager = "androidx.hilt:hilt-work:1.0.0"
     }

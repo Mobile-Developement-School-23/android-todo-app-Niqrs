@@ -35,7 +35,7 @@ android {
 
 dependencies {
     implementation(Dependencies.Hilt.android)
-    kapt(Dependencies.Hilt.androidCompiler)
+    kapt(Dependencies.Hilt.daggerAndroidCompiler)
 
     testImplementation(Dependencies.Testing.junit4)
     androidTestImplementation(Dependencies.Testing.junitAndroidExt)

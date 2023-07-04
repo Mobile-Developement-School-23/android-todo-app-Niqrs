@@ -53,11 +53,14 @@ android {
 
 dependencies {
     implementation(project(":core:ui"))
+    implementation(project(":core:data"))
 
     implementation(project(":auth:ui"))
+    implementation(project(":auth:domain"))
     implementation(project(":auth:data"))
 
     implementation(project(":tasks:ui"))
+    implementation(project(":tasks:domain"))
     implementation(project(":tasks:data"))
 
     implementation(project(":edit:ui"))
@@ -70,7 +73,7 @@ dependencies {
 
     //DI
     implementation(Dependencies.Hilt.android)
-    kapt(Dependencies.Hilt.androidCompiler)
+    kapt(Dependencies.Hilt.daggerAndroidCompiler)
     implementation(Dependencies.Hilt.navigation)
 
     //Compose
@@ -82,29 +85,9 @@ dependencies {
     //Yandex
     implementation(Dependencies.Other.yandexAuthSdk)
 
-    //Datastore
-    implementation(Dependencies.Other.datastore)
-
-    //WorkManager
-    implementation(Dependencies.Other.workManager)
-    implementation(Dependencies.Hilt.workManager)
-
-    //Room
-    implementation(Dependencies.Room.roomKtx)
-    annotationProcessor(Dependencies.Room.roomCompiler)
-    ksp(Dependencies.Room.roomCompiler)
-
-    //Ktor
-    implementation(Dependencies.Ktor.core)
-    implementation(Dependencies.Ktor.cio)
-    implementation(Dependencies.Ktor.contentNegotiation)
-    implementation(Dependencies.Ktor.serializationJson)
-    implementation(Dependencies.Ktor.slf4fNop)
-
     //Test
     testImplementation(Dependencies.Testing.junit4)
     androidTestImplementation(Dependencies.Testing.junitAndroidExt)
-    androidTestImplementation(Dependencies.Testing.espressoCore)
 }
 
 kapt {

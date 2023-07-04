@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.niqr.todoapp.data.abstraction.AuthRepository
+import com.niqr.auth.domain.AuthRepository
 import com.niqr.todoapp.ui.auth.model.AuthAction
 import com.niqr.todoapp.ui.auth.model.AuthEvent
 import com.niqr.todoapp.ui.auth.model.AuthUiState
@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AuthViewModel @Inject constructor(
+internal class AuthViewModel @Inject constructor(
     private val repository: AuthRepository
 ): ViewModel() {
     var uiState by mutableStateOf(AuthUiState())

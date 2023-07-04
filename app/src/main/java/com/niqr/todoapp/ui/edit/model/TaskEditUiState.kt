@@ -1,6 +1,6 @@
 package com.niqr.todoapp.ui.edit.model
 
-import com.niqr.todoapp.data.model.Priority
+import com.niqr.tasks.domain.model.Priority
 import com.niqr.todoapp.utils.tomorrowLocalDate
 import java.time.LocalDate
 

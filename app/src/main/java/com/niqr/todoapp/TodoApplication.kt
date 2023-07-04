@@ -1,12 +1,10 @@
 package com.niqr.todoapp
 
 import android.app.Application
-import android.app.NotificationChannel
 import android.app.NotificationManager
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
-import com.niqr.todoapp.utils.SYNCHRONIZATION_CHANNEL
-import com.niqr.todoapp.utils.SYNCHRONIZATION_CHANNEL_ID
+import com.niqr.other.work.SynchronizationNotificationChannel
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
@@ -17,15 +15,10 @@ class TodoApplication: Application(), Configuration.Provider {
 
     override fun onCreate() {
         super.onCreate()
-
-        val channel = NotificationChannel(
-            SYNCHRONIZATION_CHANNEL_ID,
-            SYNCHRONIZATION_CHANNEL,
-            NotificationManager.IMPORTANCE_NONE
-        )
+        val syncChannel = SynchronizationNotificationChannel()
 
         val notificationManager = getSystemService(NotificationManager::class.java)
-        notificationManager.createNotificationChannel(channel)
+        notificationManager.createNotificationChannel(syncChannel.channel)
     }
 
     override fun getWorkManagerConfiguration(): Configuration =

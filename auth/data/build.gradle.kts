@@ -10,4 +10,7 @@ dependencies {
     implementation(project(":core:data"))
 
     implementation(project(":auth:domain"))
+
+    //Datastore
+    implementation(Dependencies.Other.datastore)
 }

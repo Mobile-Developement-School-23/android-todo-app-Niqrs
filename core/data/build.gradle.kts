@@ -5,3 +5,15 @@ plugins {
 android {
     namespace = ProjectConfig.namespace("core.data")
 }
+
+dependencies {
+    //Room
+    api(Dependencies.Room.roomKtx)
+
+    //Ktor
+    implementation(Dependencies.Ktor.core)
+    api(Dependencies.Ktor.cio)
+    api(Dependencies.Ktor.serializationJson)
+    implementation(Dependencies.Ktor.contentNegotiation)
+    implementation(Dependencies.Ktor.slf4fNop)
+}

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="synchronizing">Синхронизация…</string>
+    <string name="synchronization_in_progress">Синхронизация данных</string>
+</resources>

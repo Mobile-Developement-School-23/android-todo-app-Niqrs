@@ -9,10 +9,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.work.WorkManager
+import com.niqr.other.work.utils.SYNCHRONIZATION_WORK_TAG
 import com.niqr.todoapp.R
 import com.niqr.todoapp.ui.tasks.model.TasksAction
 import com.niqr.todoapp.ui.tasks.model.TasksEvent
-import com.niqr.todoapp.utils.SYNCHRONIZATION_WORK_TAG
 import kotlinx.coroutines.flow.Flow
 
 @Composable
