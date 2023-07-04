@@ -1,117 +1,104 @@
 package com.niqr.todoapp.ui.taskEdit
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.niqr.todoapp.data.TodoItemsRepository
-import com.niqr.todoapp.data.model.Priority
+import com.niqr.todoapp.data.abstraction.TodoItemsRepository
 import com.niqr.todoapp.data.model.TodoItem
-import com.niqr.todoapp.ui.taskEdit.model.TaskEditUiEvent
+import com.niqr.todoapp.ui.taskEdit.model.TaskEditAction
+import com.niqr.todoapp.ui.taskEdit.model.TaskEditEvent
+import com.niqr.todoapp.ui.taskEdit.model.TaskEditUiState
 import com.niqr.todoapp.utils.dateFromLong
-import com.niqr.todoapp.utils.toLong
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.time.LocalDate
-import java.time.LocalDateTime
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
 class TaskEditViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     private val repo: TodoItemsRepository
 ): ViewModel() {
     private var isEditing = false
     private var previousTask: TodoItem? = null
 
+    init {
+        val taskId: String? = savedStateHandle[TaskId]
+        taskId?.let {
+            setupTask(taskId)
+        }
+    }
 
-    private val _uiEvent = Channel<TaskEditUiEvent>()
+    var uiState by mutableStateOf(TaskEditUiState())
+        private set
+
+    private val _uiEvent = Channel<TaskEditEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
-
-    private val _description = MutableStateFlow("")
-    val description = _description.asStateFlow()
-
-    private val _priority = MutableStateFlow(Priority.COMMON)
-    val priority = _priority.asStateFlow()
-
-    private val _date = MutableStateFlow<LocalDate>(LocalDate.now().plusDays(1))
-    val date = _date.asStateFlow()
-
-    private val _dateVisibility = MutableStateFlow(false)
-    val dateVisibility = _dateVisibility.asStateFlow()
-
-    fun updateDescription(description: String) {
-        _description.update {
-            description
+    fun onAction(action: TaskEditAction) {
+        when(action) {
+            is TaskEditAction.DescriptionChange -> uiState = uiState.copy(description = action.description)
+            is TaskEditAction.UpdateDeadlineVisibility -> uiState = uiState.copy(isDeadlineVisible = action.visible)
+            is TaskEditAction.UpdatePriority -> uiState = uiState.copy(priority = action.priority)
+            is TaskEditAction.UpdateDeadline -> uiState = uiState.copy(deadline = dateFromLong(action.deadline))
+            TaskEditAction.SaveTask -> saveTask()
+            TaskEditAction.DeleteTask -> deleteTask()
+            TaskEditAction.NavigateUp -> viewModelScope.launch { _uiEvent.send(TaskEditEvent.NavigateBack) }
         }
     }
 
-    fun updatePriority(priority: Priority) {
-        _priority.update {
-            priority
-        }
-    }
-
-    fun updateDate(time: Long) {
-        val newDate = dateFromLong(time)
-        _date.update {
-            newDate
-        }
-    }
-
-    fun updateDateVisibility(visible: Boolean) {
-        _dateVisibility.update {
-            visible
-        }
-    }
-
-    fun saveTask() {
-        if (_description.value.isBlank())
+    private fun saveTask() {
+        if (uiState.description.isBlank())
             return
 
         val newTask = if (isEditing)
             previousTask!!.copy(
-                description = _description.value,
-                priority = _priority.value,
-                deadline = if (_dateVisibility.value) _date.value else null,
-                editedAt = LocalDateTime.now()
+                description = uiState.description,
+                priority = uiState.priority,
+                deadline = if (uiState.isDeadlineVisible) uiState.deadline else null
             )
         else
             TodoItem(
-                id = "1",
-                description = _description.value,
-                priority = _priority.value,
-                deadline = if (_dateVisibility.value) _date.value else null,
+                description = uiState.description,
+                priority = uiState.priority,
+                deadline = if (uiState.isDeadlineVisible) uiState.deadline else null
             )
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             if (isEditing) repo.updateTodoItem(newTask)
             else repo.addTodoItem(newTask)
-            _uiEvent.send(TaskEditUiEvent.NavigateBack)
+            _uiEvent.send(TaskEditEvent.SaveTask)
         }
     }
 
-    fun deleteTask() {
-        viewModelScope.launch {
+    private fun deleteTask() {
+        viewModelScope.launch(Dispatchers.IO) {
             if (isEditing)
-                previousTask?.let { repo.deleteTodoItem(it.id) }
-            _uiEvent.send(TaskEditUiEvent.NavigateBack)
+                previousTask?.let { repo.deleteTodoItem(it) }
+            _uiEvent.send(TaskEditEvent.NavigateBack)
         }
     }
 
-    fun setupTask(id: String) {
-        viewModelScope.launch {
+    private fun setupTask(id: String) {
+        viewModelScope.launch(Dispatchers.IO) {
             repo.findItemById(id)?.let { item ->
                 isEditing = true
                 previousTask = item
-                updateDescription(item.description)
-                updatePriority(item.priority)
-                item.deadline?.let {
-                    updateDate(it.toLong())
-                    updateDateVisibility(true)
+
+                withContext(Dispatchers.Main) {
+                    uiState = uiState.copy(
+                        description = item.description,
+                        priority = item.priority,
+                        deadline = item.deadline ?: uiState.deadline,
+                        isDeadlineVisible = item.deadline != null,
+                        isEditing = true
+                    )
                 }
             }
         }
