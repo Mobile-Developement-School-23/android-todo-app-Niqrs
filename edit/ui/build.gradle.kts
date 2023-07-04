@@ -11,4 +11,5 @@ dependencies {
     implementation(project(":core:ui"))
 
     implementation(project(":edit:domain"))
+    implementation(project(":tasks:domain"))
 }

@@ -11,4 +11,7 @@ dependencies {
     implementation(project(":core:ui"))
 
     implementation(project(":auth:domain"))
+
+    //Yandex
+    implementation(Dependencies.Other.yandexAuthSdk)
 }

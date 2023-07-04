@@ -82,9 +82,6 @@ dependencies {
     implementation(Dependencies.Compose.material3)
     implementation(Dependencies.Compose.navigation)
 
-    //Yandex
-    implementation(Dependencies.Other.yandexAuthSdk)
-
     //Test
     testImplementation(Dependencies.Testing.junit4)
     androidTestImplementation(Dependencies.Testing.junitAndroidExt)

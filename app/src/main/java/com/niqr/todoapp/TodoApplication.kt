@@ -25,5 +25,4 @@ class TodoApplication: Application(), Configuration.Provider {
         Configuration.Builder()
             .setWorkerFactory(workerFactory)
             .build()
-
 }
