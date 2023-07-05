@@ -1,6 +1,8 @@
 package com.niqr.edit.ui
 
+import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -27,12 +29,12 @@ fun NavGraphBuilder.taskEditScreen(
         route = TaskEditScreenRoutePattern,
         arguments = listOf(navArgument(TaskEdit) {
             nullable = true
-        }
-        )
+        })
     ) {
         val viewModel: TaskEditViewModel = hiltViewModel()
+        val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         TaskEditScreen(
-            uiState = viewModel.uiState,
+            uiState = uiState,
             uiEvent = viewModel.uiEvent,
             onAction = viewModel::onAction,
             onNavigateUp = onNavigateUp,

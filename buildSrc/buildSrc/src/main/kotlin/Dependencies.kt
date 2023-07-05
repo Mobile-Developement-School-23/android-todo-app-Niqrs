@@ -41,11 +41,13 @@ object Dependencies {
         private const val version = "1.4.3"
         private const val material3Version = "1.1.1"
         private const val navigationVersion = "2.6.0"
+        private const val lifecycleRuntimeVersion = "2.6.1"
 
         const val ui = "androidx.compose.ui:ui:$version"
         const val tooling = "androidx.compose.ui:ui-tooling:$version"
         const val material3 = "androidx.compose.material3:material3:$material3Version"
         const val navigation = "androidx.navigation:navigation-compose:$navigationVersion"
+        const val lifecycleRuntime = "androidx.lifecycle:lifecycle-runtime-compose:$lifecycleRuntimeVersion"
     }
 
     object Room {

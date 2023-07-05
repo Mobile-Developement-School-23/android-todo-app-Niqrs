@@ -1,13 +1,10 @@
 package com.niqr.tasks.ui
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.niqr.auth.domain.AuthRepository
 import com.niqr.tasks.domain.model.TodoItem
 import com.niqr.tasks.domain.repo.TodoItemsRepository
-import com.niqr.auth.domain.AuthRepository
 import com.niqr.tasks.ui.model.TasksAction
 import com.niqr.tasks.ui.model.TasksEvent
 import com.niqr.tasks.ui.model.TasksUiState
@@ -15,9 +12,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,8 +27,8 @@ class TasksViewModel @Inject constructor(
     private val authRepo: AuthRepository,
     private val todoRepo: TodoItemsRepository
 ): ViewModel() {
-    var uiState by mutableStateOf(TasksUiState())
-        private set
+    private val _uiState = MutableStateFlow(TasksUiState())
+    val uiState = _uiState.asStateFlow()
 
     init {
         setupTodoItems()
@@ -58,8 +58,10 @@ class TasksViewModel @Inject constructor(
                     else -> tasks.filter { !it.isDone }
                 }
                 Pair(doneVisible, newTasks)
-            }.collectLatest {
-                uiState = uiState.copy(doneVisible = it.first, tasks = it.second)
+            }.collectLatest { pair ->
+                _uiState.update {
+                    uiState.value.copy(doneVisible = pair.first, tasks = pair.second)
+                }
             }
         }
     }
@@ -83,7 +85,7 @@ class TasksViewModel @Inject constructor(
     }
 
     private fun updateDoneVisibility(visible: Boolean) {
-        uiState = uiState.copy(doneVisible = visible)
+        _uiState.update { uiState.value.copy(doneVisible = visible) }
         viewModelScope.launch(Dispatchers.IO) {
             todoRepo.updateDoneTodoItemsVisibility(visible)
         }
@@ -91,10 +93,10 @@ class TasksViewModel @Inject constructor(
 
     private fun refreshTasks() {
         viewModelScope.launch {
-            uiState = uiState.copy(isRefreshing = true)
+            _uiState.update { uiState.value.copy(isRefreshing = true) }
             if (!todoRepo.refreshTodoItems())
                 _uiEvent.send(TasksEvent.ConnectionError)
-            uiState = uiState.copy(isRefreshing = false)
+            _uiState.update { uiState.value.copy(isRefreshing = false) }
         }
     }
 
