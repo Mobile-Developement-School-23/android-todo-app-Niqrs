@@ -27,7 +27,8 @@ fun TodoNavigation(authProvider: AuthInfoProvider) {
     ) {
         NavHost(
             navController = navController,
-            startDestination = if (authProvider.authInfo().token.isBlank()) AuthScreenRoutePattern else TasksScreenRoutePattern
+            startDestination = if (authProvider.authInfo().token.isBlank()) AuthScreenRoutePattern
+                else TasksScreenRoutePattern
         ) {
             authScreen(
                 onSuccessAuth = navController::navigateToTasks
