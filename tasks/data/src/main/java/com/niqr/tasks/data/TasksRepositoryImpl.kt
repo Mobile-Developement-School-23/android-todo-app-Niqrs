@@ -8,6 +8,7 @@ import com.niqr.tasks.data.model.TodoItemDto
 import com.niqr.tasks.data.remote.TasksService
 import com.niqr.tasks.data.remote.model.RequestError
 import com.niqr.tasks.data.remote.model.RequestResult
+import com.niqr.tasks.data.utils.TasksMerger
 import com.niqr.tasks.domain.model.TodoItem
 import com.niqr.tasks.domain.repo.TodoItemsRepository
 import kotlinx.coroutines.CoroutineScope
@@ -31,6 +32,7 @@ class TasksRepositoryImpl @Inject constructor(
     private val repoScope = CoroutineScope(Dispatchers.IO)
     private val deviceId by lazy { authProvider.authInfo().deviceId }
     private val recentlyDeleted = HashSet<String>()
+    private val tasksMerger = TasksMerger()
 
     private var isDoneVisibleFlow = MutableStateFlow(true)
 
@@ -83,9 +85,13 @@ class TasksRepositoryImpl @Inject constructor(
         when(val result = service.getTasks()) {
             is RequestResult.Success -> {
                 authProvider.updateRevision(result.value.revision)
-                val newTasks = mergeTasks(tasksFLow.value, result.value.tasks)
+
+                val newTasks = tasksMerger.mergeNewTasksWithOld(tasksFLow.value, result.value.tasks)
                 dao.replaceAll(newTasks)
                 recentlyDeleted.clear()
+
+                if (newTasks != result)
+                    pushTodoItems()
             }
             is RequestResult.Error -> {
                 //Should here really be something?
@@ -100,10 +106,13 @@ class TasksRepositoryImpl @Inject constructor(
                     return false
             }
             is RequestResult.Success -> {
-                val newTasks = mergeRefreshedTasks(tasksFLow.value, result.value.tasks)
+                val newTasks = tasksMerger.mergeOldTasksWithNew(tasksFLow.value, result.value.tasks, recentlyDeleted)
                 dao.replaceAll(newTasks)
-                repoScope.launch { service.mergeTasks(newTasks) }
-                recentlyDeleted.clear()
+
+                repoScope.launch {
+                    service.mergeTasks(newTasks)
+                    recentlyDeleted.clear()
+                }
             }
         }
         return true
@@ -119,35 +128,5 @@ class TasksRepositoryImpl @Inject constructor(
     override suspend fun clearTodoItems() {
         recentlyDeleted.clear()
         dao.clearAll()
-    }
-
-    private fun mergeTasks(old: List<TodoItemDto>, new: List<TodoItemDto>): List<TodoItemDto> {
-        val newMapped = new.associateBy(TodoItemDto::id).toMutableMap()
-        old.forEach { oldValue ->
-            val newValue = newMapped[oldValue.id]
-            if (newValue != null && oldValue.editedAt > newValue.editedAt)
-                newMapped[newValue.id] = oldValue
-        }
-        return newMapped.values.toList()
-    }
-
-    private fun mergeRefreshedTasks(old: List<TodoItemDto>, new: List<TodoItemDto>): List<TodoItemDto> {
-        val oldMapped = old.associateBy(TodoItemDto::id).toMutableMap()
-        val diff = mutableListOf<TodoItemDto>()
-
-        new.forEach { newValue ->
-            val oldValue = oldMapped[newValue.id]
-
-            if (oldValue != null) {
-                if (newValue.editedAt > oldValue.editedAt)
-                    oldMapped[newValue.id] = newValue
-            } else {
-                diff.add(newValue)
-            }
-        }
-
-        val newTasks = diff.filter { !recentlyDeleted.contains(it.id) }
-
-        return oldMapped.values + newTasks
     }
 }
