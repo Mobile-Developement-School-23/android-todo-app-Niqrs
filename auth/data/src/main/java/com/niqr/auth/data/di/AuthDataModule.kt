@@ -7,15 +7,11 @@ import com.niqr.auth.domain.AuthInfoProvider
 import com.niqr.auth.domain.AuthRepository
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent::class)
 object AuthDataModule {
     @Provides
-    @Singleton
+    @AuthProviderScope
     fun provideAuthRepository(
         authProvider: AuthInfoMutableProvider
     ): AuthRepository {
@@ -23,7 +19,7 @@ object AuthDataModule {
     }
 
     @Provides
-    @Singleton
+    @AuthProviderScope
     fun provideAuthInfoMutableProvider(
         manager: AuthInfoDataStoreManager
     ): AuthInfoMutableProvider {
@@ -31,7 +27,7 @@ object AuthDataModule {
     }
 
     @Provides
-    @Singleton
+    @AuthProviderScope
     fun provideAuthInfoProvider(
         manager: AuthInfoDataStoreManager
     ): AuthInfoProvider {

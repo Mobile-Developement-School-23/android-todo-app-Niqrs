@@ -1,11 +1,13 @@
 package com.niqr.tasks.ui
 
 import androidx.compose.runtime.getValue
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.niqr.core.ui.utils.daggerViewModel
+import com.niqr.tasks.ui.di.TasksUiComponentProvider
 
 const val TasksScreenRoutePattern = "tasks"
 
@@ -22,7 +24,11 @@ fun NavGraphBuilder.tasksScreen(
     onSignOut: () -> Unit
 ) {
     composable(TasksScreenRoutePattern) {
-        val viewModel: TasksViewModel = hiltViewModel()
+        val context = LocalContext.current
+        val viewModel = daggerViewModel {
+            (context.applicationContext as TasksUiComponentProvider)
+                .provideTasksUiComponent().getViewModel()
+        }
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         TasksScreen(
             uiState = uiState,

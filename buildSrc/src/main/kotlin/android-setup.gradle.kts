@@ -34,11 +34,16 @@ android {
 }
 
 dependencies {
-    implementation(Dependencies.Hilt.android)
-    kapt(Dependencies.Hilt.daggerAndroidCompiler)
+    implementation(Dependencies.Kotlin.coroutines)
+    implementation(Dependencies.Dagger.dependency)
+    kapt(Dependencies.Dagger.compiler)
 
     testImplementation(Dependencies.Testing.junit4)
     androidTestImplementation(Dependencies.Testing.junitAndroidExt)
+}
+
+kapt {
+    correctErrorTypes = true
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
@@ -46,3 +51,4 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
         jvmTarget = "17"
     }
 }
+

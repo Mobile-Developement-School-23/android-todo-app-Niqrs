@@ -1,9 +1,11 @@
 package com.niqr.auth.ui
 
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.niqr.auth.ui.di.AuthUiComponentProvider
+import com.niqr.core.ui.utils.daggerViewModel
 
 const val AuthScreenRoutePattern = "auth"
 
@@ -18,7 +20,12 @@ fun NavGraphBuilder.authScreen(
     onSuccessAuth: () -> Unit
 ) {
     composable(AuthScreenRoutePattern) {
-        val viewModel: AuthViewModel = hiltViewModel()
+        val context = LocalContext.current
+        val viewModel: AuthViewModel = daggerViewModel {
+            (context.applicationContext as AuthUiComponentProvider)
+                .provideAuthUiComponent().getViewModel()
+        }
+
         AuthScreen(
             uiState = viewModel.uiState,
             uiEvent = viewModel.uiEvent,

@@ -2,7 +2,6 @@ package com.niqr.other.work.workers
 
 import android.content.Context
 import androidx.core.app.NotificationCompat
-import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.ForegroundInfo
 import androidx.work.WorkerParameters
@@ -11,11 +10,11 @@ import com.niqr.other.work.R
 import com.niqr.other.work.utils.SYNCHRONIZATION_CHANNEL_ID
 import com.niqr.tasks.domain.repo.TodoItemsRepository
 import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlin.random.Random
 
-@HiltWorker
-internal class ScheduledSynchronizationWorker @AssistedInject constructor(
+class ScheduledSynchronizationWorker @AssistedInject constructor(
     @Assisted private val context: Context,
     @Assisted private val params: WorkerParameters,
     private val repo: TodoItemsRepository,
@@ -36,5 +35,10 @@ internal class ScheduledSynchronizationWorker @AssistedInject constructor(
         if (authProvider.authInfo().token.isNotBlank() && !repo.refreshTodoItems())
             return Result.retry()
         return Result.success()
+    }
+
+    @AssistedFactory
+    interface Factory {
+        fun create(appContext: Context, params: WorkerParameters): SynchronizationWorker
     }
 }

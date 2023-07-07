@@ -1,5 +1,6 @@
 package com.niqr.tasks.ui
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.niqr.auth.domain.AuthRepository
@@ -8,7 +9,6 @@ import com.niqr.tasks.domain.repo.TodoItemsRepository
 import com.niqr.tasks.ui.model.TasksAction
 import com.niqr.tasks.ui.model.TasksEvent
 import com.niqr.tasks.ui.model.TasksUiState
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
@@ -22,7 +22,6 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
-@HiltViewModel
 class TasksViewModel @Inject constructor(
     private val authRepo: AuthRepository,
     private val todoRepo: TodoItemsRepository
@@ -110,5 +109,12 @@ class TasksViewModel @Inject constructor(
             todoRepo.clearTodoItems()
             _uiEvent.send(TasksEvent.SignOut)
         }
+    }
+
+    override fun onCleared() {
+        Log.d("VM_TAG", "ON_CLEARED_VIEW_MODEL")
+        Log.d("VM_TAG", "ON_CLEARED_VIEW_MODEL")
+        Log.d("VM_TAG", "ON_CLEARED_VIEW_MODEL")
+        super.onCleared()
     }
 }

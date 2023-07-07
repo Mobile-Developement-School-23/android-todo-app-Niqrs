@@ -1,12 +1,14 @@
 package com.niqr.edit.ui
 
 import androidx.compose.runtime.getValue
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.niqr.core.ui.utils.daggerViewModel
+import com.niqr.edit.ui.di.EditUiComponentProvider
 
 internal const val TaskId = "taskId"
 private const val TaskEdit = "taskEdit"
@@ -31,7 +33,13 @@ fun NavGraphBuilder.taskEditScreen(
             nullable = true
         })
     ) {
-        val viewModel: TaskEditViewModel = hiltViewModel()
+        val context = LocalContext.current
+        val viewModel: TaskEditViewModel = daggerViewModel {
+            (context.applicationContext as EditUiComponentProvider)
+                .provideEditUiComponent().getViewModel()
+                .apply { setupViewModel(it.arguments) }
+        }
+
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         TaskEditScreen(
             uiState = uiState,

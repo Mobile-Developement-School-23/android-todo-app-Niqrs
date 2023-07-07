@@ -2,27 +2,35 @@ package com.niqr.todoapp
 
 import android.app.Application
 import android.app.NotificationManager
-import androidx.hilt.work.HiltWorkerFactory
-import androidx.work.Configuration
+import com.niqr.auth.ui.di.AuthUiComponent
+import com.niqr.auth.ui.di.AuthUiComponentProvider
+import com.niqr.edit.ui.di.EditUiComponent
+import com.niqr.edit.ui.di.EditUiComponentProvider
 import com.niqr.other.work.SynchronizationNotificationChannel
-import dagger.hilt.android.HiltAndroidApp
-import javax.inject.Inject
+import com.niqr.tasks.ui.di.TasksUiComponent
+import com.niqr.tasks.ui.di.TasksUiComponentProvider
+import com.niqr.todoapp.di.AppComponent
+import com.niqr.todoapp.di.DaggerAppComponent
 
-@HiltAndroidApp
-class TodoApplication: Application(), Configuration.Provider {
-    @Inject
-    lateinit var workerFactory: HiltWorkerFactory
+class TodoApplication: Application(),
+    AuthUiComponentProvider,
+    TasksUiComponentProvider,
+    EditUiComponentProvider {
+    lateinit var appComponent: AppComponent
 
     override fun onCreate() {
         super.onCreate()
+        appComponent = DaggerAppComponent.factory().create(this)
         val syncChannel = SynchronizationNotificationChannel()
 
         val notificationManager = getSystemService(NotificationManager::class.java)
         notificationManager.createNotificationChannel(syncChannel.channel)
     }
 
-    override fun getWorkManagerConfiguration(): Configuration =
-        Configuration.Builder()
-            .setWorkerFactory(workerFactory)
-            .build()
+    override fun provideAuthUiComponent(): AuthUiComponent =
+        appComponent.authUiComponent().create()
+    override fun provideTasksUiComponent(): TasksUiComponent =
+        appComponent.tasksUiComponent().create()
+    override fun provideEditUiComponent(): EditUiComponent =
+        appComponent.editUiComponent().create()
 }

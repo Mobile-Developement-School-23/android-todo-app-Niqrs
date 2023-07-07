@@ -26,10 +26,9 @@ include(":tasks:data")
 include(":tasks:domain")
 
 include(":edit:ui")
-include(":edit:data")
-include(":edit:domain")
 
 include(":core:ui")
 include(":core:data")
+include(":core:di")
 
 include(":other:work")

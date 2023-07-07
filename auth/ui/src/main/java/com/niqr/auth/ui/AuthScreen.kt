@@ -61,7 +61,7 @@ fun AuthScreen(
     }
 
     val authLauncher = rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) {
-        val yandexAuthToken = authSdk.extractToken(it.resultCode, it.data)
+        val yandexAuthToken = try { authSdk.extractToken(it.resultCode, it.data) } catch (_: Exception) { null }
         onAction(AuthAction.AuthResult(yandexAuthToken?.value))
     }
 

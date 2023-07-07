@@ -9,14 +9,12 @@ import com.niqr.auth.domain.AuthRepository
 import com.niqr.auth.ui.model.AuthAction
 import com.niqr.auth.ui.model.AuthEvent
 import com.niqr.auth.ui.model.AuthUiState
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@HiltViewModel
-internal class AuthViewModel @Inject constructor(
+class AuthViewModel @Inject constructor(
     private val repository: AuthRepository
 ): ViewModel() {
     var uiState by mutableStateOf(AuthUiState())

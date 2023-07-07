@@ -7,6 +7,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:di"))
+
     //Room
     api(Dependencies.Room.roomKtx)
 

@@ -1,6 +1,7 @@
 package com.niqr.other.work
 
 import android.content.Context
+import androidx.work.Configuration
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.ExistingWorkPolicy
@@ -9,6 +10,8 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.OutOfQuotaPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
+import com.niqr.other.work.di.SynchronizationWorkScope
+import com.niqr.other.work.factory.SynchronizationWorkerFactory
 import com.niqr.other.work.utils.PERIODIC_SYNCHRONIZATION_WORK
 import com.niqr.other.work.utils.PERIODIC_SYNCHRONIZATION_WORK_TAG
 import com.niqr.other.work.utils.SYNCHRONIZATION_WORK
@@ -16,13 +19,21 @@ import com.niqr.other.work.utils.SYNCHRONIZATION_WORK_TAG
 import com.niqr.other.work.workers.ScheduledSynchronizationWorker
 import com.niqr.other.work.workers.SynchronizationWorker
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-class SynchronizationWork(
-    context: Context
+@SynchronizationWorkScope
+class SynchronizationWork @Inject constructor(
+    context: Context,
+    syncWorkFactory: SynchronizationWorkerFactory
 ) {
     private val workManager: WorkManager
 
     init {
+        val syncWorkConfig = Configuration.Builder()
+            .setWorkerFactory(syncWorkFactory)
+            .build()
+        WorkManager.initialize(context, syncWorkConfig)
+
         workManager = WorkManager.getInstance(context)
     }
 

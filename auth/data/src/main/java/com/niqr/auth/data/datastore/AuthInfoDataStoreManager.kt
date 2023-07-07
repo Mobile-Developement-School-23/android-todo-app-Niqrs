@@ -2,19 +2,18 @@ package com.niqr.auth.data.datastore
 
 import android.content.Context
 import androidx.datastore.preferences.core.edit
+import com.niqr.auth.data.di.AuthProviderScope
 import com.niqr.auth.domain.AuthInfoMutableProvider
 import com.niqr.auth.domain.model.AuthInfo
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
+@AuthProviderScope
 class AuthInfoDataStoreManager @Inject constructor(
-    @ApplicationContext context: Context
+    context: Context
 ): AuthInfoMutableProvider {
     private val dataStore = context.dataStore
 

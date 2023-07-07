@@ -4,6 +4,7 @@ object Dependencies {
 
         const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$ver"
 
+        const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2"
         object Serialization {
             const val gradlePlugin = "org.jetbrains.kotlin:kotlin-serialization:$ver"
         }
@@ -25,16 +26,23 @@ object Dependencies {
         const val coreKtx = "androidx.core:core-ktx:$coreKtxVersion"
     }
 
-    object Hilt {
-        private const val version = "2.45"
+//    object Hilt {
+//        private const val version = "2.45"
+//
+//        const val gradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:$version"
+//
+//        const val android = "com.google.dagger:hilt-android:$version"
+//        const val daggerAndroidCompiler = "com.google.dagger:hilt-android-compiler:$version" //kapt
+//        const val androidCompiler = "androidx.hilt:hilt-compiler:1.0.0"
+//        const val navigation = "androidx.hilt:hilt-navigation-compose:1.0.0"
+//        const val workManager = "androidx.hilt:hilt-work:1.0.0"
+//    }
 
-        const val gradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:$version"
+    object Dagger {
+        private const val version = "2.46.1"
 
-        const val android = "com.google.dagger:hilt-android:$version"
-        const val daggerAndroidCompiler = "com.google.dagger:hilt-android-compiler:$version" //kapt
-        const val androidCompiler = "androidx.hilt:hilt-compiler:1.0.0"
-        const val navigation = "androidx.hilt:hilt-navigation-compose:1.0.0"
-        const val workManager = "androidx.hilt:hilt-work:1.0.0"
+        const val dependency = "com.google.dagger:dagger:$version"
+        const val compiler = "com.google.dagger:dagger-compiler:$version" //kapt
     }
 
     object Compose {

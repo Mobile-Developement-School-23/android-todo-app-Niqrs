@@ -2,7 +2,6 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.serialization")
-    id("com.google.dagger.hilt.android")
     id("com.google.devtools.ksp")
     id("kotlin-kapt")
 }
@@ -52,6 +51,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:di"))
     implementation(project(":core:ui"))
     implementation(project(":core:data"))
 
@@ -64,7 +64,6 @@ dependencies {
     implementation(project(":tasks:data"))
 
     implementation(project(":edit:ui"))
-    implementation(project(":edit:data"))
 
     implementation(project(":other:work"))
 
@@ -72,9 +71,11 @@ dependencies {
     implementation(Dependencies.Android.activityCompose)
 
     //DI
-    implementation(Dependencies.Hilt.android)
-    kapt(Dependencies.Hilt.daggerAndroidCompiler)
-    implementation(Dependencies.Hilt.navigation)
+    implementation(Dependencies.Dagger.dependency)
+    kapt(Dependencies.Dagger.compiler)
+//    implementation(Dependencies.Hilt.android)
+//    kapt(Dependencies.Hilt.daggerAndroidCompiler)
+//    implementation(Dependencies.Hilt.navigation)
 
     //Compose
     implementation(Dependencies.Compose.ui)

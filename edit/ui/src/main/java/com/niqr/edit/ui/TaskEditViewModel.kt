@@ -1,6 +1,6 @@
 package com.niqr.edit.ui
 
-import androidx.lifecycle.SavedStateHandle
+import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.niqr.edit.ui.model.TaskEditAction
@@ -9,7 +9,6 @@ import com.niqr.edit.ui.model.TaskEditUiState
 import com.niqr.edit.ui.utils.dateFromLong
 import com.niqr.tasks.domain.model.TodoItem
 import com.niqr.tasks.domain.repo.TodoItemsRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,20 +19,11 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-@HiltViewModel
 class TaskEditViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
     private val repo: TodoItemsRepository
 ): ViewModel() {
     private var isEditing = false
     private var previousTask: TodoItem? = null
-
-    init {
-        val taskId: String? = savedStateHandle[TaskId]
-        taskId?.let {
-            setupTask(taskId)
-        }
-    }
 
     private val _uiState = MutableStateFlow(TaskEditUiState())
     val uiState = _uiState.asStateFlow()
@@ -55,6 +45,13 @@ class TaskEditViewModel @Inject constructor(
             TaskEditAction.DeleteTask -> deleteTask()
             TaskEditAction.NavigateUp -> viewModelScope.launch {
                 _uiEvent.send(TaskEditEvent.NavigateBack) }
+        }
+    }
+
+    fun setupViewModel(arguments: Bundle?) {
+        val taskId: String? = arguments?.getString(TaskId)
+        taskId?.let {
+            setupTask(taskId)
         }
     }
 

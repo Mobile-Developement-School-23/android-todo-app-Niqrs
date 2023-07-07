@@ -10,6 +10,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:di"))
     implementation(project(":core:data"))
 
     implementation(project(":tasks:domain"))
