@@ -1,6 +1,5 @@
 package com.niqr.tasks.ui
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.niqr.auth.domain.AuthRepository
@@ -113,9 +112,6 @@ class TasksViewModel @Inject constructor(
     }
 
     override fun onCleared() {
-        Log.d("VM_TAG", "ON_CLEARED_VIEW_MODEL")
-        Log.d("VM_TAG", "ON_CLEARED_VIEW_MODEL")
-        Log.d("VM_TAG", "ON_CLEARED_VIEW_MODEL")
         super.onCleared()
     }
 }
