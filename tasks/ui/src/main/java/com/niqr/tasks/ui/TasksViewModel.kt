@@ -21,6 +21,13 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * An intermediate layer between tasks ui and tasks logic
+ *
+ * Uses [AuthRepository] to control user
+ *
+ * Uses [TodoItemsRepository] for getting and editing [TodoItem]s
+ */
 @FeatureScope
 class TasksViewModel @Inject constructor(
     private val authRepo: AuthRepository,

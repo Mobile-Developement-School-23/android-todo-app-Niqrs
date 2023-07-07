@@ -13,6 +13,11 @@ import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 
+/**
+ * Dagger network module
+ *
+ * Provides main [HttpClient]
+ */
 @Module
 class NetworkModule {
 

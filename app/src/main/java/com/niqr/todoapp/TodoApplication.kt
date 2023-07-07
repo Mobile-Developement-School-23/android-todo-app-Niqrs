@@ -12,6 +12,14 @@ import com.niqr.tasks.ui.di.TasksUiComponentProvider
 import com.niqr.todoapp.di.AppComponent
 import com.niqr.todoapp.di.DaggerAppComponent
 
+/**
+ * Custom Application class allows to hold reference to [appComponent]
+ * as long as application lives.
+ *
+ * Provides app features dagger components
+ *
+ * Creates [SynchronizationNotificationChannel]
+ */
 class TodoApplication: Application(),
     AuthUiComponentProvider,
     TasksUiComponentProvider,

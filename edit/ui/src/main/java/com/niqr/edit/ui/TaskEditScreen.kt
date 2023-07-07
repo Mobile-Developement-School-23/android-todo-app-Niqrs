@@ -23,6 +23,9 @@ import com.niqr.edit.ui.model.TaskEditEvent
 import com.niqr.edit.ui.model.TaskEditUiState
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * Screen to create/edit task
+ */
 @Composable
 fun TaskEditScreen(
     uiState: TaskEditUiState,

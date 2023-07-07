@@ -20,6 +20,11 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+/**
+ * An intermediate layer between edit ui and tasks logic
+ *
+ * Uses [TodoItemsRepository] to work with task
+ */
 @FeatureScope
 class TaskEditViewModel @Inject constructor(
     private val repo: TodoItemsRepository

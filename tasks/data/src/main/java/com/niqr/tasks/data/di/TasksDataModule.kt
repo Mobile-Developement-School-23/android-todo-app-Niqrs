@@ -12,6 +12,11 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 
+/**
+ * Dagger module of tasks data layer
+ *
+ * Provides [TaskDao] and [TodoItemsRepository]
+ */
 @Module(includes = [TasksDataBindingModule::class])
 class TasksDataModule {
     @Provides

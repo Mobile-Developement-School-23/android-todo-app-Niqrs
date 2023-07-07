@@ -11,6 +11,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
+/**
+ * Control info about current user
+ *
+ * Use [AuthInfo] model
+ */
 @AuthProviderScope
 class AuthInfoDataStoreManager @Inject constructor(
     context: Context

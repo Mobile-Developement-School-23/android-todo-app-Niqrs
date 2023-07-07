@@ -73,9 +73,6 @@ dependencies {
     //DI
     implementation(Dependencies.Dagger.dependency)
     kapt(Dependencies.Dagger.compiler)
-//    implementation(Dependencies.Hilt.android)
-//    kapt(Dependencies.Hilt.daggerAndroidCompiler)
-//    implementation(Dependencies.Hilt.navigation)
 
     //Compose
     implementation(Dependencies.Compose.ui)

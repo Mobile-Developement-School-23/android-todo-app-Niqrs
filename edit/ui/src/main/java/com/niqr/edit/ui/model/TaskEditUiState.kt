@@ -4,6 +4,9 @@ import com.niqr.edit.ui.utils.tomorrowLocalDate
 import com.niqr.tasks.domain.model.Priority
 import java.time.LocalDate
 
+/**
+ * Main state of edit screen
+ */
 data class TaskEditUiState(
     val description: String = "",
     val priority: Priority = Priority.COMMON,

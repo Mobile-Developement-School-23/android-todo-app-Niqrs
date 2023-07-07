@@ -3,6 +3,9 @@ package com.niqr.tasks.domain.repo
 import com.niqr.tasks.domain.model.TodoItem
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * Tasks repository abstraction
+ */
 interface TodoItemsRepository {
     fun todoItems(): Flow<List<TodoItem>>
     fun doneVisible(): Flow<Boolean>

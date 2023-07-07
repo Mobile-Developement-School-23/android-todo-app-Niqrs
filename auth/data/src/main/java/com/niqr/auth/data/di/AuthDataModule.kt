@@ -8,6 +8,9 @@ import com.niqr.auth.domain.AuthRepository
 import dagger.Binds
 import dagger.Module
 
+/**
+ * Dagger module of auth data layer
+ */
 @Module
 interface AuthDataModule {
     @Binds

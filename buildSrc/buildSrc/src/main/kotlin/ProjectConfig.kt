@@ -1,5 +1,8 @@
 import org.gradle.api.JavaVersion
 
+/**
+ * Provides android project config
+ */
 object ProjectConfig {
     fun namespace(name: String) = "com.niqr.$name"
 

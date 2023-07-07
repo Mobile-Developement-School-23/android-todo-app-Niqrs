@@ -17,6 +17,9 @@ import com.niqr.tasks.ui.TasksScreenRoutePattern
 import com.niqr.tasks.ui.navigateToTasks
 import com.niqr.tasks.ui.tasksScreen
 
+/**
+ * Root of app navigation graph
+ */
 @Composable
 fun TodoNavigation(authProvider: AuthInfoProvider) {
     val navController = rememberNavController()

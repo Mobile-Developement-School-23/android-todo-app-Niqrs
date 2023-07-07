@@ -8,6 +8,9 @@ import com.niqr.tasks.data.di.TasksDataModule
 import com.niqr.tasks.ui.di.TasksUiModule
 import dagger.Module
 
+/**
+ * Contains all dagger modules
+ */
 @Module(includes = [
     NetworkModule::class,
     AuthDataModule::class, AuthUiModule::class,

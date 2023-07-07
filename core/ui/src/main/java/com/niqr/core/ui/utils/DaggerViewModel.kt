@@ -4,6 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
+/**
+ * Provides view model from current dagger UiComponent
+ */
 @Composable
 inline fun <reified T : ViewModel> daggerViewModel(
    key: String? = null,

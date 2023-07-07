@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.niqr.core.ui.theme.ExtendedTheme
+import com.niqr.tasks.domain.model.TodoItem
 import com.niqr.tasks.ui.components.TasksFloatingActionButton
 import com.niqr.tasks.ui.components.TasksItem
 import com.niqr.tasks.ui.components.TasksTopAppBar
@@ -28,6 +29,9 @@ import com.niqr.tasks.ui.model.TasksEvent
 import com.niqr.tasks.ui.model.TasksUiState
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * Main app screen for watching and editing all user [TodoItem]s
+ */
 @Composable
 fun TasksScreen(
     uiState: TasksUiState,

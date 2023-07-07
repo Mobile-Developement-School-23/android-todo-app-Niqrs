@@ -18,6 +18,9 @@ fun NavController.navigateToTasks() {
     }
 }
 
+/**
+ * Tasks navigation graph
+ */
 fun NavGraphBuilder.tasksScreen(
     onNavigateToCreateTask: () -> Unit,
     onNavigateToEditTask: (String) -> Unit,

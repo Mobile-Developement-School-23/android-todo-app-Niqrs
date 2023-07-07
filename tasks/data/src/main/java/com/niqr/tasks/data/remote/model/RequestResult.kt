@@ -4,11 +4,17 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.statement.HttpResponse
 
+/**
+ * [HttpResponse] wrapper
+ */
 sealed class RequestResult<out T> {
     data class Success<T>(val value: T): RequestResult<T>()
     data class Error<T>(val e: RequestError): RequestResult<T>()
 }
 
+/**
+ * Custom request error representation
+ */
 enum class RequestError(val code: Int) {
     REVISION(400),
     AUTH(401),
@@ -18,6 +24,9 @@ enum class RequestError(val code: Int) {
     UNKNOWN(0)
 }
 
+/**
+ * Ktor HttpRequest wrapper for making safe requests
+ */
 suspend inline fun <reified T> HttpClient.safeRequest(
     request: HttpClient.() -> HttpResponse
 ): RequestResult<T> {
@@ -28,6 +37,9 @@ suspend inline fun <reified T> HttpClient.safeRequest(
     }
 }
 
+/**
+ * Wraps [HttpResponse] to [RequestResult]
+ */
 suspend inline fun <reified T> HttpResponse.result(): RequestResult<T> {
     if (status.value in 200..299)
         return RequestResult.Success(body<T>())

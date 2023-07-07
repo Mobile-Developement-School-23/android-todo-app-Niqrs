@@ -20,6 +20,7 @@ import io.ktor.client.request.patch
 import io.ktor.client.request.post
 import io.ktor.client.request.put
 import io.ktor.client.request.setBody
+import io.ktor.client.statement.HttpResponse
 import io.ktor.http.HttpMessageBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,6 +28,11 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
+/**
+ * Service for making tasks http requests
+ *
+ * All [HttpResponse]s are wrapped with [RequestResult]
+ */
 class TasksService @Inject constructor(
     private val client: HttpClient,
     authProvider: AuthInfoProvider

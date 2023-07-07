@@ -4,6 +4,12 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.UUID
 
+/**
+ * Main [TodoItem] model
+ *
+ *
+ * Represents all information about Task
+ */
 data class TodoItem(
     val id: String = UUID.randomUUID().toString(),
     val description: String,

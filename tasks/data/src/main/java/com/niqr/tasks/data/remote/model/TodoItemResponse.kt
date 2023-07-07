@@ -4,6 +4,9 @@ import com.niqr.tasks.data.model.TodoItemDto
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+/**
+ * Http response model
+ */
 @Serializable
 data class TodoItemResponse(
     @SerialName("element") val task: TodoItemDto,

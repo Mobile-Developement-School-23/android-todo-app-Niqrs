@@ -3,6 +3,9 @@ package com.niqr.tasks.data.mappers
 import com.niqr.tasks.data.model.TodoItemDto
 import com.niqr.tasks.domain.model.TodoItem
 
+/**
+ * Domain -> Data layers [TodoItem] mapper
+ */
 fun TodoItem.toDto() = TodoItemDto(
     id = id,
     description = description,
@@ -15,6 +18,9 @@ fun TodoItem.toDto() = TodoItemDto(
     lastUpdatedBy = lastUpdatedBy
 )
 
+/**
+ * Data -> Domain layers [TodoItem] mapper
+ */
 fun TodoItemDto.fromDto() = TodoItem(
     id = id,
     description = description,

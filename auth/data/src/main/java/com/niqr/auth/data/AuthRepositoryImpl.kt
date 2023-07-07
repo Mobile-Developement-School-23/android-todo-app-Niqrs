@@ -7,6 +7,9 @@ import com.niqr.auth.domain.model.AuthInfo
 import java.util.UUID
 import javax.inject.Inject
 
+/**
+ * Controls user authentication state
+ */
 @AuthProviderScope
 class AuthRepositoryImpl @Inject constructor(
     private val authProvider: AuthInfoMutableProvider

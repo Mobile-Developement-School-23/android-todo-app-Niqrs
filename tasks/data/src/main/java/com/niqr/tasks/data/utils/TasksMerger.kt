@@ -2,6 +2,11 @@ package com.niqr.tasks.data.utils
 
 import com.niqr.tasks.data.model.TodoItemDto
 
+/**
+ * Merge old tasks with new tasks
+ *
+ * Can be used for merging local tasks with remote tasks
+ */
 internal class TasksMerger {
     fun mergeNewTasksWithOld(
         old: List<TodoItemDto>,

@@ -11,6 +11,9 @@ import com.niqr.todoapp.MainActivity
 import dagger.BindsInstance
 import dagger.Component
 
+/**
+ * Root of Dagger DI graph
+ */
 @AppScope
 @AuthProviderScope
 @SynchronizationWorkScope

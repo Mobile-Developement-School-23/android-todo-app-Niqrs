@@ -4,6 +4,9 @@ import com.niqr.auth.ui.AuthViewModel
 import com.niqr.core.di.FeatureScope
 import dagger.Subcomponent
 
+/**
+ * Dagger component for auth ui layer
+ */
 @Subcomponent
 @FeatureScope
 interface AuthUiComponent {

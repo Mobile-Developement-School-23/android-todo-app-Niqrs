@@ -1,7 +1,12 @@
 package com.niqr.tasks.ui.model
 
 import com.niqr.tasks.domain.model.TodoItem
+import com.niqr.tasks.ui.TasksScreen
 
+
+/**
+ * Contains info about tasks ui actions on [TasksScreen]
+ */
 sealed class TasksAction {
     object CreateTask: TasksAction()
     data class UpdateTask(val todoItem: TodoItem): TasksAction()

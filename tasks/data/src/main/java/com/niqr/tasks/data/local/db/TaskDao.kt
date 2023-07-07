@@ -10,6 +10,11 @@ import androidx.room.Update
 import com.niqr.tasks.data.model.TodoItemDto
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * Controls local tasks database
+ *
+ * Provides Flow of [TodoItemDto]
+ */
 @Dao
 abstract class TaskDao {
     @Query("SELECT * FROM task")

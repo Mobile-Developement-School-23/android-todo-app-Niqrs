@@ -1,5 +1,8 @@
 package com.niqr.core.data
 
+/**
+ * Constants used for network requests
+ */
 object NetworkConstants {
     const val BASE_URL = "https://beta.mrdekk.ru/todobackend/"
     const val LIST = "list/"

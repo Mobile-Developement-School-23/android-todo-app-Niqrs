@@ -8,7 +8,11 @@ import com.niqr.core.ui.theme.TodoAppTheme
 import com.niqr.other.work.SynchronizationWork
 import javax.inject.Inject
 
-
+/**
+ * Entry point for app UI
+ *
+ * Starts synchronization work with [SynchronizationWork]
+ */
 class MainActivity : ComponentActivity() {
     @Inject
     lateinit var authProvider: AuthInfoProvider

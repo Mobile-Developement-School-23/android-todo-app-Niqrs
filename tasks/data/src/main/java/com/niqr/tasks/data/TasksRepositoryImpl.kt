@@ -25,6 +25,11 @@ import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import javax.inject.Inject
 
+/**
+ * Provides ability to work with Tasks
+ *
+ * Uses [TasksService] and [TaskDao] to control data Flow
+ */
 @AppScope
 class TasksRepositoryImpl @Inject constructor(
     private val authProvider: AuthInfoMutableProvider,

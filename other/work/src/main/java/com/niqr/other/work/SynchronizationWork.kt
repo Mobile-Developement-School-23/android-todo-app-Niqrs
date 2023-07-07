@@ -21,6 +21,11 @@ import com.niqr.other.work.workers.SynchronizationWorker
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
+/**
+ * Encapsulate work of synchronization workers
+ *
+ * Starts synchronization workers
+ */
 @SynchronizationWorkScope
 class SynchronizationWork @Inject constructor(
     context: Context,

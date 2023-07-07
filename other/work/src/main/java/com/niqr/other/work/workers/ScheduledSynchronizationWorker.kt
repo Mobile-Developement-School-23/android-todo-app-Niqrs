@@ -14,6 +14,12 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlin.random.Random
 
+/**
+ * Periodically synchronize local data with remote data when
+ * internet connection is available
+ *
+ * Can work independent of app state
+ */
 class ScheduledSynchronizationWorker @AssistedInject constructor(
     @Assisted private val context: Context,
     @Assisted private val params: WorkerParameters,

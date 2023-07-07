@@ -8,6 +8,9 @@ import com.niqr.other.work.workers.ScheduledSynchronizationWorker
 import com.niqr.other.work.workers.SynchronizationWorker
 import javax.inject.Inject
 
+/**
+ * Create synchronization workers
+ */
 class SynchronizationWorkerFactory @Inject constructor(
     private val synchronizationWorkerFactory: SynchronizationWorker.Factory,
     private val scheduledSynchronizationWorkerFactory: ScheduledSynchronizationWorker.Factory

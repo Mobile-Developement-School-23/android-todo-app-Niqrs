@@ -5,6 +5,9 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 
+/**
+ * Utils for working with [LocalDate] and [LocalDateTime]
+ */
 fun localDateFromTimestamp(value: Long?): LocalDate? {
     return value?.let { Instant.ofEpochMilli(it).atZone(ZoneOffset.UTC).toLocalDate() }
 }

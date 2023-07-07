@@ -3,6 +3,7 @@ package com.niqr.tasks.data.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.niqr.tasks.data.local.db.TasksDatabase
 import com.niqr.tasks.data.mappers.mapToString
 import com.niqr.tasks.data.mappers.toTimestamp
 import com.niqr.tasks.domain.model.Priority
@@ -13,6 +14,11 @@ import kotlinx.serialization.Serializable
 import java.time.LocalDateTime
 import java.util.UUID
 
+/**
+ * Data layer task model
+ *
+ * Can be used for http requests with Ktor or working Room [TasksDatabase]
+ */
 @OptIn(ExperimentalSerializationApi::class)
 @Serializable
 @Entity(tableName = "task")

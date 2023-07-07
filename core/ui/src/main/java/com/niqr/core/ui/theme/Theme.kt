@@ -60,6 +60,9 @@ val LocalExtendedColors = staticCompositionLocalOf {
     ExtendedColors()
 }
 
+/**
+ * App Compose theme
+ */
 @Composable
 fun TodoAppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),

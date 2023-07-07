@@ -1,3 +1,6 @@
+/**
+ * Provides all used in project dependencies
+ */
 object Dependencies {
     object Kotlin {
         const val ver = "1.8.21"
@@ -25,18 +28,6 @@ object Dependencies {
         const val activityCompose = "androidx.activity:activity-compose:$activityComposeVersion"
         const val coreKtx = "androidx.core:core-ktx:$coreKtxVersion"
     }
-
-//    object Hilt {
-//        private const val version = "2.45"
-//
-//        const val gradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:$version"
-//
-//        const val android = "com.google.dagger:hilt-android:$version"
-//        const val daggerAndroidCompiler = "com.google.dagger:hilt-android-compiler:$version" //kapt
-//        const val androidCompiler = "androidx.hilt:hilt-compiler:1.0.0"
-//        const val navigation = "androidx.hilt:hilt-navigation-compose:1.0.0"
-//        const val workManager = "androidx.hilt:hilt-work:1.0.0"
-//    }
 
     object Dagger {
         private const val version = "2.46.1"

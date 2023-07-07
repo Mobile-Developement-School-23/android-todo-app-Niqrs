@@ -4,6 +4,9 @@ import com.niqr.core.di.FeatureScope
 import com.niqr.edit.ui.TaskEditViewModel
 import dagger.Subcomponent
 
+/**
+ * Dagger component for edit ui layer
+ */
 @Subcomponent
 @FeatureScope
 interface EditUiComponent {

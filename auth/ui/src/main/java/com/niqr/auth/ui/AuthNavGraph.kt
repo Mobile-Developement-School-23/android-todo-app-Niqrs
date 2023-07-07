@@ -16,6 +16,9 @@ fun NavController.navigateToAuth() {
     }
 }
 
+/**
+ * Authentication navigation graph
+ */
 fun NavGraphBuilder.authScreen(
     onSuccessAuth: () -> Unit
 ) {

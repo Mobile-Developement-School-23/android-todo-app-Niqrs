@@ -14,6 +14,11 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * An intermediate layer between auth ui and auth logic
+ *
+ * Uses [AuthRepository] to authenticate user
+ */
 class AuthViewModel @Inject constructor(
     private val repository: AuthRepository
 ): ViewModel() {

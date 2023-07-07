@@ -7,6 +7,9 @@ import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
+/**
+ * Utils for working with [LocalDate]
+ */
 val tomorrowLocalDate: LocalDate
     get() = LocalDate.now(ZoneOffset.UTC).plusDays(1)
 

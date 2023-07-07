@@ -23,6 +23,9 @@ fun NavController.navigateToTaskEdit(id: String = "") {
     }
 }
 
+/**
+ * Edit navigation graph
+ */
 fun NavGraphBuilder.taskEditScreen(
     onNavigateUp: () -> Unit,
     onSuccessSave: () -> Unit

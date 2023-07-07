@@ -42,6 +42,9 @@ import com.yandex.authsdk.YandexAuthOptions
 import com.yandex.authsdk.YandexAuthSdk
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * Screen for user authentication
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AuthScreen(
