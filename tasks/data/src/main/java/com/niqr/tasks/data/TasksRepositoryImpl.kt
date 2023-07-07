@@ -1,6 +1,7 @@
 package com.niqr.tasks.data
 
 import com.niqr.auth.domain.AuthInfoMutableProvider
+import com.niqr.core.di.AppScope
 import com.niqr.tasks.data.local.db.TaskDao
 import com.niqr.tasks.data.mappers.fromDto
 import com.niqr.tasks.data.mappers.toDto
@@ -24,6 +25,7 @@ import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import javax.inject.Inject
 
+@AppScope
 class TasksRepositoryImpl @Inject constructor(
     private val authProvider: AuthInfoMutableProvider,
     private val service: TasksService,

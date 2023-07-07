@@ -5,32 +5,26 @@ import com.niqr.auth.data.datastore.AuthInfoDataStoreManager
 import com.niqr.auth.domain.AuthInfoMutableProvider
 import com.niqr.auth.domain.AuthInfoProvider
 import com.niqr.auth.domain.AuthRepository
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 
 @Module
-object AuthDataModule {
-    @Provides
+interface AuthDataModule {
+    @Binds
     @AuthProviderScope
     fun provideAuthRepository(
-        authProvider: AuthInfoMutableProvider
-    ): AuthRepository {
-        return AuthRepositoryImpl(authProvider)
-    }
+        repo: AuthRepositoryImpl
+    ): AuthRepository
 
-    @Provides
+    @Binds
     @AuthProviderScope
     fun provideAuthInfoMutableProvider(
         manager: AuthInfoDataStoreManager
-    ): AuthInfoMutableProvider {
-        return manager
-    }
+    ): AuthInfoMutableProvider
 
-    @Provides
+    @Binds
     @AuthProviderScope
     fun provideAuthInfoProvider(
         manager: AuthInfoDataStoreManager
-    ): AuthInfoProvider {
-        return manager
-    }
+    ): AuthInfoProvider
 }

@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.niqr.auth.domain.AuthRepository
+import com.niqr.core.di.FeatureScope
 import com.niqr.tasks.domain.model.TodoItem
 import com.niqr.tasks.domain.repo.TodoItemsRepository
 import com.niqr.tasks.ui.model.TasksAction
@@ -21,7 +22,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
+@FeatureScope
 class TasksViewModel @Inject constructor(
     private val authRepo: AuthRepository,
     private val todoRepo: TodoItemsRepository

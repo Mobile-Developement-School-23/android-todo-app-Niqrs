@@ -4,7 +4,7 @@ import com.niqr.core.di.FeatureScope
 import com.niqr.tasks.ui.TasksViewModel
 import dagger.Subcomponent
 
-@Subcomponent(modules = [TasksViewModelModule::class])
+@Subcomponent
 @FeatureScope
 interface TasksUiComponent {
 

@@ -4,7 +4,7 @@ import com.niqr.core.di.FeatureScope
 import com.niqr.edit.ui.TaskEditViewModel
 import dagger.Subcomponent
 
-@Subcomponent(modules = [TaskEditViewModelModule::class])
+@Subcomponent
 @FeatureScope
 interface EditUiComponent {
 

@@ -3,6 +3,7 @@ package com.niqr.edit.ui
 import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.niqr.core.di.FeatureScope
 import com.niqr.edit.ui.model.TaskEditAction
 import com.niqr.edit.ui.model.TaskEditEvent
 import com.niqr.edit.ui.model.TaskEditUiState
@@ -19,6 +20,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+@FeatureScope
 class TaskEditViewModel @Inject constructor(
     private val repo: TodoItemsRepository
 ): ViewModel() {

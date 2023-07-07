@@ -2,19 +2,18 @@ package com.niqr.tasks.data.di
 
 import android.content.Context
 import androidx.room.Room
-import com.niqr.auth.domain.AuthInfoMutableProvider
 import com.niqr.core.di.AppScope
 import com.niqr.tasks.data.TasksRepositoryImpl
 import com.niqr.tasks.data.local.db.TaskDao
 import com.niqr.tasks.data.local.db.TasksDatabase
-import com.niqr.tasks.data.remote.TasksService
 import com.niqr.tasks.data.utils.DATABASE_NAME
 import com.niqr.tasks.domain.repo.TodoItemsRepository
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 
-@Module
-object TasksDataModule {
+@Module(includes = [TasksDataBindingModule::class])
+class TasksDataModule {
     @Provides
     @AppScope
     fun provideDatabase(
@@ -34,14 +33,13 @@ object TasksDataModule {
     ): TaskDao {
         return db.taskDao()
     }
+}
 
-    @Provides
+@Module
+interface TasksDataBindingModule {
+    @Binds
     @AppScope
     fun provideTodoItemsRepository(
-        service: TasksService,
-        dao: TaskDao,
-        authEditor: AuthInfoMutableProvider
-    ): TodoItemsRepository {
-        return TasksRepositoryImpl(authEditor, service, dao)
-    }
+        repo: TasksRepositoryImpl
+    ): TodoItemsRepository
 }

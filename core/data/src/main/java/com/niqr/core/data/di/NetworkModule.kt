@@ -14,7 +14,7 @@ import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 
 @Module
-object NetworkModule {
+class NetworkModule {
 
     @Provides
     @AppScope
@@ -24,7 +24,6 @@ object NetworkModule {
                 json()
             }
             defaultRequest {
-                //header(GENERATE_FAILS, "10")
                 contentType(ContentType.Application.Json)
                 url(BASE_URL + LIST)
             }
