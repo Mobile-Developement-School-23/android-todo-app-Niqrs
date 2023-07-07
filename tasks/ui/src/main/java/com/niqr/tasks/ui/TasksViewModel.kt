@@ -110,8 +110,4 @@ class TasksViewModel @Inject constructor(
             _uiEvent.send(TasksEvent.SignOut)
         }
     }
-
-    override fun onCleared() {
-        super.onCleared()
-    }
 }
