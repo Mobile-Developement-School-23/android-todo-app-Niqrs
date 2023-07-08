@@ -8,6 +8,7 @@ import com.niqr.edit.ui.di.EditUiComponent
 import com.niqr.other.work.di.SynchronizationWorkScope
 import com.niqr.tasks.ui.di.TasksUiComponent
 import com.niqr.todoapp.MainActivity
+import com.niqr.todoapp.TodoApplication
 import dagger.BindsInstance
 import dagger.Component
 
@@ -26,6 +27,7 @@ interface AppComponent {
         ): AppComponent
     }
 
+    fun inject(app: TodoApplication)
     fun inject(activity: MainActivity)
 
     fun authUiComponent(): AuthUiComponent.Factory
