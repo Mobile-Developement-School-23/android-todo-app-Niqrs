@@ -14,7 +14,7 @@ fun TodoItem.toDto() = TodoItemDto(
     isDone = isDone,
     color = color,
     createdAt = createdAt.toTimestamp(),
-    editedAt = createdAt.toTimestamp(),
+    editedAt = editedAt.toTimestamp(),
     lastUpdatedBy = lastUpdatedBy
 )
 
