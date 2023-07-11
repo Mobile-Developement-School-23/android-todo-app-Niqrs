@@ -11,4 +11,5 @@
     <string name="edit">Edit</string>
     <string name="sign_out">Sign-Out</string>
     <string name="connection_error">Connection error</string>
+    <string name="theme">Theme</string>
 </resources>

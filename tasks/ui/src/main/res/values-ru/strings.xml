@@ -11,4 +11,5 @@
     <string name="edit">Изменить</string>
     <string name="sign_out">Выйти</string>
     <string name="connection_error">Ошибка в соединении</string>
+    <string name="theme">Тема</string>
 </resources>

@@ -16,5 +16,6 @@ dependencies {
 
     implementation(project(":other:work"))
 
+    implementation(Dependencies.Compose.material2)
     implementation(Dependencies.Ktor.cio)
 }

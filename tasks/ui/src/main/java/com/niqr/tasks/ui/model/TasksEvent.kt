@@ -7,6 +7,7 @@ import com.niqr.tasks.ui.TasksScreen
  */
 sealed class TasksEvent {
     object ConnectionError: TasksEvent()
+    object ShowSettings: TasksEvent()
     data class NavigateToEditTask(val id: String): TasksEvent()
     object NavigateToNewTask: TasksEvent()
     object SignOut: TasksEvent()

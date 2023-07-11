@@ -45,14 +45,15 @@ class TasksViewModel @Inject constructor(
 
     fun onAction(action: TasksAction) {
         when(action) {
-            TasksAction.CreateTask -> viewModelScope.launch { _uiEvent.send(TasksEvent.NavigateToNewTask) }
+            is TasksAction.CreateTask -> viewModelScope.launch { _uiEvent.send(TasksEvent.NavigateToNewTask) }
             is TasksAction.UpdateTask -> updateItem(action.todoItem)
             is TasksAction.DeleteTask -> deleteItem(action.todoItem)
             is TasksAction.EditTask -> editTask(action.todoItem)
             is TasksAction.UpdateDoneVisibility -> updateDoneVisibility(action.visible)
+            is TasksAction.ShowSettings -> viewModelScope.launch { _uiEvent.send(TasksEvent.ShowSettings) }
             is TasksAction.UpdateRequest -> viewModelScope.launch(Dispatchers.IO) { todoRepo.updateTodoItems() }
             is TasksAction.RefreshTasks -> refreshTasks()
-            TasksAction.SignOut -> signOut()
+            is TasksAction.SignOut -> signOut()
         }
     }
 

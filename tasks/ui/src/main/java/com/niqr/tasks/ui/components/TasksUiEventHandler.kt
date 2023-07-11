@@ -1,5 +1,7 @@
 package com.niqr.tasks.ui.components
 
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -15,6 +17,7 @@ import com.niqr.tasks.ui.model.TasksAction
 import com.niqr.tasks.ui.model.TasksEvent
 import kotlinx.coroutines.flow.Flow
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TasksUiEventHandler(
     uiEvent: Flow<TasksEvent>,
@@ -22,7 +25,8 @@ fun TasksUiEventHandler(
     onAction: (TasksAction) -> Unit,
     onEditTask: (String) -> Unit,
     onSignOut: () -> Unit,
-    snackbarHostState: SnackbarHostState
+    snackbarHostState: SnackbarHostState,
+    sheetState: ModalBottomSheetState
 ) {
     val context = LocalContext.current
     var launchedBefore by rememberSaveable { mutableStateOf(false) }
@@ -44,6 +48,10 @@ fun TasksUiEventHandler(
             when(it) {
                 TasksEvent.ConnectionError -> {
                     snackbarHostState.showSnackbar(context.getString(R.string.connection_error))
+                }
+                TasksEvent.ShowSettings -> {
+                    if (!sheetState.isVisible)
+                        sheetState.show()
                 }
                 is TasksEvent.NavigateToEditTask -> onEditTask(it.id)
                 TasksEvent.NavigateToNewTask -> onCreateTask()
