@@ -6,17 +6,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.niqr.todoapp.data.abstraction.AuthInfoProvider
-import com.niqr.todoapp.ui.auth.AuthScreenRoutePattern
-import com.niqr.todoapp.ui.auth.authScreen
-import com.niqr.todoapp.ui.auth.navigateToAuth
-import com.niqr.todoapp.ui.taskEdit.navigateToTaskEdit
-import com.niqr.todoapp.ui.taskEdit.taskEditScreen
-import com.niqr.todoapp.ui.tasks.TasksScreenRoutePattern
-import com.niqr.todoapp.ui.tasks.navigateToTasks
-import com.niqr.todoapp.ui.tasks.tasksScreen
-import com.niqr.todoapp.ui.theme.ExtendedTheme
+import com.niqr.auth.domain.AuthInfoProvider
+import com.niqr.auth.ui.AuthScreenRoutePattern
+import com.niqr.auth.ui.authScreen
+import com.niqr.auth.ui.navigateToAuth
+import com.niqr.core.ui.theme.ExtendedTheme
+import com.niqr.edit.ui.navigateToTaskEdit
+import com.niqr.edit.ui.taskEditScreen
+import com.niqr.tasks.ui.TasksScreenRoutePattern
+import com.niqr.tasks.ui.navigateToTasks
+import com.niqr.tasks.ui.tasksScreen
 
+/**
+ * Root of app navigation graph
+ */
 @Composable
 fun TodoNavigation(authProvider: AuthInfoProvider) {
     val navController = rememberNavController()
@@ -27,7 +30,8 @@ fun TodoNavigation(authProvider: AuthInfoProvider) {
     ) {
         NavHost(
             navController = navController,
-            startDestination = if (authProvider.authInfo().token.isBlank()) AuthScreenRoutePattern else TasksScreenRoutePattern
+            startDestination = if (authProvider.authInfo().token.isBlank()) AuthScreenRoutePattern
+                else TasksScreenRoutePattern
         ) {
             authScreen(
                 onSuccessAuth = navController::navigateToTasks

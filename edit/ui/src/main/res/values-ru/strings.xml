@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="do_it_till">Сделать до</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Отмена</string>
+    <string name="delete">Удалить</string>
+    <string name="priority_no">Нет</string>
+    <string name="priority_low">Низкий</string>
+    <string name="priority_high">Высокий</string>
+    <string name="priority_high_extra">!! Высокий</string>
+    <string name="save_button">СОХРАНИТЬ</string>
+    <string name="task_input_hint">Что надо сделать…</string>
+    <string name="priority">Важность</string>
+</resources>
