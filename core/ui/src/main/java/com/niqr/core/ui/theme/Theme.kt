@@ -26,6 +26,7 @@ data class ExtendedColors(
     val labelSecondary: Color = Color.Unspecified,
     val labelTertiary: Color = Color.Unspecified,
     val labelDisable: Color = Color.Unspecified,
+    val labelPrimaryReversed: Color = Color.Unspecified,
     val backPrimary: Color = Color.Unspecified,
     val backSecondary: Color = Color.Unspecified,
     val backElevated: Color = Color.Unspecified
@@ -35,6 +36,7 @@ val lightExtendedColors = ExtendedColors(
     supportSeparator = LightSupportSeparator,
     supportOverlay = LightSupportOverlay,
     labelPrimary = LightLabelPrimary,
+    labelPrimaryReversed = DarkLabelPrimary,
     labelSecondary = LightLabelSecondary,
     labelTertiary = LightLabelTertiary,
     labelDisable = LightLabelDisable,
@@ -47,6 +49,7 @@ val darkExtendedColors = ExtendedColors(
     supportSeparator = DarkSupportSeparator,
     supportOverlay = DarkSupportOverlay,
     labelPrimary = DarkLabelPrimary,
+    labelPrimaryReversed = LightLabelPrimary,
     labelSecondary = DarkLabelSecondary,
     labelTertiary = DarkLabelTertiary,
     labelDisable = DarkLabelDisable,
@@ -87,7 +90,7 @@ fun TodoAppTheme(
             val window = (view.context as Activity).window
             WindowCompat.setDecorFitsSystemWindows(window, false)
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
-            window.statusBarColor = android.graphics.Color.TRANSPARENT;
+            window.statusBarColor = android.graphics.Color.TRANSPARENT
         }
     }
 

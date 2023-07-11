@@ -12,4 +12,7 @@
     <string name="sign_out">Выйти</string>
     <string name="connection_error">Ошибка в соединении</string>
     <string name="theme">Тема</string>
+    <string name="theme_light">Светлая</string>
+    <string name="theme_system">Системная</string>
+    <string name="theme_dark">Темная</string>
 </resources>
