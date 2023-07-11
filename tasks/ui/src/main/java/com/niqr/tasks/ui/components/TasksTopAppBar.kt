@@ -24,7 +24,10 @@ fun TasksTopAppBar(
 ) {
     TopAppBar(
         title = {
-            Text(text = stringResource(id = R.string.my_tasks))
+            Text(
+                text = stringResource(id = R.string.my_tasks),
+                style = ExtendedTheme.typography.title
+            )
         },
         navigationIcon = {
             IconButton(

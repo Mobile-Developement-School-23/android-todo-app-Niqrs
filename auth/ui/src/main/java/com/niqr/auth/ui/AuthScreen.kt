@@ -14,11 +14,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -81,7 +80,10 @@ fun AuthScreen(
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Text(text = stringResource(app_name))
+                    Text(
+                        text = stringResource(app_name),
+                        style = ExtendedTheme.typography.title
+                    )
                 },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = ExtendedTheme.colors.backPrimary,
@@ -98,12 +100,13 @@ fun AuthScreen(
                 .padding(it),
             contentAlignment = Alignment.Center
         ) {
-            Button(
+            OutlinedButton(
                 onClick = { onAction(AuthAction.AuthClick) },
                 modifier = Modifier.fillMaxWidth(0.8f),
                 shape = RoundedCornerShape(28),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = ExtendedTheme.colors.backSecondary
+                    containerColor = ExtendedTheme.colors.backSecondary,
+                    contentColor = ExtendedTheme.colors.labelPrimary
                 ),
                 border = BorderStroke(1.5.dp, ExtendedTheme.colors.labelPrimary),
                 contentPadding = PaddingValues(vertical = 16.dp, horizontal = 32.dp)
@@ -116,10 +119,12 @@ fun AuthScreen(
                         painter = painterResource(R.drawable.ic_yandex_logo),
                         contentDescription = null
                     )
+
                     Spacer(modifier = Modifier.width(12.dp))
+
                     Text(
                         text = stringResource(R.string.login_with_yandex_id),
-                        style = MaterialTheme.typography.headlineMedium,
+                        style = ExtendedTheme.typography.titleSmall,
                         color = ExtendedTheme.colors.labelPrimary
                     )
                 }

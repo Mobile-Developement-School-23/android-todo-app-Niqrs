@@ -9,9 +9,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,21 +48,26 @@ fun TaskEditPriorityField(
             .clickable { menuExpanded = true }
             .padding(4.dp)
     ) {
-        Text(
-            text = stringResource(id = R.string.priority),
-            color = ExtendedTheme.colors.labelPrimary
-        )
-        Text(
-            text = stringResource(id = priority.toStringResource()),
-            modifier = Modifier.padding(top = 4.dp),
-            color = if (isHighPriority) Red else ExtendedTheme.colors.labelTertiary
-        )
+        CompositionLocalProvider(
+            LocalTextStyle provides ExtendedTheme.typography.body
+        ) {
+            Text(
+                text = stringResource(id = R.string.priority),
+                color = ExtendedTheme.colors.labelPrimary
+            )
+            Text(
+                text = stringResource(id = priority.toStringResource()),
+                modifier = Modifier.padding(top = 2.dp),
+                color = if (isHighPriority) Red else ExtendedTheme.colors.labelTertiary,
+                style = ExtendedTheme.typography.subhead
+            )
 
-        PriorityDropdownMenu(
-            expanded = menuExpanded,
-            hideMenu = { menuExpanded = false },
-            onAction = onAction
-        )
+            PriorityDropdownMenu(
+                expanded = menuExpanded,
+                hideMenu = { menuExpanded = false },
+                onAction = onAction
+            )
+        }
     }
 }
 

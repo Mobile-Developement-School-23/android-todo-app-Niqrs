@@ -43,14 +43,17 @@ fun SettingsBottomSheetContent(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 16.dp)
+            .padding(bottom = 20.dp)
             .padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         BottomSheetDefaults.DragHandle()
 
-        Text(text = stringResource(R.string.theme))
+        Text(
+            text = stringResource(R.string.theme),
+            style = ExtendedTheme.typography.titleSmall
+        )
 
         Spacer(modifier = Modifier.height(12.dp))
 
@@ -64,7 +67,8 @@ fun SettingsBottomSheetContent(
                 .fillMaxWidth(0.9f),
             selectionColor = Blue,
             selectedColor = ExtendedTheme.colors.labelPrimaryReversed,
-            unselectedColor = ExtendedTheme.colors.labelPrimary
+            unselectedColor = ExtendedTheme.colors.labelPrimary,
+            textStyle = ExtendedTheme.typography.button
         )
 
         Divider(
@@ -84,7 +88,10 @@ fun SettingsBottomSheetContent(
             ),
             border = border
         ) {
-            Text(text = stringResource(R.string.sign_out))
+            Text(
+                text = stringResource(R.string.sign_out),
+                style = ExtendedTheme.typography.button
+            )
         }
     }
 }

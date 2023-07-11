@@ -30,11 +30,13 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.SwipeToDismiss
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDismissState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -134,12 +136,14 @@ fun LazyItemScope.TasksItem(
 
 
                         Box(modifier = Modifier.align(Alignment.End)) {
-                            TasksItemMenu(
-                                task = task,
-                                expanded = menuExpanded,
-                                hideMenu = { menuExpanded = false },
-                                onAction = onAction
-                            )
+                            CompositionLocalProvider(LocalTextStyle provides ExtendedTheme.typography.body) {
+                                TasksItemMenu(
+                                    task = task,
+                                    expanded = menuExpanded,
+                                    hideMenu = { menuExpanded = false },
+                                    onAction = onAction
+                                )
+                            }
                         }
                     }
 
@@ -219,13 +223,15 @@ private fun TasksItemText(
             color = if (it) ExtendedTheme.colors.labelTertiary else ExtendedTheme.colors.labelPrimary,
             textDecoration = if (it) TextDecoration.LineThrough else TextDecoration.None,
             overflow = TextOverflow.Ellipsis,
-            maxLines = 3
+            maxLines = 3,
+            style = ExtendedTheme.typography.body
         )
     }
     deadline?.let {
         Text(
             text = it,
-            color = ExtendedTheme.colors.labelTertiary
+            color = ExtendedTheme.colors.labelTertiary,
+            style = ExtendedTheme.typography.subhead
         )
     }
 }

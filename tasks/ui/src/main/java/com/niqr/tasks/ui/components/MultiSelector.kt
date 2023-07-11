@@ -30,10 +30,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.layoutId
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
+import com.niqr.core.ui.theme.ExtendedTheme
 import com.niqr.core.ui.theme.TodoAppTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -170,6 +172,7 @@ fun MultiSelector(
     selectionColor: Color = MaterialTheme.colorScheme.surface,
     selectedColor: Color = MaterialTheme.colorScheme.onPrimary,
     unselectedColor: Color = MaterialTheme.colorScheme.primary,
+    textStyle: TextStyle,
     state: MultiSelectorState = rememberMultiSelectorState(
         options = options,
         selectedOption = selectedOption,
@@ -197,7 +200,7 @@ fun MultiSelector(
                 ) {
                     Text(
                         text = option,
-                        style = MaterialTheme.typography.bodyMedium,
+                        style = textStyle,
                         color = lerp(
                             start = unselectedColor,
                             stop = selectedColor,
@@ -205,7 +208,7 @@ fun MultiSelector(
                         ),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.padding(horizontal = 4.dp),
+                        modifier = Modifier.padding(horizontal = 4.dp)
                     )
                 }
             }
@@ -283,7 +286,8 @@ fun PreviewMultiSelector() {
                     modifier = Modifier
                         .padding(all = 16.dp)
                         .fillMaxWidth()
-                        .height(56.dp)
+                        .height(56.dp),
+                    textStyle = ExtendedTheme.typography.button
                 )
 
                 MultiSelector(
@@ -295,7 +299,8 @@ fun PreviewMultiSelector() {
                     modifier = Modifier
                         .padding(all = 16.dp)
                         .fillMaxWidth()
-                        .height(56.dp)
+                        .height(56.dp),
+                    textStyle = ExtendedTheme.typography.button
                 )
             }
         }

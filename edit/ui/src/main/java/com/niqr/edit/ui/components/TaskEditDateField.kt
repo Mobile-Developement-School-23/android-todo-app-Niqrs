@@ -66,7 +66,8 @@ fun TaskEditDateField(
             Text(
                 text = stringResource(id = R.string.do_it_till),
                 modifier = Modifier.padding(start = 4.dp),
-                color = ExtendedTheme.colors.labelPrimary
+                color = ExtendedTheme.colors.labelPrimary,
+                style = ExtendedTheme.typography.body
             )
 
             AnimatedVisibility(visible = isDateVisible) {
@@ -76,7 +77,11 @@ fun TaskEditDateField(
                         .clickable { openDialog = true }
                         .padding(4.dp)
                 ) {
-                    Text(text = dateText, color = Blue)
+                    Text(
+                        text = dateText,
+                        color = Blue,
+                        style = ExtendedTheme.typography.subhead
+                    )
                 }
             }
         }

@@ -51,7 +51,10 @@ fun TaskEditTextField(
                     .padding(16.dp)
             ) {
                 if (description.isEmpty())
-                    Text(text = stringResource(id = R.string.task_input_hint))
+                    Text(
+                        text = stringResource(id = R.string.task_input_hint),
+                        style = ExtendedTheme.typography.body
+                    )
                 innerTextField.invoke()
             }
         }
