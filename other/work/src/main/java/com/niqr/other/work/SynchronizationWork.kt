@@ -1,82 +1,36 @@
 package com.niqr.other.work
 
 import android.content.Context
-import androidx.work.Configuration
-import androidx.work.Constraints
+import android.content.Intent
 import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.ExistingWorkPolicy
-import androidx.work.NetworkType
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.OutOfQuotaPolicy
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
+import com.niqr.other.work.details.WorkDetails
 import com.niqr.other.work.di.SynchronizationWorkScope
-import com.niqr.other.work.factory.SynchronizationWorkerFactory
+import com.niqr.other.work.services.SynchronizationService
 import com.niqr.other.work.utils.PERIODIC_SYNCHRONIZATION_WORK
-import com.niqr.other.work.utils.PERIODIC_SYNCHRONIZATION_WORK_TAG
-import com.niqr.other.work.utils.SYNCHRONIZATION_WORK
-import com.niqr.other.work.utils.SYNCHRONIZATION_WORK_TAG
-import com.niqr.other.work.workers.ScheduledSynchronizationWorker
-import com.niqr.other.work.workers.SynchronizationWorker
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 /**
  * Encapsulate work of synchronization workers
  *
- * Starts synchronization workers
+ * Starts synchronization workers and service
  */
 @SynchronizationWorkScope
 class SynchronizationWork @Inject constructor(
-    context: Context,
-    syncWorkFactory: SynchronizationWorkerFactory
+    private val context: Context,
+    private val details: WorkDetails
 ) {
-    private val workManager: WorkManager
-
-    init {
-        val syncWorkConfig = Configuration.Builder()
-            .setWorkerFactory(syncWorkFactory)
-            .build()
-        WorkManager.initialize(context, syncWorkConfig)
-
-        workManager = WorkManager.getInstance(context)
-    }
-
-    private val constraints = Constraints.Builder()
-        .setRequiredNetworkType(NetworkType.CONNECTED)
-        .build()
-
-    private val oneTimeSyncRequest by lazy {
-        OneTimeWorkRequestBuilder<SynchronizationWorker>()
-            .addTag(SYNCHRONIZATION_WORK_TAG)
-            .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
-            .setConstraints(constraints)
-            .build()
-    }
-
-    private val periodicSyncWork by lazy {
-        PeriodicWorkRequestBuilder<ScheduledSynchronizationWorker>(
-            8, TimeUnit.HOURS, 7, TimeUnit.HOURS)
-            .addTag(PERIODIC_SYNCHRONIZATION_WORK_TAG)
-            .setConstraints(constraints)
-            .build()
-    }
-
     fun beginOneTimeSynchronizationWork() {
-        workManager
-            .beginUniqueWork(
-                SYNCHRONIZATION_WORK,
-                ExistingWorkPolicy.REPLACE,
-                oneTimeSyncRequest
-            )
-            .enqueue()
+        val app = context.applicationContext
+        Intent(app, SynchronizationService::class.java).also {
+            app.startService(it)
+        }
     }
 
     fun enqueuePeriodicSynchronizationWork() {
-        workManager.enqueueUniquePeriodicWork(
+        details.workManager.enqueueUniquePeriodicWork(
             PERIODIC_SYNCHRONIZATION_WORK,
             ExistingPeriodicWorkPolicy.KEEP,
-            periodicSyncWork
+            details.periodicSyncWork
         )
     }
 }

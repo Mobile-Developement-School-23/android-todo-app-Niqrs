@@ -6,6 +6,7 @@ import com.niqr.auth.ui.di.AuthUiComponent
 import com.niqr.core.di.AppScope
 import com.niqr.edit.ui.di.EditUiComponent
 import com.niqr.other.work.di.SynchronizationWorkScope
+import com.niqr.other.work.di.WorkComponent
 import com.niqr.tasks.ui.di.TasksUiComponent
 import com.niqr.todoapp.MainActivity
 import com.niqr.todoapp.TodoApplication
@@ -33,4 +34,6 @@ interface AppComponent {
     fun authUiComponent(): AuthUiComponent.Factory
     fun tasksUiComponent(): TasksUiComponent.Factory
     fun editUiComponent(): EditUiComponent.Factory
+
+    fun workComponent(): WorkComponent.Factory
 }

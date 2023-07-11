@@ -33,6 +33,12 @@
             android:authorities="${applicationId}.androidx-startup"
             tools:node="remove">
         </provider>
+
+        <service
+            android:name="com.niqr.other.work.services.SynchronizationService"
+            android:foregroundServiceType="dataSync"
+            android:exported="false">
+        </service>
     </application>
 
 </manifest>

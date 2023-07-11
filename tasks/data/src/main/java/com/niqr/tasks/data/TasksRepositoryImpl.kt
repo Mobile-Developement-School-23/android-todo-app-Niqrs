@@ -93,7 +93,9 @@ class TasksRepositoryImpl @Inject constructor(
             is RequestResult.Success -> {
                 authProvider.updateRevision(result.value.revision)
 
-                val newTasks = tasksMerger.mergeNewTasksWithOld(tasksFLow.value, result.value.tasks)
+                val newTasks = tasksMerger
+                    .mergeNewTasksWithOld(tasksFLow.value, result.value.tasks)
+                    .sortedBy { it.createdAt }
                 dao.replaceAll(newTasks)
                 recentlyDeleted.clear()
 
@@ -113,7 +115,9 @@ class TasksRepositoryImpl @Inject constructor(
                     return false
             }
             is RequestResult.Success -> {
-                val newTasks = tasksMerger.mergeOldTasksWithNew(tasksFLow.value, result.value.tasks, recentlyDeleted)
+                val newTasks = tasksMerger
+                    .mergeOldTasksWithNew(tasksFLow.value, result.value.tasks, recentlyDeleted)
+                    .sortedBy { it.createdAt }
                 dao.replaceAll(newTasks)
 
                 repoScope.launch {

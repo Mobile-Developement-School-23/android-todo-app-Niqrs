@@ -8,6 +8,8 @@ import com.niqr.auth.ui.di.AuthUiComponentProvider
 import com.niqr.edit.ui.di.EditUiComponent
 import com.niqr.edit.ui.di.EditUiComponentProvider
 import com.niqr.other.work.SynchronizationNotificationChannel
+import com.niqr.other.work.di.WorkComponent
+import com.niqr.other.work.di.WorkComponentProvider
 import com.niqr.other.work.factory.SynchronizationWorkerFactory
 import com.niqr.tasks.ui.di.TasksUiComponent
 import com.niqr.tasks.ui.di.TasksUiComponentProvider
@@ -26,7 +28,8 @@ import javax.inject.Inject
 class TodoApplication: Application(), Configuration.Provider,
     AuthUiComponentProvider,
     TasksUiComponentProvider,
-    EditUiComponentProvider {
+    EditUiComponentProvider,
+    WorkComponentProvider {
     lateinit var appComponent: AppComponent
 
     @Inject
@@ -53,4 +56,8 @@ class TodoApplication: Application(), Configuration.Provider,
         appComponent.tasksUiComponent().create()
     override fun provideEditUiComponent(): EditUiComponent =
         appComponent.editUiComponent().create()
+
+
+    override fun provideWorkComponent(): WorkComponent =
+        appComponent.workComponent().create()
 }
