@@ -1,7 +1,6 @@
 package com.niqr.todoapp
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -27,8 +26,7 @@ fun TodoNavigation(authProvider: AuthInfoProvider) {
 
     Surface(
         modifier = Modifier
-            .fillMaxSize()
-            .navigationBarsPadding(),
+            .fillMaxSize(),
         color = ExtendedTheme.colors.backPrimary
     ) {
         NavHost(
