@@ -77,6 +77,7 @@ fun SettingsBottomSheetContent(
                 .border(border, CircleShape)
                 .heightIn(48.dp, 64.dp)
                 .fillMaxWidth(0.9f),
+            containerColor = ExtendedTheme.colors.backPrimary,
             selectionColor = Blue,
             selectedColor = ExtendedTheme.colors.labelPrimaryReversed,
             unselectedColor = ExtendedTheme.colors.labelPrimary,

@@ -169,6 +169,7 @@ fun MultiSelector(
     selectedOption: String,
     onOptionSelect: (String) -> Unit,
     modifier: Modifier = Modifier,
+    containerColor: Color = MaterialTheme.colorScheme.surface,
     selectionColor: Color = MaterialTheme.colorScheme.surface,
     selectedColor: Color = MaterialTheme.colorScheme.onPrimary,
     unselectedColor: Color = MaterialTheme.colorScheme.primary,
@@ -188,7 +189,7 @@ fun MultiSelector(
             .clip(
                 shape = RoundedCornerShape(percent = 50)
             )
-            .background(MaterialTheme.colorScheme.surface),
+            .background(containerColor),
         content = {
             val colorFractions = state.textColorsFraction
             options.forEachIndexed { index, option ->
