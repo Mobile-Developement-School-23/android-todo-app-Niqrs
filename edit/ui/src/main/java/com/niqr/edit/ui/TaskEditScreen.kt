@@ -1,13 +1,16 @@
 package com.niqr.edit.ui
 
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.niqr.core.ui.theme.ExtendedTheme
@@ -36,9 +39,15 @@ fun TaskEditScreen(
 ) {
     TaskEditUiEventHandler(uiEvent, onNavigateUp, onSave)
 
+    val listState = rememberLazyListState()
+    val topBarElevation by animateDpAsState(
+        if (listState.canScrollBackward) 8.dp else 0.dp,
+        label = "top bar elevation"
+    )
+
     Scaffold(
         topBar = {
-            TaskEditTopAppBar(uiState.description, onAction)
+            TaskEditTopAppBar(uiState.description, topBarElevation, onAction)
         },
         containerColor = ExtendedTheme.colors.backPrimary
     ) { paddingValues ->
@@ -46,7 +55,8 @@ fun TaskEditScreen(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
+                .padding(paddingValues),
+            state = listState
         ) {
             item {
                 TaskEditTextField(

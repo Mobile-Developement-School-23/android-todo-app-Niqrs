@@ -17,4 +17,5 @@ dependencies {
     implementation(Dependencies.Compose.material3)
     implementation(Dependencies.Compose.navigation)
     implementation(Dependencies.Compose.lifecycleRuntime)
+    implementation(Dependencies.Compose.Accompanist.navigationAnimation)
 }

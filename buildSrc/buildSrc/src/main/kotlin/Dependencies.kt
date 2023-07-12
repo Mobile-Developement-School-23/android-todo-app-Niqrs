@@ -50,6 +50,12 @@ object Dependencies {
         const val material3 = "androidx.compose.material3:material3:$material3Version"
         const val navigation = "androidx.navigation:navigation-compose:$navigationVersion"
         const val lifecycleRuntime = "androidx.lifecycle:lifecycle-runtime-compose:$lifecycleRuntimeVersion"
+
+        object Accompanist {
+            private const val version = "0.30.1"
+
+            const val navigationAnimation = "com.google.accompanist:accompanist-navigation-animation:$version"
+        }
     }
 
     object Room {

@@ -13,7 +13,10 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
 import com.niqr.core.ui.theme.Blue
 import com.niqr.core.ui.theme.ExtendedTheme
 import com.niqr.edit.ui.R
@@ -23,9 +26,12 @@ import com.niqr.edit.ui.model.TaskEditAction
 @Composable
 fun TaskEditTopAppBar(
     description: String,
+    elevation: Dp,
     onAction: (TaskEditAction) -> Unit
 ) {
     TopAppBar(
+        modifier = Modifier
+            .shadow(elevation),
         navigationIcon = {
             IconButton(
                 onClick = { onAction(TaskEditAction.NavigateUp) }
@@ -59,6 +65,7 @@ fun TaskEditTopAppBar(
         },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = ExtendedTheme.colors.backPrimary,
+            scrolledContainerColor = ExtendedTheme.colors.backElevated,
             navigationIconContentColor = ExtendedTheme.colors.labelPrimary
         )
     )

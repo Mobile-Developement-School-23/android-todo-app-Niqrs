@@ -72,6 +72,7 @@ dependencies {
 
     implementation(Dependencies.Android.coreKtx)
     implementation(Dependencies.Android.activityCompose)
+    implementation(Dependencies.Compose.Accompanist.navigationAnimation)
 
     //DI
     implementation(Dependencies.Dagger.dependency)

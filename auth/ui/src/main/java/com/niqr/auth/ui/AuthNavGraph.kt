@@ -1,9 +1,10 @@
 package com.niqr.auth.ui
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
+import com.google.accompanist.navigation.animation.composable
 import com.niqr.auth.ui.di.AuthUiComponentProvider
 import com.niqr.core.ui.utils.daggerViewModel
 
@@ -19,6 +20,7 @@ fun NavController.navigateToAuth() {
 /**
  * Authentication navigation graph
  */
+@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.authScreen(
     onSuccessAuth: () -> Unit
 ) {
