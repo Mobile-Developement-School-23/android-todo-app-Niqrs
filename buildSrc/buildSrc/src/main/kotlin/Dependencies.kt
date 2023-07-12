@@ -8,8 +8,10 @@ object Dependencies {
         const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$ver"
 
         const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2"
+        const val immutableCollections = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5"
         object Serialization {
             const val gradlePlugin = "org.jetbrains.kotlin:kotlin-serialization:$ver"
+            const val json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1"
         }
 
         object Ksp {
@@ -79,7 +81,8 @@ object Dependencies {
         private const val workManagerVersion = "2.8.1"
 
         const val yandexAuthSdk = "com.yandex.android:authsdk:$yandexAuthSdkVersion"
-        const val datastore = "androidx.datastore:datastore-preferences:$datastoreVersion"
+        const val datastore = "androidx.datastore:datastore:$datastoreVersion"
+        const val preferencesDatastore = "androidx.datastore:datastore-preferences:$datastoreVersion"
         const val workManager = "androidx.work:work-runtime-ktx:$workManagerVersion"
     }
 }

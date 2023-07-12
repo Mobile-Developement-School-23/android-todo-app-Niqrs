@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.niqr.auth.domain.AuthRepository
 import com.niqr.core.di.FeatureScope
+import com.niqr.settings.domain.model.Theme
+import com.niqr.settings.domain.settings.AppSettingsMutableProvider
 import com.niqr.tasks.domain.model.TodoItem
 import com.niqr.tasks.domain.repo.TodoItemsRepository
 import com.niqr.tasks.ui.model.TasksAction
@@ -31,13 +33,14 @@ import javax.inject.Inject
 @FeatureScope
 class TasksViewModel @Inject constructor(
     private val authRepo: AuthRepository,
-    private val todoRepo: TodoItemsRepository
+    private val todoRepo: TodoItemsRepository,
+    private val settingsProvider: AppSettingsMutableProvider
 ): ViewModel() {
     private val _uiState = MutableStateFlow(TasksUiState())
     val uiState = _uiState.asStateFlow()
 
     init {
-        setupTodoItems()
+        setupViewModel()
     }
 
     private val _uiEvent = Channel<TasksEvent>()
@@ -51,23 +54,32 @@ class TasksViewModel @Inject constructor(
             is TasksAction.EditTask -> editTask(action.todoItem)
             is TasksAction.UpdateDoneVisibility -> updateDoneVisibility(action.visible)
             is TasksAction.ShowSettings -> viewModelScope.launch { _uiEvent.send(TasksEvent.ShowSettings) }
+            is TasksAction.UpdateTheme -> updateTheme(action.theme)
             is TasksAction.UpdateRequest -> viewModelScope.launch(Dispatchers.IO) { todoRepo.updateTodoItems() }
             is TasksAction.RefreshTasks -> refreshTasks()
             is TasksAction.SignOut -> signOut()
         }
     }
 
-    private fun setupTodoItems() {
+    private fun setupViewModel() {
         viewModelScope.launch {
-            todoRepo.todoItems().combine(todoRepo.doneVisible()) { tasks, doneVisible ->
+            combine(
+                todoRepo.todoItems(),
+                todoRepo.doneVisible(),
+                settingsProvider.settingsFlow()
+            ) { tasks, doneVisible, settings ->
                 val newTasks = when(doneVisible) {
                     true -> tasks
                     else -> tasks.filter { !it.isDone }
                 }
-                Pair(doneVisible, newTasks)
-            }.collectLatest { pair ->
+                Triple(doneVisible, newTasks, settings)
+            }.collectLatest { triple ->
                 _uiState.update {
-                    uiState.value.copy(doneVisible = pair.first, tasks = pair.second)
+                    uiState.value.copy(
+                        doneVisible = triple.first,
+                        tasks = triple.second,
+                        selectedTheme = triple.third.theme
+                    )
                 }
             }
         }
@@ -95,6 +107,12 @@ class TasksViewModel @Inject constructor(
         _uiState.update { uiState.value.copy(doneVisible = visible) }
         viewModelScope.launch(Dispatchers.IO) {
             todoRepo.updateDoneTodoItemsVisibility(visible)
+        }
+    }
+
+    private fun updateTheme(theme: Theme) {
+        viewModelScope.launch {
+            settingsProvider.updateTheme(theme)
         }
     }
 

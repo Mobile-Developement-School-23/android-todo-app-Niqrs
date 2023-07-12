@@ -68,7 +68,7 @@ fun TasksScreen(
 
     ModalBottomSheetLayout(
         sheetContent = {
-            SettingsBottomSheetContent(onAction)
+            SettingsBottomSheetContent(uiState.selectedTheme, onAction)
         },
         sheetState = sheetState,
         sheetShape = BottomSheetDefaults.ExpandedShape,

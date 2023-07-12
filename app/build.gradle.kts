@@ -65,6 +65,9 @@ dependencies {
 
     implementation(project(":edit:ui"))
 
+    implementation(project(":settings:domain"))
+    implementation(project(":settings:data"))
+
     implementation(project(":other:work"))
 
     implementation(Dependencies.Android.coreKtx)

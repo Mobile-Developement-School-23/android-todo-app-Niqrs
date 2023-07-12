@@ -1,5 +1,6 @@
 package com.niqr.tasks.ui.model
 
+import com.niqr.settings.domain.model.Theme
 import com.niqr.tasks.domain.model.TodoItem
 import com.niqr.tasks.ui.TasksScreen
 
@@ -14,6 +15,7 @@ sealed class TasksAction {
     data class EditTask(val todoItem: TodoItem) : TasksAction()
     data class UpdateDoneVisibility(val visible: Boolean): TasksAction()
     object ShowSettings: TasksAction()
+    data class UpdateTheme(val theme: Theme): TasksAction()
     object UpdateRequest: TasksAction()
     object RefreshTasks: TasksAction()
     object SignOut: TasksAction()
