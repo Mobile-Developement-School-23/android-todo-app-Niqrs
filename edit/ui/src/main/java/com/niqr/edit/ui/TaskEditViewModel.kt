@@ -44,6 +44,8 @@ class TaskEditViewModel @Inject constructor(
                 uiState.value.copy(description = action.description) }
             is TaskEditAction.UpdateDeadlineVisibility -> _uiState.update {
                 uiState.value.copy(isDeadlineVisible = action.visible) }
+            is TaskEditAction.PriorityChoose -> viewModelScope.launch {
+                _uiEvent.send(TaskEditEvent.PriorityChoose) }
             is TaskEditAction.UpdatePriority -> _uiState.update {
                 uiState.value.copy(priority = action.priority) }
             is TaskEditAction.UpdateDeadline -> _uiState.update {

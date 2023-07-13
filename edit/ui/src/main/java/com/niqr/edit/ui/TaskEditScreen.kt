@@ -8,12 +8,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.niqr.core.ui.components.TodoBottomSheetLayout
+import com.niqr.core.ui.components.rememberTodoBottomSheetState
 import com.niqr.core.ui.theme.ExtendedTheme
+import com.niqr.edit.ui.components.PriorityBottomSheetContent
 import com.niqr.edit.ui.components.TaskEditDateField
 import com.niqr.edit.ui.components.TaskEditDeleteButton
 import com.niqr.edit.ui.components.TaskEditDivider
@@ -29,6 +33,7 @@ import kotlinx.coroutines.flow.Flow
 /**
  * Screen to create/edit task
  */
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TaskEditScreen(
     uiState: TaskEditUiState,
@@ -37,52 +42,61 @@ fun TaskEditScreen(
     onNavigateUp: () -> Unit,
     onSave: () -> Unit
 ) {
-    TaskEditUiEventHandler(uiEvent, onNavigateUp, onSave)
-
     val listState = rememberLazyListState()
-    val topBarElevation by animateDpAsState(
-        if (listState.canScrollBackward) 8.dp else 0.dp,
-        label = "top bar elevation"
-    )
+    val sheetState = rememberTodoBottomSheetState()
 
-    Scaffold(
-        topBar = {
-            TaskEditTopAppBar(uiState.description, topBarElevation, onAction)
+    TaskEditUiEventHandler(uiEvent, onNavigateUp, onSave, sheetState)
+
+    TodoBottomSheetLayout(
+        sheetContent = {
+            PriorityBottomSheetContent(uiState.priority, onAction)
         },
-        containerColor = ExtendedTheme.colors.backPrimary
-    ) { paddingValues ->
+        sheetState = sheetState
+    ) {
+        val topBarElevation by animateDpAsState(
+            if (listState.canScrollBackward) 8.dp else 0.dp,
+            label = "top bar elevation"
+        )
 
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues),
-            state = listState
-        ) {
-            item {
-                TaskEditTextField(
-                    description = uiState.description,
-                    onAction = onAction
-                )
+        Scaffold(
+            topBar = {
+                TaskEditTopAppBar(uiState.description, topBarElevation, onAction)
+            },
+            containerColor = ExtendedTheme.colors.backPrimary
+        ) { paddingValues ->
 
-                TaskEditPriorityField(uiState.priority, onAction)
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
+                state = listState
+            ) {
+                item {
+                    TaskEditTextField(
+                        description = uiState.description,
+                        onAction = onAction
+                    )
 
-                TaskEditDivider(PaddingValues(horizontal = 16.dp))
+                    TaskEditPriorityField(uiState.priority, onAction)
 
-                TaskEditDateField(
-                    date = uiState.deadline,
-                    isDateVisible = uiState.isDeadlineVisible,
-                    onAction = onAction
-                )
+                    TaskEditDivider(PaddingValues(horizontal = 16.dp))
 
-                TaskEditDivider(PaddingValues(top = 16.dp, bottom = 8.dp))
+                    TaskEditDateField(
+                        date = uiState.deadline,
+                        isDateVisible = uiState.isDeadlineVisible,
+                        onAction = onAction
+                    )
 
-                TaskEditDeleteButton(
-                    enabled = uiState.isDeleteEnabled,
-                    onAction = onAction
-                )
-            }
-            item {
-                Spacer(modifier = Modifier.height(96.dp))
+                    TaskEditDivider(PaddingValues(top = 16.dp, bottom = 8.dp))
+
+                    TaskEditDeleteButton(
+                        enabled = uiState.isDeleteEnabled,
+                        onAction = onAction
+                    )
+                }
+                item {
+                    Spacer(modifier = Modifier.height(96.dp))
+                }
             }
         }
     }

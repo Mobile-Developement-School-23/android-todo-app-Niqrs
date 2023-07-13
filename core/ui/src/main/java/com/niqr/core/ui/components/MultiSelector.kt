@@ -1,4 +1,4 @@
-package com.niqr.tasks.ui.components
+package com.niqr.core.ui.components
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
@@ -6,9 +6,9 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -35,6 +35,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
+import com.niqr.core.ui.theme.Blue
 import com.niqr.core.ui.theme.ExtendedTheme
 import com.niqr.core.ui.theme.TodoAppTheme
 import kotlinx.coroutines.CoroutineScope
@@ -169,15 +170,15 @@ fun MultiSelector(
     selectedOption: String,
     onOptionSelect: (String) -> Unit,
     modifier: Modifier = Modifier,
-    containerColor: Color = MaterialTheme.colorScheme.surface,
-    selectionColor: Color = MaterialTheme.colorScheme.surface,
-    selectedColor: Color = MaterialTheme.colorScheme.onPrimary,
-    unselectedColor: Color = MaterialTheme.colorScheme.primary,
-    textStyle: TextStyle,
+    containerColor: Color = ExtendedTheme.colors.backPrimary,
+    selectionColor: Color = Blue,
+    selectedColor: Color = ExtendedTheme.colors.labelPrimaryReversed,
+    unselectedColor: Color = ExtendedTheme.colors.labelPrimary,
+    textStyle: TextStyle = ExtendedTheme.typography.button,
     state: MultiSelectorState = rememberMultiSelectorState(
         options = options,
         selectedOption = selectedOption,
-    ),
+    )
 ) {
     require(options.size >= 2) { "This composable requires at least 2 options" }
     require(options.contains(selectedOption)) { "Invalid selected option [$selectedOption]" }
@@ -186,6 +187,7 @@ fun MultiSelector(
     }
     Layout(
         modifier = modifier
+            .heightIn(48.dp, 64.dp)
             .clip(
                 shape = RoundedCornerShape(percent = 50)
             )
@@ -259,7 +261,7 @@ fun MultiSelector(
 
 @Preview(widthDp = 420)
 @Composable
-fun PreviewMultiSelector() {
+private fun MultiSelectorPreview() {
     TodoAppTheme {
         Surface(
             color = MaterialTheme.colorScheme.background,
@@ -268,42 +270,18 @@ fun PreviewMultiSelector() {
             var selectedOption1 by remember {
                 mutableStateOf(options1.first())
             }
-            val options2 = listOf("Sit", "Amet", "Consectetur", "Elit", "Quis")
-            var selectedOption2 by remember {
-                mutableStateOf(options2.first())
-            }
-            Column(
+            MultiSelector(
+                options = options1,
+                selectedOption = selectedOption1,
+                onOptionSelect = { option ->
+                    selectedOption1 = option
+                },
                 modifier = Modifier
+                    .padding(all = 16.dp)
                     .fillMaxWidth()
-                    .padding(top = 16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                MultiSelector(
-                    options = options1,
-                    selectedOption = selectedOption1,
-                    onOptionSelect = { option ->
-                        selectedOption1 = option
-                    },
-                    modifier = Modifier
-                        .padding(all = 16.dp)
-                        .fillMaxWidth()
-                        .height(56.dp),
-                    textStyle = ExtendedTheme.typography.button
-                )
-
-                MultiSelector(
-                    options = options2,
-                    selectedOption = selectedOption2,
-                    onOptionSelect = { option ->
-                        selectedOption2 = option
-                    },
-                    modifier = Modifier
-                        .padding(all = 16.dp)
-                        .fillMaxWidth()
-                        .height(56.dp),
-                    textStyle = ExtendedTheme.typography.button
-                )
-            }
+                    .height(56.dp),
+                textStyle = ExtendedTheme.typography.button
+            )
         }
     }
 }

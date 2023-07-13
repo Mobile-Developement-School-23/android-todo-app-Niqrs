@@ -10,10 +10,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
-import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
@@ -25,6 +23,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.niqr.core.ui.components.TodoBottomSheetLayout
 import com.niqr.core.ui.theme.Blue
 import com.niqr.core.ui.theme.ExtendedTheme
 import com.niqr.tasks.domain.model.TodoItem
@@ -74,13 +73,11 @@ fun TasksScreen(
 
 
 
-    ModalBottomSheetLayout(
+    TodoBottomSheetLayout(
         sheetContent = {
             SettingsBottomSheetContent(uiState.selectedTheme, onAction)
         },
         sheetState = sheetState,
-        sheetShape = BottomSheetDefaults.ExpandedShape,
-        sheetBackgroundColor = ExtendedTheme.colors.backPrimary
     ) {
         val topBarElevation by animateDpAsState(
             if (listState.canScrollBackward) 8.dp else 0.dp,

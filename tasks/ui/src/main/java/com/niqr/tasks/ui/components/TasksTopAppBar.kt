@@ -13,9 +13,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import com.niqr.core.ui.theme.Blue
 import com.niqr.core.ui.theme.ExtendedTheme
+import com.niqr.core.ui.theme.TodoAppTheme
 import com.niqr.tasks.ui.R
 import com.niqr.tasks.ui.model.TasksAction
 
@@ -69,4 +72,16 @@ fun TasksTopAppBar(
             actionIconContentColor = Blue
         )
     )
+}
+
+@Preview
+@Composable
+private fun TasksTopAppBarPreview() {
+    TodoAppTheme {
+        TasksTopAppBar(
+            doneVisible = true,
+            elevation = 0.dp,
+            onAction = {}
+        )
+    }
 }
