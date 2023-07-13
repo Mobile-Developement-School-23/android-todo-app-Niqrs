@@ -43,6 +43,8 @@ class TasksViewModel @Inject constructor(
         setupViewModel()
     }
 
+    private var lastDeleted = TodoItem(description = "dummy item")
+
     private val _uiEvent = Channel<TasksEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
@@ -53,6 +55,7 @@ class TasksViewModel @Inject constructor(
             is TasksAction.DeleteTask -> deleteItem(action.todoItem)
             is TasksAction.EditTask -> editTask(action.todoItem)
             is TasksAction.UpdateDoneVisibility -> updateDoneVisibility(action.visible)
+            is TasksAction.UndoAction -> returnTask()
             is TasksAction.ShowSettings -> viewModelScope.launch { _uiEvent.send(TasksEvent.ShowSettings) }
             is TasksAction.UpdateTheme -> updateTheme(action.theme)
             is TasksAction.UpdateRequest -> viewModelScope.launch(Dispatchers.IO) { todoRepo.updateTodoItems() }
@@ -99,7 +102,9 @@ class TasksViewModel @Inject constructor(
 
     private fun deleteItem(item: TodoItem) {
         viewModelScope.launch(Dispatchers.IO) {
+            lastDeleted = item
             todoRepo.deleteTodoItem(item)
+            _uiEvent.send(TasksEvent.UndoNotification)
         }
     }
 
@@ -107,6 +112,12 @@ class TasksViewModel @Inject constructor(
         _uiState.update { uiState.value.copy(doneVisible = visible) }
         viewModelScope.launch(Dispatchers.IO) {
             todoRepo.updateDoneTodoItemsVisibility(visible)
+        }
+    }
+
+    private fun returnTask() {
+        viewModelScope.launch(Dispatchers.IO) {
+            todoRepo.addTodoItem(lastDeleted)
         }
     }
 

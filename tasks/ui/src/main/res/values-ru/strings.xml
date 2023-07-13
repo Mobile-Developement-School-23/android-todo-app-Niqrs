@@ -15,4 +15,6 @@
     <string name="theme_light">Светлая</string>
     <string name="theme_system">Системная</string>
     <string name="theme_dark">Темная</string>
+    <string name="undo">ОТМЕНА</string>
+    <string name="task_deleted">Задача удалена</string>
 </resources>

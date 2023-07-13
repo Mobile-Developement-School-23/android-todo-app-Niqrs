@@ -16,6 +16,7 @@ import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
@@ -24,6 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.niqr.core.ui.theme.Blue
 import com.niqr.core.ui.theme.ExtendedTheme
 import com.niqr.tasks.domain.model.TodoItem
 import com.niqr.tasks.ui.components.SettingsBottomSheetContent
@@ -90,7 +92,12 @@ fun TasksScreen(
                 TasksTopAppBar(uiState.doneVisible, topBarElevation, onAction)
             },
             snackbarHost = {
-                SnackbarHost(snackbarHostState)
+                SnackbarHost(snackbarHostState) {
+                    Snackbar(
+                        snackbarData = it,
+                        actionColor = Blue
+                    )
+                }
             },
             floatingActionButton = {
                 TasksFloatingActionButton(onAction)
