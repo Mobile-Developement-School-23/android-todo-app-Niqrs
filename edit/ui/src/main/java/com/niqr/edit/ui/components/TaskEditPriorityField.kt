@@ -1,5 +1,7 @@
 package com.niqr.edit.ui.components
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -20,6 +22,7 @@ import com.niqr.edit.ui.model.TaskEditAction
 import com.niqr.edit.ui.utils.toStringResource
 import com.niqr.tasks.domain.model.Priority
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun TaskEditPriorityField(
     priority: Priority,
@@ -44,12 +47,18 @@ fun TaskEditPriorityField(
                 text = stringResource(id = R.string.priority),
                 color = ExtendedTheme.colors.labelPrimary
             )
-            Text(
-                text = stringResource(id = priority.toStringResource()),
-                modifier = Modifier.padding(top = 2.dp),
-                color = if (isHighPriority) Red else ExtendedTheme.colors.labelTertiary,
-                style = ExtendedTheme.typography.subhead
-            )
+
+            AnimatedContent(
+                targetState = priority,
+                label = "Priority change animation"
+            ) {
+                Text(
+                    text = stringResource(id = it.toStringResource()),
+                    modifier = Modifier.padding(top = 2.dp),
+                    color = if (isHighPriority) Red else ExtendedTheme.colors.labelTertiary,
+                    style = ExtendedTheme.typography.subhead
+                )
+            }
         }
     }
 }
