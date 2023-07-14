@@ -74,7 +74,7 @@ class TasksViewModel @Inject constructor(
                 val newTasks = when(doneVisible) {
                     true -> tasks
                     else -> tasks.filter { !it.isDone }
-                }
+                }.sortedBy { it.createdAt }
                 Triple(doneVisible, newTasks, settings)
             }.collectLatest { triple ->
                 _uiState.update {

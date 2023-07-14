@@ -18,11 +18,11 @@ import com.niqr.core.ui.components.TodoBottomSheetLayout
 import com.niqr.core.ui.components.rememberTodoBottomSheetState
 import com.niqr.core.ui.theme.ExtendedTheme
 import com.niqr.edit.ui.components.PriorityBottomSheetContent
-import com.niqr.edit.ui.components.TaskEditDateField
 import com.niqr.edit.ui.components.TaskEditDeleteButton
 import com.niqr.edit.ui.components.TaskEditDivider
 import com.niqr.edit.ui.components.TaskEditPriorityField
 import com.niqr.edit.ui.components.TaskEditTextField
+import com.niqr.edit.ui.components.TaskEditTimeField
 import com.niqr.edit.ui.components.TaskEditTopAppBar
 import com.niqr.edit.ui.components.TaskEditUiEventHandler
 import com.niqr.edit.ui.model.TaskEditAction
@@ -81,8 +81,8 @@ fun TaskEditScreen(
 
                     TaskEditDivider(PaddingValues(horizontal = 16.dp))
 
-                    TaskEditDateField(
-                        date = uiState.deadline,
+                    TaskEditTimeField(
+                        time = uiState.deadline,
                         isDateVisible = uiState.isDeadlineVisible,
                         onAction = onAction
                     )

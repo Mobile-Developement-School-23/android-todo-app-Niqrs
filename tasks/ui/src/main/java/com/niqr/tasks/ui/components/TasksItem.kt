@@ -62,6 +62,8 @@ import com.niqr.tasks.domain.model.TodoItem
 import com.niqr.tasks.ui.R
 import com.niqr.tasks.ui.model.TasksAction
 import com.niqr.tasks.ui.utils.toStringDate
+import com.niqr.tasks.ui.utils.toStringTime
+import java.time.LocalDateTime
 
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class
@@ -71,7 +73,6 @@ fun LazyItemScope.TasksItem(
     task: TodoItem,
     onAction: (TasksAction) -> Unit
 ) {
-    val deadline = remember(task.deadline) { task.deadline?.toStringDate() }
     val isHighPriority = remember(task.priority) { task.priority == Priority.HIGH }
 
     val currentTask by rememberUpdatedState(task)
@@ -131,9 +132,7 @@ fun LazyItemScope.TasksItem(
                             .weight(1f)
                             .padding(top = 12.dp)
                     ) {
-
-                        TasksItemText(task.isDone, task.description, deadline)
-
+                        TasksItemText(task.isDone, task.description, task.deadline)
 
                         Box(modifier = Modifier.align(Alignment.End)) {
                             CompositionLocalProvider(LocalTextStyle provides ExtendedTheme.typography.body) {
@@ -212,8 +211,15 @@ private fun TasksItemIcon(
 private fun TasksItemText(
     isDone: Boolean,
     description: String,
-    deadline: String?
+    deadline: LocalDateTime?
 ) {
+    val date = remember(deadline) { deadline?.toLocalDate()?.toStringDate() }
+    val time = remember(deadline) {
+        deadline?.toLocalTime()?.let {
+            if (it.second == 0) null else it.toStringTime()
+        }
+    }
+
     AnimatedContent(
         targetState = isDone,
         label = "description animation"
@@ -227,12 +233,21 @@ private fun TasksItemText(
             style = ExtendedTheme.typography.body
         )
     }
-    deadline?.let {
-        Text(
-            text = it,
-            color = ExtendedTheme.colors.labelTertiary,
-            style = ExtendedTheme.typography.subhead
-        )
+    Row {
+        date?.let {
+            Text(
+                text = it,
+                color = ExtendedTheme.colors.labelTertiary,
+                style = ExtendedTheme.typography.subhead
+            )
+        }
+        time?.let {
+            Text(
+                text = " / $it",
+                color = ExtendedTheme.colors.labelTertiary,
+                style = ExtendedTheme.typography.subhead
+            )
+        }
     }
 }
 
