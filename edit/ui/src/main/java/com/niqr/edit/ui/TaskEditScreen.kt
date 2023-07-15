@@ -13,10 +13,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.niqr.core.ui.components.TodoBottomSheetLayout
 import com.niqr.core.ui.components.rememberTodoBottomSheetState
 import com.niqr.core.ui.theme.ExtendedTheme
+import com.niqr.core.ui.theme.TodoAppTheme
 import com.niqr.edit.ui.components.PriorityBottomSheetContent
 import com.niqr.edit.ui.components.TaskEditDeleteButton
 import com.niqr.edit.ui.components.TaskEditDivider
@@ -29,6 +31,7 @@ import com.niqr.edit.ui.model.TaskEditAction
 import com.niqr.edit.ui.model.TaskEditEvent
 import com.niqr.edit.ui.model.TaskEditUiState
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 
 /**
  * Screen to create/edit task
@@ -99,5 +102,19 @@ fun TaskEditScreen(
                 }
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun TaskEditScreenPreview() {
+    TodoAppTheme {
+        TaskEditScreen(
+            uiState = TaskEditUiState(),
+            uiEvent = emptyFlow(),
+            onAction = {},
+            onNavigateUp = { /*TODO*/ },
+            onSave = { }
+        )
     }
 }

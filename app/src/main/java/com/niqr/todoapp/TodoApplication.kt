@@ -7,6 +7,9 @@ import com.niqr.auth.ui.di.AuthUiComponent
 import com.niqr.auth.ui.di.AuthUiComponentProvider
 import com.niqr.edit.ui.di.EditUiComponent
 import com.niqr.edit.ui.di.EditUiComponentProvider
+import com.niqr.other.alarm.AlarmNotificationChannel
+import com.niqr.other.alarm.di.AlarmComponent
+import com.niqr.other.alarm.di.AlarmComponentProvider
 import com.niqr.other.work.SynchronizationNotificationChannel
 import com.niqr.other.work.di.WorkComponent
 import com.niqr.other.work.di.WorkComponentProvider
@@ -29,7 +32,8 @@ class TodoApplication: Application(), Configuration.Provider,
     AuthUiComponentProvider,
     TasksUiComponentProvider,
     EditUiComponentProvider,
-    WorkComponentProvider {
+    WorkComponentProvider,
+    AlarmComponentProvider {
     lateinit var appComponent: AppComponent
 
     @Inject
@@ -40,9 +44,11 @@ class TodoApplication: Application(), Configuration.Provider,
         appComponent = DaggerAppComponent.factory().create(this)
         appComponent.inject(this)
         val syncChannel = SynchronizationNotificationChannel()
+        val alarmChannel = AlarmNotificationChannel()
 
         val notificationManager = getSystemService(NotificationManager::class.java)
         notificationManager.createNotificationChannel(syncChannel.channel)
+        notificationManager.createNotificationChannel(alarmChannel.channel)
     }
 
     override fun getWorkManagerConfiguration() =
@@ -60,4 +66,6 @@ class TodoApplication: Application(), Configuration.Provider,
 
     override fun provideWorkComponent(): WorkComponent =
         appComponent.workComponent().create()
+    override fun provideAlarmComponent(): AlarmComponent =
+        appComponent.alarmComponent().create()
 }

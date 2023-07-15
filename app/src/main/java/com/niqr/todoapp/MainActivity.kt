@@ -9,6 +9,7 @@ import com.niqr.auth.domain.AuthInfoProvider
 import com.niqr.core.ui.theme.TodoAppTheme
 import com.niqr.other.work.SynchronizationWork
 import com.niqr.settings.domain.settings.AppSettingsProvider
+import com.niqr.todoapp.utils.PermissionsChecker
 import com.niqr.todoapp.utils.isDarkTheme
 import javax.inject.Inject
 
@@ -31,7 +32,7 @@ class MainActivity : ComponentActivity() {
         syncWork.enqueuePeriodicSynchronizationWork()
         setContent {
             val settings by settings.settingsFlow().collectAsState(settings.settings())
-
+            PermissionsChecker()
             TodoAppTheme(
                 darkTheme = settings.theme.isDarkTheme()
             ) {

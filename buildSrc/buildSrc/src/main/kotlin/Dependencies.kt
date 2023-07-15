@@ -55,6 +55,7 @@ object Dependencies {
             private const val version = "0.30.1"
 
             const val navigationAnimation = "com.google.accompanist:accompanist-navigation-animation:$version"
+            const val permissions = "com.google.accompanist:accompanist-permissions:$version"
         }
     }
 

@@ -35,3 +35,4 @@ include(":settings:domain")
 include(":settings:data")
 
 include(":other:work")
+include(":other:alarm")

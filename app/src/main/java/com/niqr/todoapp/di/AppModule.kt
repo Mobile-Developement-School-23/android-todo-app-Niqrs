@@ -13,6 +13,7 @@ import dagger.Module
  * Contains all dagger modules
  */
 @Module(includes = [
+    ActivityModule::class,
     NetworkModule::class,
     AuthDataModule::class, AuthUiModule::class,
     TasksDataModule::class, TasksUiModule::class,

@@ -69,6 +69,7 @@ dependencies {
     implementation(project(":settings:data"))
 
     implementation(project(":other:work"))
+    implementation(project(":other:alarm"))
 
     implementation(Dependencies.Android.coreKtx)
     implementation(Dependencies.Android.activityCompose)
@@ -83,6 +84,9 @@ dependencies {
     implementation(Dependencies.Compose.tooling)
     implementation(Dependencies.Compose.material3)
     implementation(Dependencies.Compose.navigation)
+
+    //Accompanist
+    implementation(Dependencies.Compose.Accompanist.permissions)
 
     //Test
     testImplementation(Dependencies.Testing.junit4)
