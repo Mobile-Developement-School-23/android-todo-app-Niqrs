@@ -12,7 +12,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
@@ -22,10 +21,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.niqr.core.ui.components.TodoBottomSheetLayout
 import com.niqr.core.ui.theme.Blue
 import com.niqr.core.ui.theme.ExtendedTheme
+import com.niqr.core.ui.theme.TodoAppTheme
+import com.niqr.tasks.domain.model.Priority
 import com.niqr.tasks.domain.model.TodoItem
 import com.niqr.tasks.ui.components.SettingsBottomSheetContent
 import com.niqr.tasks.ui.components.TasksFloatingActionButton
@@ -39,11 +41,13 @@ import com.niqr.tasks.ui.model.TasksAction
 import com.niqr.tasks.ui.model.TasksEvent
 import com.niqr.tasks.ui.model.TasksUiState
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
+import java.time.LocalDateTime
 
 /**
  * Main app screen for watching and editing all user [TodoItem]s
  */
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TasksScreen(
     uiState: TasksUiState,
@@ -129,5 +133,24 @@ fun TasksScreen(
                 )
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun Preview() {
+    val tasks = listOf(
+        TodoItem("1", "Task 1", LocalDateTime.now(), Priority.HIGH, isDone = true),
+        TodoItem("2", "Task 2", LocalDateTime.now().plusDays(1), Priority.LOW)
+    )
+    TodoAppTheme {
+        TasksScreen(
+            uiState = TasksUiState(tasks = tasks),
+            uiEvent = emptyFlow(),
+            onAction = {},
+            onCreateTask = {},
+            onEditTask = {},
+            onSignOut = {}
+        )
     }
 }

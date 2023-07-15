@@ -5,7 +5,6 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.niqr.other.alarm.di.AlarmComponentProvider
 import com.niqr.other.alarm.di.MainActivityIntent
@@ -29,9 +28,7 @@ class AlarmReceiver: BroadcastReceiver() {
             .provideAlarmComponent().inject(this@AlarmReceiver)
 
         val id = intent?.getStringExtra(TASK_ID) ?: return@goAsync
-        Log.d("TAG", "ID: $id")
         val item = repo.findItemById(id) ?: return@goAsync
-        Log.d("TAG", "ITEM: $item")
 
         if (item.isDone)
             return@goAsync
@@ -54,12 +51,6 @@ class AlarmReceiver: BroadcastReceiver() {
             .setContentTitle(context.getString(R.string.unfinished_task))
             .setContentText(item.description)
             .setContentIntent(activityPendingIntent)
-//            .setContentIntent(activityPendingIntent)
-//            .addAction(
-//                R.drawable.baseline_baby_changing_station_24,
-//                "Increment",
-//                incrementIntent
-//            )
             .build()
 
         (context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager)

@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
@@ -49,6 +50,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import com.niqr.core.ui.theme.ExtendedTheme
@@ -56,6 +58,7 @@ import com.niqr.core.ui.theme.Gray
 import com.niqr.core.ui.theme.GrayLight
 import com.niqr.core.ui.theme.Green
 import com.niqr.core.ui.theme.Red
+import com.niqr.core.ui.theme.TodoAppTheme
 import com.niqr.core.ui.theme.White
 import com.niqr.tasks.domain.model.Priority
 import com.niqr.tasks.domain.model.TodoItem
@@ -340,5 +343,25 @@ private fun SwipeBackground(dismissState: DismissState) {
             modifier = Modifier.scale(scale),
             tint = White
         )
+    }
+}
+
+@Preview
+@Composable
+private fun TasksItemPreview() {
+    TodoAppTheme {
+        Box(
+            modifier = Modifier
+                .background(ExtendedTheme.colors.backPrimary)
+        ) {
+            LazyColumn {
+                item {
+                    TasksItem(
+                        task = TodoItem("1", "Task 1", LocalDateTime.now(), Priority.HIGH, isDone = true),
+                        onAction = {}
+                    )
+                }
+            }
+        }
     }
 }

@@ -113,8 +113,8 @@ private fun TaskEditScreenPreview() {
             uiState = TaskEditUiState(),
             uiEvent = emptyFlow(),
             onAction = {},
-            onNavigateUp = { /*TODO*/ },
-            onSave = { }
+            onNavigateUp = {},
+            onSave = {}
         )
     }
 }

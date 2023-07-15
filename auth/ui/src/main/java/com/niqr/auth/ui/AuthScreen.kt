@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.niqr.auth.ui.model.AuthAction
 import com.niqr.auth.ui.model.AuthEvent
@@ -36,10 +37,12 @@ import com.niqr.auth.ui.model.AuthUiState
 import com.niqr.core.ui.R.string.app_name
 import com.niqr.core.ui.theme.Blue
 import com.niqr.core.ui.theme.ExtendedTheme
+import com.niqr.core.ui.theme.TodoAppTheme
 import com.yandex.authsdk.YandexAuthLoginOptions
 import com.yandex.authsdk.YandexAuthOptions
 import com.yandex.authsdk.YandexAuthSdk
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 
 /**
  * Screen for user authentication
@@ -130,5 +133,18 @@ fun AuthScreen(
                 }
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun AuthScreenPreview() {
+    TodoAppTheme {
+        AuthScreen(
+            uiState = AuthUiState(),
+            uiEvent = emptyFlow(),
+            onAction = {},
+            onSuccess = {}
+        )
     }
 }

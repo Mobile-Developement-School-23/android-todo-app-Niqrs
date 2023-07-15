@@ -16,9 +16,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import com.niqr.core.ui.theme.Blue
 import com.niqr.core.ui.theme.ExtendedTheme
+import com.niqr.core.ui.theme.TodoAppTheme
 import com.niqr.edit.ui.R
 import com.niqr.edit.ui.model.TaskEditAction
 
@@ -69,4 +72,16 @@ fun TaskEditTopAppBar(
             navigationIconContentColor = ExtendedTheme.colors.labelPrimary
         )
     )
+}
+
+@Preview
+@Composable
+private fun TaskEditTopAppBarPreview() {
+    TodoAppTheme {
+        TaskEditTopAppBar(
+            description = "Description",
+            elevation = 0.dp,
+            onAction = {}
+        )
+    }
 }
