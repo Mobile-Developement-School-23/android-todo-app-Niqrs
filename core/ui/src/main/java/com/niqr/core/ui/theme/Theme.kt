@@ -128,17 +128,3 @@ object ExtendedTheme {
         @Composable
         get() = LocalExtendedTypography.current
 }
-
-//@Preview
-//@Composable
-//private fun TodoAppThemePreview() {
-//    TodoAppTheme {
-//        Box(
-//            modifier = Modifier
-//                .background(ExtendedTheme.colors.backPrimary)
-//                .padding(16.dp)
-//        ) {
-//
-//        }
-//    }
-//}
