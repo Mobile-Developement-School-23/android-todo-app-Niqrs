@@ -146,7 +146,7 @@ private fun Color.toHexCode(): String {
     }
 }
 
-fun Color.isDark(): Boolean {
+private fun Color.isDark(): Boolean {
     val color = toArgb()
     val darkness = (1 - (0.299 * red + 0.587 * green + 0.114 * blue)) * alpha
     return darkness >= 0.3
