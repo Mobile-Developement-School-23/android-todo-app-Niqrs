@@ -91,8 +91,10 @@ private fun ColorPalettePreview() {
 }
 
 @Preview(
+    name = "Stable Color Palette",
     widthDp = ColorWidth * 6,
     heightDp = ColorHeight * 1,
+    uiMode = Configuration.UI_MODE_NIGHT_NO
 )
 @Composable
 private fun StableColorPalettePreview() {
