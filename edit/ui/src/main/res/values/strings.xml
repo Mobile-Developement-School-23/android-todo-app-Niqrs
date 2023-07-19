@@ -11,4 +11,7 @@
     <string name="save_button">SAVE</string>
     <string name="task_input_hint">What to do…</string>
     <string name="priority">Priority</string>
+    <string name="select_time">select time</string>
+    <string name="remove">Remove</string>
+    <string name="select_time_title">Select Time</string>
 </resources>

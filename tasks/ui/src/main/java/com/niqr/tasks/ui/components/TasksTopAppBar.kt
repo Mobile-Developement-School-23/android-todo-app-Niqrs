@@ -1,28 +1,24 @@
 package com.niqr.tasks.ui.components
 
-import androidx.compose.foundation.background
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import com.niqr.core.ui.theme.Blue
 import com.niqr.core.ui.theme.ExtendedTheme
+import com.niqr.core.ui.theme.TodoAppTheme
 import com.niqr.tasks.ui.R
 import com.niqr.tasks.ui.model.TasksAction
 
@@ -30,24 +26,22 @@ import com.niqr.tasks.ui.model.TasksAction
 @Composable
 fun TasksTopAppBar(
     doneVisible: Boolean,
+    elevation: Dp,
     onAction: (TasksAction) -> Unit
 ) {
-    var settingsVisible by remember { mutableStateOf(false) }
-
     TopAppBar(
+        modifier = Modifier
+            .shadow(elevation),
         title = {
-            Text(text = stringResource(id = R.string.my_tasks))
+            Text(
+                text = stringResource(id = R.string.my_tasks),
+                style = ExtendedTheme.typography.title
+            )
         },
         navigationIcon = {
-            SettingsMenu(
-                expanded = settingsVisible,
-                hideMenu = { settingsVisible = false },
-                onAction = onAction
-            )
-
             IconButton(
                 onClick = {
-                    settingsVisible = true
+                    onAction(TasksAction.ShowSettings)
                 }
             ) {
                 Icon(
@@ -80,34 +74,14 @@ fun TasksTopAppBar(
     )
 }
 
+@Preview
 @Composable
-private fun SettingsMenu(
-    expanded: Boolean,
-    hideMenu: () -> Unit,
-    onAction: (TasksAction) -> Unit
-) {
-    DropdownMenu(
-        expanded = expanded,
-        onDismissRequest = hideMenu,
-        modifier = Modifier
-            .background(ExtendedTheme.colors.backElevated),
-    ) {
-        DropdownMenuItem(
-            text = { Text(stringResource(R.string.sign_out)) },
-            onClick = {
-                onAction(TasksAction.SignOut)
-                hideMenu()
-            },
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Default.ExitToApp,
-                    contentDescription = null
-                )
-            },
-            colors = MenuDefaults.itemColors(
-                textColor = ExtendedTheme.colors.labelPrimary,
-                leadingIconColor = ExtendedTheme.colors.labelPrimary
-            )
+private fun TasksTopAppBarPreview() {
+    TodoAppTheme {
+        TasksTopAppBar(
+            doneVisible = true,
+            elevation = 0.dp,
+            onAction = {}
         )
     }
 }

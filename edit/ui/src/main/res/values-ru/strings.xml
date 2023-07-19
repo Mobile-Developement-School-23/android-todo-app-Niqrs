@@ -11,4 +11,7 @@
     <string name="save_button">СОХРАНИТЬ</string>
     <string name="task_input_hint">Что надо сделать…</string>
     <string name="priority">Важность</string>
+    <string name="select_time">выбрать время</string>
+    <string name="remove">Убрать</string>
+    <string name="select_time_title">Выберете Время</string>
 </resources>

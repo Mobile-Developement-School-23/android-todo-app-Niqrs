@@ -5,6 +5,7 @@ import com.niqr.auth.data.di.AuthProviderScope
 import com.niqr.auth.ui.di.AuthUiComponent
 import com.niqr.core.di.AppScope
 import com.niqr.edit.ui.di.EditUiComponent
+import com.niqr.other.alarm.di.AlarmComponent
 import com.niqr.other.work.di.SynchronizationWorkScope
 import com.niqr.other.work.di.WorkComponent
 import com.niqr.tasks.ui.di.TasksUiComponent
@@ -36,4 +37,5 @@ interface AppComponent {
     fun editUiComponent(): EditUiComponent.Factory
 
     fun workComponent(): WorkComponent.Factory
+    fun alarmComponent(): AlarmComponent.Factory
 }

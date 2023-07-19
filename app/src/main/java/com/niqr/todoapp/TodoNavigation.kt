@@ -1,11 +1,12 @@
 package com.niqr.todoapp
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.navigation.animation.AnimatedNavHost
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.niqr.auth.domain.AuthInfoProvider
 import com.niqr.auth.ui.AuthScreenRoutePattern
 import com.niqr.auth.ui.authScreen
@@ -20,15 +21,17 @@ import com.niqr.tasks.ui.tasksScreen
 /**
  * Root of app navigation graph
  */
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun TodoNavigation(authProvider: AuthInfoProvider) {
-    val navController = rememberNavController()
+    val navController = rememberAnimatedNavController()
 
     Surface(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize(),
         color = ExtendedTheme.colors.backPrimary
     ) {
-        NavHost(
+        AnimatedNavHost(
             navController = navController,
             startDestination = if (authProvider.authInfo().token.isBlank()) AuthScreenRoutePattern
                 else TasksScreenRoutePattern

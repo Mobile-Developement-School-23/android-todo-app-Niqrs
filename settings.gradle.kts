@@ -31,4 +31,8 @@ include(":core:ui")
 include(":core:data")
 include(":core:di")
 
+include(":settings:domain")
+include(":settings:data")
+
 include(":other:work")
+include(":other:alarm")

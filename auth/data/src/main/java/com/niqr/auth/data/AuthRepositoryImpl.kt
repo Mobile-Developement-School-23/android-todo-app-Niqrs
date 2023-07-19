@@ -4,6 +4,7 @@ import com.niqr.auth.data.di.AuthProviderScope
 import com.niqr.auth.domain.AuthInfoMutableProvider
 import com.niqr.auth.domain.AuthRepository
 import com.niqr.auth.domain.model.AuthInfo
+import com.niqr.settings.domain.settings.AppSettingsMutableProvider
 import java.util.UUID
 import javax.inject.Inject
 
@@ -12,7 +13,8 @@ import javax.inject.Inject
  */
 @AuthProviderScope
 class AuthRepositoryImpl @Inject constructor(
-    private val authProvider: AuthInfoMutableProvider
+    private val authProvider: AuthInfoMutableProvider,
+    private val settingsProvider: AppSettingsMutableProvider
 ): AuthRepository {
     override suspend fun signIn(token: String) {
         authProvider.updateAuthInfo(
@@ -26,5 +28,6 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun signOut() {
         authProvider.clearAuthInfo()
+        settingsProvider.resetAll()
     }
 }

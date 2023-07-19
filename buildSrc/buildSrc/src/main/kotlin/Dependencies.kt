@@ -8,8 +8,10 @@ object Dependencies {
         const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$ver"
 
         const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2"
+        const val immutableCollections = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5"
         object Serialization {
             const val gradlePlugin = "org.jetbrains.kotlin:kotlin-serialization:$ver"
+            const val json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1"
         }
 
         object Ksp {
@@ -44,9 +46,17 @@ object Dependencies {
 
         const val ui = "androidx.compose.ui:ui:$version"
         const val tooling = "androidx.compose.ui:ui-tooling:$version"
+        const val material2 = "androidx.compose.material:material:$version"
         const val material3 = "androidx.compose.material3:material3:$material3Version"
         const val navigation = "androidx.navigation:navigation-compose:$navigationVersion"
         const val lifecycleRuntime = "androidx.lifecycle:lifecycle-runtime-compose:$lifecycleRuntimeVersion"
+
+        object Accompanist {
+            private const val version = "0.30.1"
+
+            const val navigationAnimation = "com.google.accompanist:accompanist-navigation-animation:$version"
+            const val permissions = "com.google.accompanist:accompanist-permissions:$version"
+        }
     }
 
     object Room {
@@ -78,7 +88,8 @@ object Dependencies {
         private const val workManagerVersion = "2.8.1"
 
         const val yandexAuthSdk = "com.yandex.android:authsdk:$yandexAuthSdkVersion"
-        const val datastore = "androidx.datastore:datastore-preferences:$datastoreVersion"
+        const val datastore = "androidx.datastore:datastore:$datastoreVersion"
+        const val preferencesDatastore = "androidx.datastore:datastore-preferences:$datastoreVersion"
         const val workManager = "androidx.work:work-runtime-ktx:$workManagerVersion"
     }
 }

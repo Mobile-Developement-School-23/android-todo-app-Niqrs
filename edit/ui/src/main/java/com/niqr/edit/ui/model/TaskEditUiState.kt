@@ -1,8 +1,8 @@
 package com.niqr.edit.ui.model
 
-import com.niqr.edit.ui.utils.tomorrowLocalDate
+import com.niqr.edit.ui.utils.tomorrowLocalDateTime
 import com.niqr.tasks.domain.model.Priority
-import java.time.LocalDate
+import java.time.LocalDateTime
 
 /**
  * Main state of edit screen
@@ -10,7 +10,7 @@ import java.time.LocalDate
 data class TaskEditUiState(
     val description: String = "",
     val priority: Priority = Priority.COMMON,
-    val deadline: LocalDate = tomorrowLocalDate,
+    val deadline: LocalDateTime = tomorrowLocalDateTime,
     val isDeadlineVisible: Boolean = false,
     val isEditing: Boolean = false
 ) {

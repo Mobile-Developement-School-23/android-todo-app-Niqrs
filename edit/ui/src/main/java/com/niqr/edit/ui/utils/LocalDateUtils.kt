@@ -2,16 +2,17 @@ package com.niqr.edit.ui.utils
 
 import java.time.Instant
 import java.time.LocalDate
-import java.time.ZoneId
+import java.time.LocalDateTime
+import java.time.LocalTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
 /**
- * Utils for working with [LocalDate]
+ * Utils for working with Time
  */
-val tomorrowLocalDate: LocalDate
-    get() = LocalDate.now(ZoneOffset.UTC).plusDays(1)
+val tomorrowLocalDateTime: LocalDateTime
+    get() = LocalDate.now(ZoneOffset.UTC).plusDays(1).atStartOfDay()
 
 fun LocalDate.toLong(): Long {
     val zoneId = ZoneOffset.UTC
@@ -21,5 +22,8 @@ fun LocalDate.toLong(): Long {
 fun LocalDate.toStringDate(): String =
     DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG).format(this)
 
-fun dateFromLong(time: Long): LocalDate =
-    Instant.ofEpochMilli(time).atZone(ZoneId.systemDefault()).toLocalDate()
+fun LocalTime.toStringTime(): String =
+    DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT).format(this)
+
+fun dateTimeFromLong(time: Long): LocalDateTime =
+    LocalDateTime.ofInstant(Instant.ofEpochMilli(time), ZoneOffset.UTC)

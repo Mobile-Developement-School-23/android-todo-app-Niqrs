@@ -1,11 +1,12 @@
 package com.niqr.tasks.ui
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
+import com.google.accompanist.navigation.animation.composable
 import com.niqr.core.ui.utils.daggerViewModel
 import com.niqr.tasks.ui.di.TasksUiComponentProvider
 
@@ -21,6 +22,7 @@ fun NavController.navigateToTasks() {
 /**
  * Tasks navigation graph
  */
+@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.tasksScreen(
     onNavigateToCreateTask: () -> Unit,
     onNavigateToEditTask: (String) -> Unit,
