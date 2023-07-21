@@ -100,4 +100,5 @@ kapt {
 
 configure<UploadPluginExtension> {
     maxSizeMb.set(10f)
+    apkName.set("todolist")
 }
