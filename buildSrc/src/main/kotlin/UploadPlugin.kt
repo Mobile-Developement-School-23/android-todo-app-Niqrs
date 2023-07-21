@@ -14,14 +14,18 @@ class UploadPlugin : Plugin<Project> {
         androidComponents.onVariants { variant ->
             val variantName = variant.name.capitalize()
             val apk = variant.artifacts.get(SingleArtifact.APK)
+            val apkInfoFile = project.layout.buildDirectory.file("apk-info.txt")
 
             val validate = project.tasks.register<ValidateSizeTask>("validateApkSizeFor$variantName") {
                 apkDir.set(apk)
+                maxSizeMb.set(10f)
+                infoFile.set(apkInfoFile)
             }
 
             val upload = project.tasks.register<UploadTask>("uploadApkFor$variantName") {
                 dependsOn(validate.name)
                 apkDir.set(apk)
+                apkInfo.set(apkInfoFile)
             }
         }
     }

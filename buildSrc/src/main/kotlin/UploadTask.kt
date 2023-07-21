@@ -5,12 +5,16 @@ import io.ktor.client.engine.cio.CIO
 import kotlinx.coroutines.runBlocking
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.DirectoryProperty
+import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.tasks.InputDirectory
+import org.gradle.api.tasks.InputFiles
 import org.gradle.api.tasks.TaskAction
 
 abstract class UploadTask : DefaultTask() {
     @get:InputDirectory
     abstract val apkDir: DirectoryProperty
+    @get:InputFiles
+    abstract val apkInfo: RegularFileProperty
 
     @TaskAction
     fun upload() {
@@ -20,8 +24,9 @@ abstract class UploadTask : DefaultTask() {
         val chatId = properties.getProperty("tg-chat-id")
 
         val apkFile = apkDir.getApk()
+        val info = apkInfo.asFile.get().readText()
         runBlocking {
-            api.uploadFile(apkFile, token, chatId)
+            api.uploadFile(apkFile, info, token, chatId)
         }
     }
 }
