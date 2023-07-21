@@ -9,6 +9,7 @@ import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputDirectory
+import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
 
@@ -16,6 +17,7 @@ abstract class ValidateSizeTask : DefaultTask() {
     @get:InputDirectory
     abstract val apkDir: DirectoryProperty
     @get:Input
+    @get:Optional
     abstract val maxSizeMb: Property<Float>
     @get:OutputFile
     abstract val infoFile: RegularFileProperty
@@ -23,7 +25,7 @@ abstract class ValidateSizeTask : DefaultTask() {
     @TaskAction
     fun validate() {
         val apkFile = apkDir.getApk()
-        val maxSize = maxSizeMb.get()
+        val maxSize = maxSizeMb.getOrElse(Float.MAX_VALUE)
         val sizeMb = (apkFile.length() / 1024f / 1024f)
 
         if (sizeMb > maxSize) {

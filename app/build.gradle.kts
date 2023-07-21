@@ -97,3 +97,7 @@ dependencies {
 kapt {
     correctErrorTypes = true
 }
+
+configure<UploadPluginExtension> {
+    maxSizeMb.set(10f)
+}
