@@ -7,7 +7,7 @@ import com.niqr.core.di.FeatureScope
 import com.niqr.edit.ui.model.TaskEditAction
 import com.niqr.edit.ui.model.TaskEditEvent
 import com.niqr.edit.ui.model.TaskEditUiState
-import com.niqr.edit.ui.utils.dateFromLong
+import com.niqr.edit.ui.utils.dateTimeFromLong
 import com.niqr.tasks.domain.model.TodoItem
 import com.niqr.tasks.domain.repo.TodoItemsRepository
 import kotlinx.coroutines.Dispatchers
@@ -41,13 +41,15 @@ class TaskEditViewModel @Inject constructor(
     fun onAction(action: TaskEditAction) {
         when(action) {
             is TaskEditAction.DescriptionChange -> _uiState.update {
-                uiState.value.copy(description = action.description) }
+                it.copy(description = action.description) }
             is TaskEditAction.UpdateDeadlineVisibility -> _uiState.update {
-                uiState.value.copy(isDeadlineVisible = action.visible) }
+                it.copy(isDeadlineVisible = action.visible) }
+            is TaskEditAction.PriorityChoose -> viewModelScope.launch {
+                _uiEvent.send(TaskEditEvent.PriorityChoose) }
             is TaskEditAction.UpdatePriority -> _uiState.update {
-                uiState.value.copy(priority = action.priority) }
-            is TaskEditAction.UpdateDeadline -> _uiState.update {
-                uiState.value.copy(deadline = dateFromLong(action.deadline)) }
+                it.copy(priority = action.priority) }
+            is TaskEditAction.UpdateDate -> updateDate(action.date)
+            is TaskEditAction.UpdateTime -> updateTime(action.hour, action.minute, action.second)
             TaskEditAction.SaveTask -> saveTask()
             TaskEditAction.DeleteTask -> deleteTask()
             TaskEditAction.NavigateUp -> viewModelScope.launch {
@@ -59,6 +61,28 @@ class TaskEditViewModel @Inject constructor(
         val taskId: String? = arguments?.getString(TaskId)
         taskId?.let {
             setupTask(taskId)
+        }
+    }
+
+    private fun updateDate(date: Long) {
+        _uiState.update {
+            val prevDeadline = it.deadline
+            val newDeadline = dateTimeFromLong(date)
+                .withHour(prevDeadline.hour)
+                .withMinute(prevDeadline.minute)
+
+            uiState.value.copy(deadline = newDeadline)
+        }
+    }
+
+    private fun updateTime(hour: Int, minute: Int, second: Int) {
+        _uiState.update {
+            val newDeadline = if (second != 0)
+                    it.deadline.withHour(hour).withMinute(minute).withSecond(second)
+                else
+                    it.deadline.withHour(0).withMinute(0).withSecond(second)
+
+            uiState.value.copy(deadline = newDeadline)
         }
     }
 

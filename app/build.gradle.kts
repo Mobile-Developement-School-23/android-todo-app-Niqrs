@@ -4,6 +4,7 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization")
     id("com.google.devtools.ksp")
     id("kotlin-kapt")
+    id("upload-tg-plugin")
 }
 
 android {
@@ -65,10 +66,15 @@ dependencies {
 
     implementation(project(":edit:ui"))
 
+    implementation(project(":settings:domain"))
+    implementation(project(":settings:data"))
+
     implementation(project(":other:work"))
+    implementation(project(":other:alarm"))
 
     implementation(Dependencies.Android.coreKtx)
     implementation(Dependencies.Android.activityCompose)
+    implementation(Dependencies.Compose.Accompanist.navigationAnimation)
 
     //DI
     implementation(Dependencies.Dagger.dependency)
@@ -80,6 +86,9 @@ dependencies {
     implementation(Dependencies.Compose.material3)
     implementation(Dependencies.Compose.navigation)
 
+    //Accompanist
+    implementation(Dependencies.Compose.Accompanist.permissions)
+
     //Test
     testImplementation(Dependencies.Testing.junit4)
     androidTestImplementation(Dependencies.Testing.junitAndroidExt)
@@ -87,4 +96,9 @@ dependencies {
 
 kapt {
     correctErrorTypes = true
+}
+
+configure<UploadPluginExtension> {
+    maxSizeMb.set(10f)
+    apkName.set("todolist")
 }

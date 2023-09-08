@@ -11,4 +11,10 @@
     <string name="edit">Изменить</string>
     <string name="sign_out">Выйти</string>
     <string name="connection_error">Ошибка в соединении</string>
+    <string name="theme">Тема</string>
+    <string name="theme_light">Светлая</string>
+    <string name="theme_system">Системная</string>
+    <string name="theme_dark">Темная</string>
+    <string name="undo">ОТМЕНА</string>
+    <string name="task_deleted">Задача удалена</string>
 </resources>

@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
@@ -30,11 +31,13 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.SwipeToDismiss
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDismissState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -47,6 +50,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import com.niqr.core.ui.theme.ExtendedTheme
@@ -54,12 +58,15 @@ import com.niqr.core.ui.theme.Gray
 import com.niqr.core.ui.theme.GrayLight
 import com.niqr.core.ui.theme.Green
 import com.niqr.core.ui.theme.Red
+import com.niqr.core.ui.theme.TodoAppTheme
 import com.niqr.core.ui.theme.White
 import com.niqr.tasks.domain.model.Priority
 import com.niqr.tasks.domain.model.TodoItem
 import com.niqr.tasks.ui.R
 import com.niqr.tasks.ui.model.TasksAction
 import com.niqr.tasks.ui.utils.toStringDate
+import com.niqr.tasks.ui.utils.toStringTime
+import java.time.LocalDateTime
 
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class
@@ -69,7 +76,6 @@ fun LazyItemScope.TasksItem(
     task: TodoItem,
     onAction: (TasksAction) -> Unit
 ) {
-    val deadline = remember(task.deadline) { task.deadline?.toStringDate() }
     val isHighPriority = remember(task.priority) { task.priority == Priority.HIGH }
 
     val currentTask by rememberUpdatedState(task)
@@ -129,17 +135,17 @@ fun LazyItemScope.TasksItem(
                             .weight(1f)
                             .padding(top = 12.dp)
                     ) {
-
-                        TasksItemText(task.isDone, task.description, deadline)
-
+                        TasksItemText(task.isDone, task.description, task.deadline)
 
                         Box(modifier = Modifier.align(Alignment.End)) {
-                            TasksItemMenu(
-                                task = task,
-                                expanded = menuExpanded,
-                                hideMenu = { menuExpanded = false },
-                                onAction = onAction
-                            )
+                            CompositionLocalProvider(LocalTextStyle provides ExtendedTheme.typography.body) {
+                                TasksItemMenu(
+                                    task = task,
+                                    expanded = menuExpanded,
+                                    hideMenu = { menuExpanded = false },
+                                    onAction = onAction
+                                )
+                            }
                         }
                     }
 
@@ -208,8 +214,15 @@ private fun TasksItemIcon(
 private fun TasksItemText(
     isDone: Boolean,
     description: String,
-    deadline: String?
+    deadline: LocalDateTime?
 ) {
+    val date = remember(deadline) { deadline?.toLocalDate()?.toStringDate() }
+    val time = remember(deadline) {
+        deadline?.toLocalTime()?.let {
+            if (it.second == 0) null else it.toStringTime()
+        }
+    }
+
     AnimatedContent(
         targetState = isDone,
         label = "description animation"
@@ -219,14 +232,25 @@ private fun TasksItemText(
             color = if (it) ExtendedTheme.colors.labelTertiary else ExtendedTheme.colors.labelPrimary,
             textDecoration = if (it) TextDecoration.LineThrough else TextDecoration.None,
             overflow = TextOverflow.Ellipsis,
-            maxLines = 3
+            maxLines = 3,
+            style = ExtendedTheme.typography.body
         )
     }
-    deadline?.let {
-        Text(
-            text = it,
-            color = ExtendedTheme.colors.labelTertiary
-        )
+    Row {
+        date?.let {
+            Text(
+                text = it,
+                color = ExtendedTheme.colors.labelTertiary,
+                style = ExtendedTheme.typography.subhead
+            )
+        }
+        time?.let {
+            Text(
+                text = " / $it",
+                color = ExtendedTheme.colors.labelTertiary,
+                style = ExtendedTheme.typography.subhead
+            )
+        }
     }
 }
 
@@ -319,5 +343,25 @@ private fun SwipeBackground(dismissState: DismissState) {
             modifier = Modifier.scale(scale),
             tint = White
         )
+    }
+}
+
+@Preview
+@Composable
+private fun TasksItemPreview() {
+    TodoAppTheme {
+        Box(
+            modifier = Modifier
+                .background(ExtendedTheme.colors.backPrimary)
+        ) {
+            LazyColumn {
+                item {
+                    TasksItem(
+                        task = TodoItem("1", "Task 1", LocalDateTime.now(), Priority.HIGH, isDone = true),
+                        onAction = {}
+                    )
+                }
+            }
+        }
     }
 }

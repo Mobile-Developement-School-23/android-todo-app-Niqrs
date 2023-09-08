@@ -9,6 +9,7 @@ android {
 dependencies {
     implementation(project(":auth:domain"))
     implementation(project(":tasks:domain"))
+    implementation(project(":other:alarm"))
 
     implementation(Dependencies.Android.coreKtx)
 

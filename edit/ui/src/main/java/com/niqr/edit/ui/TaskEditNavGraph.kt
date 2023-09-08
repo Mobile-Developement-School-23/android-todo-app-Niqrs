@@ -1,12 +1,13 @@
 package com.niqr.edit.ui
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.google.accompanist.navigation.animation.composable
 import com.niqr.core.ui.utils.daggerViewModel
 import com.niqr.edit.ui.di.EditUiComponentProvider
 
@@ -26,6 +27,7 @@ fun NavController.navigateToTaskEdit(id: String = "") {
 /**
  * Edit navigation graph
  */
+@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.taskEditScreen(
     onNavigateUp: () -> Unit,
     onSuccessSave: () -> Unit

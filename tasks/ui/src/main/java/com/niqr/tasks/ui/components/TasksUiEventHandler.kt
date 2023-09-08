@@ -1,6 +1,10 @@
 package com.niqr.tasks.ui.components
 
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetState
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -14,7 +18,9 @@ import com.niqr.tasks.ui.R
 import com.niqr.tasks.ui.model.TasksAction
 import com.niqr.tasks.ui.model.TasksEvent
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TasksUiEventHandler(
     uiEvent: Flow<TasksEvent>,
@@ -22,7 +28,8 @@ fun TasksUiEventHandler(
     onAction: (TasksAction) -> Unit,
     onEditTask: (String) -> Unit,
     onSignOut: () -> Unit,
-    snackbarHostState: SnackbarHostState
+    snackbarHostState: SnackbarHostState,
+    sheetState: ModalBottomSheetState
 ) {
     val context = LocalContext.current
     var launchedBefore by rememberSaveable { mutableStateOf(false) }
@@ -43,7 +50,32 @@ fun TasksUiEventHandler(
         uiEvent.collect {
             when(it) {
                 TasksEvent.ConnectionError -> {
-                    snackbarHostState.showSnackbar(context.getString(R.string.connection_error))
+                    launch {
+                        snackbarHostState.currentSnackbarData?.dismiss()
+                        snackbarHostState.showSnackbar(
+                            message = context.getString(R.string.connection_error))
+
+                    }
+                }
+                TasksEvent.UndoNotification -> {
+                    launch {
+                        snackbarHostState.currentSnackbarData?.dismiss()
+                        val snackbarResult = snackbarHostState.showSnackbar(
+                            message = context.getString(R.string.task_deleted),
+                            actionLabel = context.getString(R.string.undo),
+                            duration = SnackbarDuration.Short
+                        )
+                        when(snackbarResult) {
+                            SnackbarResult.Dismissed -> Unit
+                            SnackbarResult.ActionPerformed -> {
+                                onAction(TasksAction.UndoAction)
+                            }
+                        }
+                    }
+                }
+                TasksEvent.ShowSettings -> {
+                    if (!sheetState.isVisible)
+                        sheetState.show()
                 }
                 is TasksEvent.NavigateToEditTask -> onEditTask(it.id)
                 TasksEvent.NavigateToNewTask -> onCreateTask()

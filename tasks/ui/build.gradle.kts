@@ -14,7 +14,10 @@ dependencies {
     implementation(project(":tasks:domain"))
     implementation(project(":auth:domain"))
 
+    implementation(project(":settings:domain"))
+
     implementation(project(":other:work"))
 
+    implementation(Dependencies.Compose.material2)
     implementation(Dependencies.Ktor.cio)
 }
