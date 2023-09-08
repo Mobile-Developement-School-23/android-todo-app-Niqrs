@@ -13,6 +13,7 @@ import com.niqr.other.alarm.utils.TASK_ID
 import com.niqr.other.alarm.utils.goAsync
 import com.niqr.tasks.domain.model.Priority
 import com.niqr.tasks.domain.repo.TodoItemsRepository
+import com.yandex.metrica.YandexMetrica
 import javax.inject.Inject
 
 class AlarmReceiver: BroadcastReceiver() {
@@ -55,5 +56,7 @@ class AlarmReceiver: BroadcastReceiver() {
 
         (context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager)
             .notify(item.id.hashCode(), notification)
+
+        YandexMetrica.reportEvent("Show task notification")
     }
 }

@@ -8,6 +8,7 @@ import com.niqr.settings.data.model.AppSettingsDto
 import com.niqr.settings.domain.model.AppSettings
 import com.niqr.settings.domain.model.Theme
 import com.niqr.settings.domain.settings.AppSettingsMutableProvider
+import com.yandex.metrica.YandexMetrica
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -34,6 +35,8 @@ class AppSettingsDataStoreManager @Inject constructor(
                 theme = theme
             )
         }
+        val themeParam = mapOf("theme" to theme.name)
+        YandexMetrica.reportEvent("Set theme", themeParam)
     }
 
     override suspend fun resetAll() {

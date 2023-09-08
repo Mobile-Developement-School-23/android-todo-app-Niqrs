@@ -18,4 +18,7 @@ dependencies {
     api(Dependencies.Ktor.serializationJson)
     implementation(Dependencies.Ktor.contentNegotiation)
     implementation(Dependencies.Ktor.slf4fNop)
+
+    //AppMetrica
+    api(Dependencies.Other.appMetrica)
 }

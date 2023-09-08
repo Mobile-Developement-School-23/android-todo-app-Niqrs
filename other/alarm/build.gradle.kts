@@ -10,4 +10,5 @@ dependencies {
     implementation(project(":tasks:domain"))
 
     implementation(Dependencies.Android.coreKtx)
+    implementation(Dependencies.Other.appMetrica)
 }

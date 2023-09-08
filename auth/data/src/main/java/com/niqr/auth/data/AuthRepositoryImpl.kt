@@ -5,6 +5,7 @@ import com.niqr.auth.domain.AuthInfoMutableProvider
 import com.niqr.auth.domain.AuthRepository
 import com.niqr.auth.domain.model.AuthInfo
 import com.niqr.settings.domain.settings.AppSettingsMutableProvider
+import com.yandex.metrica.YandexMetrica
 import java.util.UUID
 import javax.inject.Inject
 
@@ -24,10 +25,12 @@ class AuthRepositoryImpl @Inject constructor(
                 deviceId = UUID.randomUUID().toString()
             )
         )
+        YandexMetrica.reportEvent("Sign in")
     }
 
     override suspend fun signOut() {
         authProvider.clearAuthInfo()
         settingsProvider.resetAll()
+        YandexMetrica.reportEvent("Sign out")
     }
 }

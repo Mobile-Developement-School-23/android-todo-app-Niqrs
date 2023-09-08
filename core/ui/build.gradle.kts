@@ -9,4 +9,6 @@ android {
 
 dependencies {
 
+    //AppMetrica
+    api(Dependencies.Other.appMetrica)
 }

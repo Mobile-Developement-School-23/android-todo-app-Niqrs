@@ -10,6 +10,7 @@ import com.niqr.edit.ui.model.TaskEditUiState
 import com.niqr.edit.ui.utils.dateTimeFromLong
 import com.niqr.tasks.domain.model.TodoItem
 import com.niqr.tasks.domain.repo.TodoItemsRepository
+import com.yandex.metrica.YandexMetrica
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -104,8 +105,18 @@ class TaskEditViewModel @Inject constructor(
             )
 
         viewModelScope.launch(Dispatchers.IO) {
-            if (isEditing) repo.updateTodoItem(newTask)
-            else repo.addTodoItem(newTask)
+            if (isEditing) {
+                repo.updateTodoItem(newTask)
+                YandexMetrica.reportEvent("Update task")
+            }
+            else {
+                repo.addTodoItem(newTask)
+                val metricaParams = mapOf(
+                    "with date" to uiState.value.isDeadlineVisible,
+                    "with time" to (uiState.value.isDeadlineVisible && uiState.value.deadline.second != 0)
+                )
+                YandexMetrica.reportEvent("Add task", metricaParams)
+            }
             _uiEvent.send(TaskEditEvent.SaveTask)
         }
     }

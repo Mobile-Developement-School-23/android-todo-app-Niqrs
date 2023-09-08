@@ -12,6 +12,7 @@ import com.niqr.tasks.data.remote.model.RequestResult
 import com.niqr.tasks.data.utils.TasksMerger
 import com.niqr.tasks.domain.model.TodoItem
 import com.niqr.tasks.domain.repo.TodoItemsRepository
+import com.yandex.metrica.YandexMetrica
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -82,6 +83,7 @@ class TasksRepositoryImpl @Inject constructor(
     override suspend fun deleteTodoItem(task: TodoItem) {
         recentlyDeleted.add(task.id)
         dao.deleteTask(task.toDto())
+        YandexMetrica.reportEvent("Delete task")
     }
 
     override suspend fun updateDoneTodoItemsVisibility(visible: Boolean) {
@@ -109,6 +111,7 @@ class TasksRepositoryImpl @Inject constructor(
     }
 
     override suspend fun refreshTodoItems(): Boolean {
+        YandexMetrica.reportEvent("Refresh tasks")
         when(val result = service.getTasks()) {
             is RequestResult.Error -> {
                 if (result.e == RequestError.NO_CONNECTION)

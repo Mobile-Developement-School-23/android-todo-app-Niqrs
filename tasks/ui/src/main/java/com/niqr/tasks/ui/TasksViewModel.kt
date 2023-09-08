@@ -11,6 +11,7 @@ import com.niqr.tasks.domain.repo.TodoItemsRepository
 import com.niqr.tasks.ui.model.TasksAction
 import com.niqr.tasks.ui.model.TasksEvent
 import com.niqr.tasks.ui.model.TasksUiState
+import com.yandex.metrica.YandexMetrica
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
@@ -97,6 +98,7 @@ class TasksViewModel @Inject constructor(
     private fun updateItem(item: TodoItem) {
         viewModelScope.launch(Dispatchers.IO) {
             todoRepo.updateTodoItem(item)
+            YandexMetrica.reportEvent("Update task status", mapOf("done" to item.isDone))
         }
     }
 
