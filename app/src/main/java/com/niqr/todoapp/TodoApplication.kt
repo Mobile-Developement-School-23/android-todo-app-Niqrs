@@ -18,6 +18,9 @@ import com.niqr.tasks.ui.di.TasksUiComponent
 import com.niqr.tasks.ui.di.TasksUiComponentProvider
 import com.niqr.todoapp.di.AppComponent
 import com.niqr.todoapp.di.DaggerAppComponent
+import com.niqr.todoapp.utils.APP_METRICA_API_KEY
+import com.yandex.metrica.YandexMetrica
+import com.yandex.metrica.YandexMetricaConfig
 import javax.inject.Inject
 
 /**
@@ -41,8 +44,14 @@ class TodoApplication: Application(), Configuration.Provider,
 
     override fun onCreate() {
         super.onCreate()
+
         appComponent = DaggerAppComponent.factory().create(this)
         appComponent.inject(this)
+
+        val config: YandexMetricaConfig = YandexMetricaConfig.newConfigBuilder(APP_METRICA_API_KEY).build()
+        YandexMetrica.activate(applicationContext, config)
+        YandexMetrica.enableActivityAutoTracking(this)
+
         val syncChannel = SynchronizationNotificationChannel()
         val alarmChannel = AlarmNotificationChannel()
 

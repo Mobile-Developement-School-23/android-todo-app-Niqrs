@@ -86,10 +86,12 @@ object Dependencies {
         private const val yandexAuthSdkVersion = "2.5.1"
         private const val datastoreVersion = "1.0.0"
         private const val workManagerVersion = "2.8.1"
+        private const val appMetricaVersion = "5.3.0"
 
         const val yandexAuthSdk = "com.yandex.android:authsdk:$yandexAuthSdkVersion"
         const val datastore = "androidx.datastore:datastore:$datastoreVersion"
         const val preferencesDatastore = "androidx.datastore:datastore-preferences:$datastoreVersion"
         const val workManager = "androidx.work:work-runtime-ktx:$workManagerVersion"
+        const val appMetrica = "com.yandex.android:mobmetricalib:$appMetricaVersion"
     }
 }

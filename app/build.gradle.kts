@@ -89,6 +89,9 @@ dependencies {
     //Accompanist
     implementation(Dependencies.Compose.Accompanist.permissions)
 
+    //AppMetrica
+    implementation(Dependencies.Other.appMetrica)
+
     //Test
     testImplementation(Dependencies.Testing.junit4)
     androidTestImplementation(Dependencies.Testing.junitAndroidExt)
